@@ -1,0 +1,273 @@
+openapi: 3.0.0
+info:
+  title: Word API
+  version: 1.0.0
+servers:
+  - url: /api
+tags:
+  - name: User
+    description: User owns Lessons
+  - name: Lesson
+    description: Lessons own Words
+  - name: Word
+    description: Words are lowest entities
+
+
+paths:
+  /users:
+    post:
+      summary: Create a user
+      tags:
+        - User
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserDTO'
+      responses:
+        '201':
+          description: User created
+    patch:
+      summary: Rename a user
+      tags:
+        - User
+      operationId: renameUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserDTO'
+      responses:
+        '201':
+          description: User renamed
+    delete:
+      summary: Delete a user
+      tags:
+        - User
+      operationId: deleteUser
+      responses:
+        '204':
+          description: User deleted
+
+  /users/{userId}/lessons:
+    get:
+      summary: Get all lessons of an user
+      tags:
+        - Lesson
+      operationId: getLessonsByUserId
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lessons of the user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LessonDTO'
+
+    post:
+      summary: Create a new lesson
+      tags:
+        - Lesson
+      operationId: createLesson
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonDTO'
+      responses:
+        '201':
+          description: Lesson created
+
+    patch:
+      summary: Update a lesson
+      tags:
+        - Lesson
+      operationId: updateLesson
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonDTO'
+      responses:
+        '201':
+          description: Lesson updated
+
+  /users/{userId}/lessons/{lessonId}/copy:
+    post:
+      summary: Copy a shared lesson
+      tags:
+        - Lesson
+      operationId: copySharedLesson
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Lesson copied
+
+  /users/{userId}/lessons/{lessonId}:
+    delete:
+      summary: Delete a lesson
+      tags:
+        - Lesson
+      operationId: deleteLesson
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Lesson deleted
+
+  /lessons/{lessonId}/words:
+    get:
+      summary: Get all words of a lesson
+      tags:
+        - Word
+      operationId: getWordsByLessonId
+      parameters:
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Words of the lesson
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WordDTO'
+
+  /words:
+    post:
+      summary: Create a new word in a lesson
+      tags:
+        - Word
+      operationId: createWord
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordDTO'
+      responses:
+        '201':
+          description: Word created
+
+    patch:
+      summary: Update words in a lesson
+      tags:
+        - Word
+      operationId: updateWords
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/WordDTO'
+      responses:
+        '201':
+          description: Words updated
+
+  /words/{wordId}:
+    delete:
+      summary: Delete a word
+      tags:
+        - Word
+      operationId: deleteWord
+      parameters:
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: wordId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Words deleted
+
+components:
+  schemas:
+    WordDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        question:
+          type: string
+        answer:
+          type: string
+        score:
+          type: integer
+        lesson:
+          type: integer
+
+    LessonDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        lessonName:
+          type: string
+        description:
+          type: string
+        shared:
+          type: integer
+        appUser:
+          type: integer
+
+    AppUserDTO:
+      type: object
+      properties:
+        appUserName:
+          type: string
+        passwordHash:
+          type: string
