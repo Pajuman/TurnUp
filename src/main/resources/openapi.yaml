@@ -145,7 +145,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: string
+            format: uuid
       responses:
         '204':
           description: Lesson deleted
@@ -162,7 +163,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: string
+            format: uuid
       responses:
         '201':
           description: Lesson copied
@@ -179,7 +181,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: string
+            format: uuid
       responses:
         '200':
           description: Words of the lesson
@@ -197,7 +200,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: string
+            format: uuid
       tags:
         - Lesson
       operationId: createWord
@@ -237,7 +241,8 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
+          format: uuid
         question:
           type: string
         answer:
@@ -271,19 +276,21 @@ components:
         deletedWordIds:
           type: array
           items:
-            type: integer
+            type: string
+            format: uuid
 
     LessonDTO:
       type: object
       properties:
         id:
-          type: integer
+          type: string
+          format: uuid
         lessonName:
           type: string
         description:
           type: string
         shared:
-          type: integer
+          type: boolean
       required:
         - id
         - lessonName
@@ -298,7 +305,7 @@ components:
         description:
           type: string
         shared:
-          type: integer
+          type: boolean
       required:
         - lessonName
         - description
