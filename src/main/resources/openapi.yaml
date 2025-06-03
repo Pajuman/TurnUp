@@ -6,12 +6,11 @@ servers:
   - url: /api
 tags:
   - name: User
-    description: User owns Lessons
+    description: Users own Lessons
   - name: Lesson
     description: Lessons own Words
   - name: Word
     description: Words are lowest entities
-
 
 paths:
   /users:
@@ -27,13 +26,20 @@ paths:
             schema:
               $ref: '#/components/schemas/AppUserDTO'
       responses:
-        '201':
+        '200':
           description: User created
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
     patch:
-      summary: Rename a user
+      summary: Update a user
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
       tags:
         - User
-      operationId: renameUser
+      operationId: updateUser
       requestBody:
         required: true
         content:
@@ -42,9 +48,11 @@ paths:
               $ref: '#/components/schemas/AppUserDTO'
       responses:
         '201':
-          description: User renamed
+          description: User updated
     delete:
       summary: Delete a user
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
       tags:
         - User
       operationId: deleteUser
@@ -52,21 +60,38 @@ paths:
         '204':
           description: User deleted
 
-  /users/{userId}/lessons:
-    get:
-      summary: Get all lessons of an user
+  /users/login:
+    post:
+      summary: Login a user
       tags:
-        - Lesson
-      operationId: getLessonsByUserId
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
+        - User
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserDTO'
       responses:
         '200':
-          description: Lessons of the user
+          description: User logged in
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+
+  /users/me/lessons:
+    get:
+      summary: Get all lessons of logged in user
+      tags:
+        - User
+      operationId: getLessonsOfLoggedInUser
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+      responses:
+        '200':
+          description: Lessons of logged in user
           content:
             application/json:
               schema:
@@ -74,38 +99,30 @@ paths:
                 items:
                   $ref: '#/components/schemas/LessonDTO'
 
+  /lessons:
     post:
       summary: Create a new lesson
       tags:
         - Lesson
       operationId: createLesson
       parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/UserIdHeader'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LessonDTO'
+              $ref: '#/components/schemas/NewLessonDTO'
       responses:
         '201':
           description: Lesson created
-
     patch:
       summary: Update a lesson
       tags:
         - Lesson
       operationId: updateLesson
       parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/UserIdHeader'
       requestBody:
         required: true
         content:
@@ -116,39 +133,14 @@ paths:
         '201':
           description: Lesson updated
 
-  /users/{userId}/lessons/{lessonId}/copy:
-    post:
-      summary: Copy a shared lesson
-      tags:
-        - Lesson
-      operationId: copySharedLesson
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: lessonId
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '201':
-          description: Lesson copied
-
-  /users/{userId}/lessons/{lessonId}:
+  /lessons/{lessonId}:
     delete:
       summary: Delete a lesson
       tags:
         - Lesson
       operationId: deleteLesson
       parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/UserIdHeader'
         - name: lessonId
           in: path
           required: true
@@ -158,13 +150,31 @@ paths:
         '204':
           description: Lesson deleted
 
+  /lessons/{lessonId}/copy:
+    post:
+      summary: Copy a shared lesson
+      tags:
+        - Lesson
+      operationId: copySharedLesson
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Lesson copied
+
   /lessons/{lessonId}/words:
     get:
       summary: Get all words of a lesson
       tags:
-        - Word
+        - Lesson
       operationId: getWordsByLessonId
       parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
         - name: lessonId
           in: path
           required: true
@@ -179,25 +189,35 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/WordDTO'
-
-  /words:
     post:
-      summary: Create a new word in a lesson
+      summary: Create new words in a lesson
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
       tags:
-        - Word
+        - Lesson
       operationId: createWord
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WordDTO'
+              type: array
+              items:
+                $ref: '#/components/schemas/NewWordDTO'
       responses:
         '201':
           description: Word created
 
+  /words:
     patch:
-      summary: Update words in a lesson
+      summary: Update and/or delete words
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
       tags:
         - Word
       operationId: updateWords
@@ -206,33 +226,10 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/WordDTO'
-      responses:
-        '201':
-          description: Words updated
-
-  /words/{wordId}:
-    delete:
-      summary: Delete a word
-      tags:
-        - Word
-      operationId: deleteWord
-      parameters:
-        - name: lessonId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: wordId
-          in: path
-          required: true
-          schema:
-            type: integer
+              $ref: '#/components/schemas/BatchWordUpdateDTO'
       responses:
         '204':
-          description: Words deleted
+          description: Words updated and/or deleted
 
 components:
   schemas:
@@ -247,8 +244,34 @@ components:
           type: string
         score:
           type: integer
-        lesson:
-          type: integer
+      required:
+        - id
+        - question
+        - answer
+        - score
+
+    NewWordDTO:
+      type: object
+      properties:
+        question:
+          type: string
+        answer:
+          type: string
+      required:
+        - question
+        - answer
+
+    BatchWordUpdateDTO:
+      type: object
+      properties:
+        updatedWords:
+          type: array
+          items:
+            $ref: '#/components/schemas/WordDTO'
+        deletedWordIds:
+          type: array
+          items:
+            type: integer
 
     LessonDTO:
       type: object
@@ -261,8 +284,25 @@ components:
           type: string
         shared:
           type: integer
-        appUser:
+      required:
+        - id
+        - lessonName
+        - description
+        - shared
+
+    NewLessonDTO:
+      type: object
+      properties:
+        lessonName:
+          type: string
+        description:
+          type: string
+        shared:
           type: integer
+      required:
+        - lessonName
+        - description
+        - shared
 
     AppUserDTO:
       type: object
@@ -271,3 +311,15 @@ components:
           type: string
         passwordHash:
           type: string
+      required:
+        - appUserName
+        - passwordHash
+
+  parameters:
+    UserIdHeader:
+      name: X-User-Id
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uuid
