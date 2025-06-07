@@ -3,6 +3,8 @@ package com.learn.turnup.controllers;
 import com.learn.turnup.apis.UsersApi;
 import com.learn.turnup.dto.AppUserDTO;
 import com.learn.turnup.dto.LessonDTO;
+import com.learn.turnup.services.AppUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,30 +16,33 @@ import java.util.UUID;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-03T14:15:17.222973100+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Controller
 @RequestMapping("${openapi.word.base-path:/api}")
+@RequiredArgsConstructor
 public class UsersApiController implements UsersApi {
+
+    private final AppUserService appUserService;
 
     @Override
     public ResponseEntity<UUID> createUser(AppUserDTO appUserDTO) {
-        return null;
+        return ResponseEntity.ok(appUserService.createUser(appUserDTO));
     }
 
     @Override
     public ResponseEntity<Void> deleteUser(UUID xUserId) {
-        return null;
+        return appUserService.deleteUser(xUserId);
     }
 
     @Override
     public ResponseEntity<List<LessonDTO>> getLessonsOfLoggedInUser(UUID xUserId) {
-        return null;
+        return ResponseEntity.ok(appUserService.getLessonsOfLoggedInUser(xUserId));
     }
 
     @Override
     public ResponseEntity<UUID> loginUser(AppUserDTO appUserDTO) {
-        return null;
+        return ResponseEntity.ok(appUserService.loginUser(appUserDTO));
     }
 
     @Override
     public ResponseEntity<Void> updateUser(UUID xUserId, AppUserDTO appUserDTO) {
-        return null;
+        return appUserService.updateUser(xUserId, appUserDTO);
     }
 }
