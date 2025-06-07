@@ -33,7 +33,12 @@ paths:
               schema:
                 type: string
                 format: uuid
-    patch:
+        '400':
+          description: Invalid input
+        '409':
+          description: User already exists
+
+    put:
       summary: Update a user
       parameters:
         - $ref: '#/components/parameters/UserIdHeader'
@@ -49,6 +54,10 @@ paths:
       responses:
         '201':
           description: User updated
+        '400':
+          description: Invalid input
+        '409':
+          description: User already exists
     delete:
       summary: Delete a user
       parameters:
@@ -80,6 +89,10 @@ paths:
               schema:
                 type: string
                 format: uuid
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized access
 
   /users/me/lessons:
     get:
@@ -98,6 +111,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/LessonDTO'
+        '401':
+          description: User id missing or invalid
+        '403':
+          description: Unauthorized access to lesson
 
   /lessons:
     post:
@@ -116,7 +133,12 @@ paths:
       responses:
         '201':
           description: Lesson created
-    patch:
+        '400':
+          description: Invalid input
+        '401':
+          description: User id missing or invalid
+
+    put:
       summary: Update a lesson
       tags:
         - Lesson
@@ -131,7 +153,12 @@ paths:
               $ref: '#/components/schemas/LessonDTO'
       responses:
         '201':
-          description: Lesson updated
+          description: Lesson created
+        '400':
+          description: Invalid input
+        '401':
+          description: User id missing or invalid
+
 
   /lessons/{lessonId}:
     delete:
@@ -150,6 +177,8 @@ paths:
       responses:
         '204':
           description: Lesson deleted
+        '401':
+          description: User id missing or invalid
 
   /lessons/{lessonId}/copy:
     post:
@@ -168,6 +197,11 @@ paths:
       responses:
         '201':
           description: Lesson copied
+        '401':
+          description: User id missing or invalid
+        '403':
+          description: Unauthorized access to lesson
+
 
   /lessons/{lessonId}/words:
     get:
@@ -192,6 +226,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/WordDTO'
+        '401':
+          description: User id missing or invalid
+        '403':
+          description: Unauthorized access to lesson
+
     post:
       summary: Create new words in a lesson
       parameters:
@@ -204,7 +243,7 @@ paths:
             format: uuid
       tags:
         - Lesson
-      operationId: createWord
+      operationId: createWords
       requestBody:
         required: true
         content:
@@ -218,7 +257,7 @@ paths:
           description: Word created
 
   /words:
-    patch:
+    put:
       summary: Update and/or delete words
       parameters:
         - $ref: '#/components/parameters/UserIdHeader'
@@ -245,8 +284,16 @@ components:
           format: uuid
         question:
           type: string
+          minLength: 1
+          maxLength: 40
+          pattern: '^[\p{L} ]+$'
+          example: "black dog"
         answer:
           type: string
+          minLength: 1
+          maxLength: 40
+          pattern: '^[\p{L} ]+$'
+          example: "černý pes"
         score:
           type: integer
       required:
@@ -260,8 +307,16 @@ components:
       properties:
         question:
           type: string
+          minLength: 1
+          maxLength: 40
+          pattern: '^[\p{L} ]+$'
+          example: "black dog"
         answer:
           type: string
+          minLength: 1
+          maxLength: 40
+          pattern: '^[\p{L} ]+$'
+          example: "černý pes"
       required:
         - question
         - answer
@@ -287,8 +342,16 @@ components:
           format: uuid
         lessonName:
           type: string
+          minLength: 3
+          maxLength: 30
+          pattern: '^[\p{L} ]+$'
+          example: "Podstatná jména"
         description:
           type: string
+          minLength: 3
+          maxLength: 60
+          pattern: '^[\p{L} ]+$'
+          example: "V lekci jsou běžná podstatná jména"
         shared:
           type: boolean
       required:
@@ -302,8 +365,16 @@ components:
       properties:
         lessonName:
           type: string
+          minLength: 3
+          maxLength: 30
+          pattern: '^[\p{L} ]+$'
+          example: "Podstatná jména"
         description:
           type: string
+          minLength: 3
+          maxLength: 60
+          pattern: '^[\p{L} ]+$'
+          example: "V lekci jsou běžná podstatná jména"
         shared:
           type: boolean
       required:
@@ -316,8 +387,16 @@ components:
       properties:
         appUserName:
           type: string
+          minLength: 3
+          maxLength: 20
+          pattern: '^[a-zA-Z0-9_]+$'
+          example: "john_doe"
         passwordHash:
           type: string
+          minLength: 8
+          maxLength: 16
+          pattern: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]+$'
+          example: "P@ssw0rd123"
       required:
         - appUserName
         - passwordHash
