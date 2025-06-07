@@ -9,4 +9,6 @@ import org.mapstruct.Mapper;
 public interface LessonMapper {
 
     Lesson toEntity(NewLessonDTO dto);
+
+    LessonDTO toDto(Lesson dto);
 }
