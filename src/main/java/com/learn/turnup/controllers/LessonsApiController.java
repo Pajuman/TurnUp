@@ -8,6 +8,7 @@ import com.learn.turnup.dto.NewLessonDTO;
 import com.learn.turnup.dto.NewWordDTO;
 import com.learn.turnup.dto.WordDTO;
 import com.learn.turnup.services.LessonsService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,7 @@ public class LessonsApiController implements LessonsApi {
     }
 
     @Override
-    public ResponseEntity<Void> createWord(UUID xUserId, UUID lessonId, List<NewWordDTO> newWordDTO) {
+    public ResponseEntity<Void> createWords(UUID xUserId, UUID lessonId, List<@Valid NewWordDTO> newWordDTO) {
         return lessonsService.createWords(xUserId, lessonId, newWordDTO);
     }
 

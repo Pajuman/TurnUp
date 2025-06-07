@@ -1,16 +1,24 @@
 package com.learn.turnup.dto;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
  * NewLessonDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-03T14:28:36.823820900+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-07T10:45:16.129411600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class NewLessonDTO {
 
   private String lessonName;
@@ -41,8 +49,8 @@ public class NewLessonDTO {
    * Get lessonName
    * @return lessonName
    */
-  @NotNull 
-  @Schema(name = "lessonName", requiredMode = Schema.RequiredMode.REQUIRED)
+  @NotNull @Pattern(regexp = "^[\\p{L} ]+$") @Size(min = 3, max = 30) 
+  @Schema(name = "lessonName", example = "Podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("lessonName")
   public String getLessonName() {
     return lessonName;
@@ -61,8 +69,8 @@ public class NewLessonDTO {
    * Get description
    * @return description
    */
-  @NotNull 
-  @Schema(name = "description", requiredMode = Schema.RequiredMode.REQUIRED)
+  @NotNull @Pattern(regexp = "^[\\p{L} ]+$") @Size(min = 3, max = 60) 
+  @Schema(name = "description", example = "V lekci jsou běžná podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;

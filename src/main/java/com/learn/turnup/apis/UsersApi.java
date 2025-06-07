@@ -10,23 +10,33 @@ import java.util.UUID;
 
 import com.learn.turnup.dto.AppUserDTO;
 import com.learn.turnup.dto.LessonDTO;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-03T14:28:36.823820900+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-07T10:45:16.129411600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "User", description = "Users own Lessons")
 public interface UsersApi {
@@ -36,6 +46,8 @@ public interface UsersApi {
      *
      * @param appUserDTO  (required)
      * @return User created (status code 200)
+     *         or Invalid input (status code 400)
+     *         or User already exists (status code 409)
      */
     @Operation(
         operationId = "createUser",
@@ -44,7 +56,9 @@ public interface UsersApi {
         responses = {
             @ApiResponse(responseCode = "200", description = "User created", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UUID.class))
-            })
+            }),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "409", description = "User already exists")
         }
     )
     @RequestMapping(
@@ -88,6 +102,8 @@ public interface UsersApi {
      *
      * @param xUserId  (required)
      * @return Lessons of logged in user (status code 200)
+     *         or User id missing or invalid (status code 401)
+     *         or Unauthorized access to lesson (status code 403)
      */
     @Operation(
         operationId = "getLessonsOfLoggedInUser",
@@ -96,7 +112,9 @@ public interface UsersApi {
         responses = {
             @ApiResponse(responseCode = "200", description = "Lessons of logged in user", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = LessonDTO.class)))
-            })
+            }),
+            @ApiResponse(responseCode = "401", description = "User id missing or invalid"),
+            @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson")
         }
     )
     @RequestMapping(
@@ -115,6 +133,8 @@ public interface UsersApi {
      *
      * @param appUserDTO  (required)
      * @return User logged in (status code 200)
+     *         or Invalid input (status code 400)
+     *         or Unauthorized access (status code 401)
      */
     @Operation(
         operationId = "loginUser",
@@ -123,7 +143,9 @@ public interface UsersApi {
         responses = {
             @ApiResponse(responseCode = "200", description = "User logged in", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UUID.class))
-            })
+            }),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized access")
         }
     )
     @RequestMapping(
@@ -139,22 +161,26 @@ public interface UsersApi {
 
 
     /**
-     * PATCH /users : Update a user
+     * PUT /users : Update a user
      *
      * @param xUserId  (required)
      * @param appUserDTO  (required)
      * @return User updated (status code 201)
+     *         or Invalid input (status code 400)
+     *         or User already exists (status code 409)
      */
     @Operation(
         operationId = "updateUser",
         summary = "Update a user",
         tags = { "User" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "User updated")
+            @ApiResponse(responseCode = "201", description = "User updated"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "409", description = "User already exists")
         }
     )
     @RequestMapping(
-        method = RequestMethod.PATCH,
+        method = RequestMethod.PUT,
         value = "/users",
         consumes = { "application/json" }
     )

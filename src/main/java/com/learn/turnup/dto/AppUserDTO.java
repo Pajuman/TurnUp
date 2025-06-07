@@ -1,16 +1,24 @@
 package com.learn.turnup.dto;
 
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
  * AppUserDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-03T14:28:36.823820900+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-07T10:45:16.129411600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class AppUserDTO {
 
   private String appUserName;
@@ -38,8 +46,8 @@ public class AppUserDTO {
    * Get appUserName
    * @return appUserName
    */
-  @NotNull 
-  @Schema(name = "appUserName", requiredMode = Schema.RequiredMode.REQUIRED)
+  @NotNull @Pattern(regexp = "^[a-zA-Z0-9_]+$") @Size(min = 3, max = 20) 
+  @Schema(name = "appUserName", example = "john_doe", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("appUserName")
   public String getAppUserName() {
     return appUserName;
@@ -58,8 +66,8 @@ public class AppUserDTO {
    * Get passwordHash
    * @return passwordHash
    */
-  @NotNull 
-  @Schema(name = "passwordHash", requiredMode = Schema.RequiredMode.REQUIRED)
+  @NotNull @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]+$") @Size(min = 8, max = 16) 
+  @Schema(name = "passwordHash", example = "P@ssw0rd123", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("passwordHash")
   public String getPasswordHash() {
     return passwordHash;
