@@ -5,6 +5,7 @@ import com.learn.turnup.dto.AppUserDTO;
 import com.learn.turnup.dto.LessonDTO;
 import com.learn.turnup.services.AppUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,18 +23,13 @@ public class UsersApiController implements UsersApi {
     private final AppUserService appUserService;
 
     @Override
-    public ResponseEntity<UUID> createUser(AppUserDTO appUserDTO) {
-        return ResponseEntity.ok(appUserService.createUser(appUserDTO));
-    }
-
-    @Override
-    public ResponseEntity<Void> deleteUser(UUID xUserId) {
-        return appUserService.deleteUser(xUserId);
-    }
-
-    @Override
     public ResponseEntity<List<LessonDTO>> getLessonsOfLoggedInUser(UUID xUserId) {
         return ResponseEntity.ok(appUserService.getLessonsOfLoggedInUser(xUserId));
+    }
+
+    @Override
+    public ResponseEntity<UUID> createUser(AppUserDTO appUserDTO) {
+        return ResponseEntity.ok(appUserService.createUser(appUserDTO));
     }
 
     @Override
@@ -43,6 +39,13 @@ public class UsersApiController implements UsersApi {
 
     @Override
     public ResponseEntity<Void> updateUser(UUID xUserId, AppUserDTO appUserDTO) {
-        return appUserService.updateUser(xUserId, appUserDTO);
+        appUserService.updateUser(xUserId, appUserDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteUser(UUID xUserId) {
+        appUserService.deleteUser(xUserId);
+        return ResponseEntity.noContent().build();
     }
 }

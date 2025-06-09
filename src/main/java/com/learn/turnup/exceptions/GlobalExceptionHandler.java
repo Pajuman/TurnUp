@@ -11,12 +11,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<String> handleBadRequest(ConstraintViolationException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        String errorMessages = ex.getConstraintViolations()
+                .stream()
+                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+                .collect(Collectors.joining("; "));
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body("Validation failed: " + errorMessages);
     }
 
    @ExceptionHandler(EntityExistsException.class)
@@ -33,7 +41,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
         if ("X-User-Id".equals(ex.getName()) && ex.getRequiredType() == UUID.class) {
             return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
+                    .status(HttpStatus.BAD_REQUEST)
                     .body("Invalid UUID format for user ID header");
         }
 
@@ -41,5 +49,4 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body("Invalid request parameter: " + ex.getName());
     }
-
 }

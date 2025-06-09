@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * BatchWordUpdateDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-07T10:45:16.129411600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T13:40:59.494461+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class BatchWordUpdateDTO {
 
   @Valid

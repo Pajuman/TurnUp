@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T09:25:28.267438100+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T13:40:59.494461+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Word", description = "Words are lowest entities")
 public interface WordsApi {
@@ -45,9 +45,9 @@ public interface WordsApi {
      * @param xUserId  (required)
      * @param batchWordUpdateDTO  (required)
      * @return All words successfully updated and/or deleted (status code 204)
-     *         or Forbidden – User does not have access to one or more of the words; operation aborted (status code 403)
-     *         or Bad Request – Invalid request structure or data (status code 400)
-     *         or Unauthorized – Authentication required (status code 401)
+     *         or Invalid input (status code 400)
+     *         or User ID is not recognized (status code 401)
+     *         or Unauthorized access to words (status code 403)
      */
     @Operation(
         operationId = "updateWords",
@@ -55,9 +55,9 @@ public interface WordsApi {
         tags = { "Word" },
         responses = {
             @ApiResponse(responseCode = "204", description = "All words successfully updated and/or deleted"),
-            @ApiResponse(responseCode = "403", description = "Forbidden – User does not have access to one or more of the words; operation aborted"),
-            @ApiResponse(responseCode = "400", description = "Bad Request – Invalid request structure or data"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized – Authentication required")
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
+            @ApiResponse(responseCode = "403", description = "Unauthorized access to words")
         }
     )
     @RequestMapping(

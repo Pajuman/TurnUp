@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T09:02:27.327632400+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T13:40:59.494461+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Lesson", description = "Lessons own Words")
 public interface LessonsApi {
@@ -49,7 +49,8 @@ public interface LessonsApi {
      * @param xUserId  (required)
      * @param lessonId  (required)
      * @return Lesson copied (status code 200)
-     *         or User id missing or invalid (status code 401)
+     *         or Invalid input (status code 400)
+     *         or User ID is not recognized (status code 401)
      *         or Unauthorized access to lesson (status code 403)
      */
     @Operation(
@@ -60,7 +61,8 @@ public interface LessonsApi {
             @ApiResponse(responseCode = "200", description = "Lesson copied", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = LessonDTO.class))
             }),
-            @ApiResponse(responseCode = "401", description = "User id missing or invalid"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
             @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson")
         }
     )
@@ -83,7 +85,8 @@ public interface LessonsApi {
      * @param newLessonDTO  (required)
      * @return Lesson created (status code 200)
      *         or Invalid input (status code 400)
-     *         or User id missing or invalid (status code 401)
+     *         or User ID is not recognized (status code 401)
+     *         or Lesson name already exists (status code 409)
      */
     @Operation(
         operationId = "createLesson",
@@ -94,7 +97,8 @@ public interface LessonsApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = LessonDTO.class))
             }),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "401", description = "User id missing or invalid")
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
+            @ApiResponse(responseCode = "409", description = "Lesson name already exists")
         }
     )
     @RequestMapping(
@@ -116,23 +120,32 @@ public interface LessonsApi {
      * @param xUserId  (required)
      * @param lessonId  (required)
      * @param newWordDTO  (required)
-     * @return Word created (status code 201)
+     * @return Words created (status code 200)
+     *         or Invalid input (status code 400)
+     *         or User ID is not recognized (status code 401)
+     *         or Unauthorized access to lesson (status code 403)
      */
     @Operation(
         operationId = "createWords",
         summary = "Create new words in a lesson",
         tags = { "Lesson" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "Word created")
+            @ApiResponse(responseCode = "200", description = "Words created", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = WordDTO.class)))
+            }),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
+            @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson")
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
         value = "/lessons/{lessonId}/words",
+        produces = { "application/json" },
         consumes = { "application/json" }
     )
     
-    ResponseEntity<Void> createWords(
+    ResponseEntity<List<WordDTO>> createWords(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "lessonId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("lessonId") UUID lessonId,
         @Parameter(name = "NewWordDTO", description = "", required = true) @Valid @RequestBody List<@Valid NewWordDTO> newWordDTO
@@ -145,7 +158,9 @@ public interface LessonsApi {
      * @param xUserId  (required)
      * @param lessonId  (required)
      * @return Lesson deleted (status code 204)
-     *         or User id missing or invalid (status code 401)
+     *         or Invalid input (status code 400)
+     *         or User ID is not recognized (status code 401)
+     *         or Unauthorized access to lesson (status code 403)
      */
     @Operation(
         operationId = "deleteLesson",
@@ -153,7 +168,9 @@ public interface LessonsApi {
         tags = { "Lesson" },
         responses = {
             @ApiResponse(responseCode = "204", description = "Lesson deleted"),
-            @ApiResponse(responseCode = "401", description = "User id missing or invalid")
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
+            @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson")
         }
     )
     @RequestMapping(
@@ -173,7 +190,8 @@ public interface LessonsApi {
      * @param xUserId  (required)
      * @param lessonId  (required)
      * @return Words of the lesson (status code 200)
-     *         or User id missing or invalid (status code 401)
+     *         or Invalid input (status code 400)
+     *         or User ID is not recognized (status code 401)
      *         or Unauthorized access to lesson (status code 403)
      */
     @Operation(
@@ -184,7 +202,8 @@ public interface LessonsApi {
             @ApiResponse(responseCode = "200", description = "Words of the lesson", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = WordDTO.class)))
             }),
-            @ApiResponse(responseCode = "401", description = "User id missing or invalid"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
             @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson")
         }
     )
@@ -205,18 +224,20 @@ public interface LessonsApi {
      *
      * @param xUserId  (required)
      * @param lessonDTO  (required)
-     * @return Lesson created (status code 201)
+     * @return Lesson updated (status code 201)
      *         or Invalid input (status code 400)
-     *         or User id missing or invalid (status code 401)
+     *         or User ID is not recognized (status code 401)
+     *         or Lesson name already exists (status code 409)
      */
     @Operation(
         operationId = "updateLesson",
         summary = "Update a lesson",
         tags = { "Lesson" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "Lesson created"),
+            @ApiResponse(responseCode = "201", description = "Lesson updated"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "401", description = "User id missing or invalid")
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
+            @ApiResponse(responseCode = "409", description = "Lesson name already exists")
         }
     )
     @RequestMapping(

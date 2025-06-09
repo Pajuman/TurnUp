@@ -5,6 +5,7 @@
  */
 package com.learn.turnup.apis;
 
+
 import java.util.UUID;
 
 import com.learn.turnup.dto.AppUserDTO;
@@ -35,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T09:02:27.327632400+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T13:40:59.494461+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "User", description = "Users own Lessons")
 public interface UsersApi {
@@ -46,7 +47,7 @@ public interface UsersApi {
      * @param appUserDTO  (required)
      * @return User created (status code 200)
      *         or Invalid input (status code 400)
-     *         or User already exists (status code 409)
+     *         or User name already exists (status code 409)
      */
     @Operation(
         operationId = "createUser",
@@ -57,7 +58,7 @@ public interface UsersApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UUID.class))
             }),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "409", description = "User already exists")
+            @ApiResponse(responseCode = "409", description = "User name already exists")
         }
     )
     @RequestMapping(
@@ -77,13 +78,17 @@ public interface UsersApi {
      *
      * @param xUserId  (required)
      * @return User deleted (status code 204)
+     *         or Invalid input (status code 400)
+     *         or User ID is not recognized (status code 401)
      */
     @Operation(
         operationId = "deleteUser",
         summary = "Delete a user",
         tags = { "User" },
         responses = {
-            @ApiResponse(responseCode = "204", description = "User deleted")
+            @ApiResponse(responseCode = "204", description = "User deleted"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized")
         }
     )
     @RequestMapping(
@@ -101,7 +106,9 @@ public interface UsersApi {
      *
      * @param xUserId  (required)
      * @return Lessons of logged in user (status code 200)
-     *         or User id missing or invalid (status code 401)
+     *         or Invalid input (status code 400)
+     *         or User ID is not recognized (status code 401)
+     *         or No lessons found for user (status code 404)
      */
     @Operation(
         operationId = "getLessonsOfLoggedInUser",
@@ -111,7 +118,9 @@ public interface UsersApi {
             @ApiResponse(responseCode = "200", description = "Lessons of logged in user", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = LessonDTO.class)))
             }),
-            @ApiResponse(responseCode = "401", description = "User id missing or invalid")
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
+            @ApiResponse(responseCode = "404", description = "No lessons found for user")
         }
     )
     @RequestMapping(
@@ -131,7 +140,7 @@ public interface UsersApi {
      * @param appUserDTO  (required)
      * @return User logged in (status code 200)
      *         or Invalid input (status code 400)
-     *         or Unauthorized access (status code 401)
+     *         or User ID is not recognized (status code 401)
      */
     @Operation(
         operationId = "loginUser",
@@ -142,7 +151,7 @@ public interface UsersApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UUID.class))
             }),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized access")
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized")
         }
     )
     @RequestMapping(
@@ -164,7 +173,8 @@ public interface UsersApi {
      * @param appUserDTO  (required)
      * @return User updated (status code 201)
      *         or Invalid input (status code 400)
-     *         or User already exists (status code 409)
+     *         or User ID is not recognized (status code 401)
+     *         or User name already exists (status code 409)
      */
     @Operation(
         operationId = "updateUser",
@@ -173,7 +183,8 @@ public interface UsersApi {
         responses = {
             @ApiResponse(responseCode = "201", description = "User updated"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "409", description = "User already exists")
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
+            @ApiResponse(responseCode = "409", description = "User name already exists")
         }
     )
     @RequestMapping(

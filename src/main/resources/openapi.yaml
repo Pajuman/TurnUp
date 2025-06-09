@@ -36,7 +36,7 @@ paths:
         '400':
           description: Invalid input
         '409':
-          description: User already exists
+          description: User name already exists
 
     put:
       summary: Update a user
@@ -56,8 +56,10 @@ paths:
           description: User updated
         '400':
           description: Invalid input
+        '401':
+          description: User ID is not recognized
         '409':
-          description: User already exists
+          description: User name already exists
     delete:
       summary: Delete a user
       parameters:
@@ -68,6 +70,10 @@ paths:
       responses:
         '204':
           description: User deleted
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
 
   /users/login:
     post:
@@ -92,7 +98,7 @@ paths:
         '400':
           description: Invalid input
         '401':
-          description: Unauthorized access
+          description: User ID is not recognized
 
   /users/me/lessons:
     get:
@@ -111,8 +117,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/LessonDTO'
+        '400':
+          description: Invalid input
         '401':
-          description: User id missing or invalid
+          description: User ID is not recognized
+        '404':
+          description: No lessons found for user
 
   /lessons:
     post:
@@ -138,7 +148,9 @@ paths:
         '400':
           description: Invalid input
         '401':
-          description: User id missing or invalid
+          description: User ID is not recognized
+        '409':
+          description: Lesson name already exists
 
     put:
       summary: Update a lesson
@@ -155,12 +167,13 @@ paths:
               $ref: '#/components/schemas/LessonDTO'
       responses:
         '201':
-          description: Lesson created
+          description: Lesson updated
         '400':
           description: Invalid input
         '401':
-          description: User id missing or invalid
-
+          description: User ID is not recognized
+        '409':
+          description: Lesson name already exists
 
   /lessons/{lessonId}:
     delete:
@@ -179,8 +192,12 @@ paths:
       responses:
         '204':
           description: Lesson deleted
+        '400':
+          description: Invalid input
         '401':
-          description: User id missing or invalid
+          description: User ID is not recognized
+        '403':
+          description: Unauthorized access to lesson
 
   /lessons/{lessonId}/copy:
     post:
@@ -203,8 +220,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LessonDTO'
+        '400':
+          description: Invalid input
         '401':
-          description: User id missing or invalid
+          description: User ID is not recognized
         '403':
           description: Unauthorized access to lesson
 
@@ -232,8 +251,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/WordDTO'
+        '400':
+          description: Invalid input
         '401':
-          description: User id missing or invalid
+          description: User ID is not recognized
         '403':
           description: Unauthorized access to lesson
 
@@ -259,8 +280,20 @@ paths:
               items:
                 $ref: '#/components/schemas/NewWordDTO'
       responses:
-        '201':
-          description: Word created
+        '200':
+          description: Words created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WordDTO'
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+        '403':
+          description: Unauthorized access to lesson
 
   /words:
     put:
@@ -279,12 +312,12 @@ paths:
       responses:
         '204':
           description: All words successfully updated and/or deleted
-        '403':
-          description: Forbidden – User does not have access to one or more of the words; operation aborted
         '400':
-          description: Bad Request – Invalid request structure or data
+          description: Invalid input
         '401':
-          description: Unauthorized – Authentication required
+          description: User ID is not recognized
+        '403':
+          description: Unauthorized access to words
 
 components:
   schemas:
@@ -298,14 +331,14 @@ components:
           type: string
           minLength: 1
           maxLength: 40
-          pattern: '^[\p{L} ]+$'
-          example: "black dog"
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "1 black dog"
         answer:
           type: string
           minLength: 1
           maxLength: 40
-          pattern: '^[\p{L} ]+$'
-          example: "černý pes"
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "1 černý pes"
         score:
           type: integer
       required:
@@ -321,14 +354,14 @@ components:
           type: string
           minLength: 1
           maxLength: 40
-          pattern: '^[\p{L} ]+$'
-          example: "black dog"
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "1 black dog"
         answer:
           type: string
           minLength: 1
           maxLength: 40
-          pattern: '^[\p{L} ]+$'
-          example: "černý pes"
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "1 černý pes"
       required:
         - question
         - answer
@@ -356,13 +389,13 @@ components:
           type: string
           minLength: 3
           maxLength: 30
-          pattern: '^[\p{L} ]+$'
+          pattern: '^[\p{L}0-9 ]+$'
           example: "Podstatná jména"
         description:
           type: string
           minLength: 3
           maxLength: 60
-          pattern: '^[\p{L} ]+$'
+          pattern: '^[\p{L}0-9 ]+$'
           example: "V lekci jsou běžná podstatná jména"
         shared:
           type: boolean
@@ -379,13 +412,13 @@ components:
           type: string
           minLength: 3
           maxLength: 30
-          pattern: '^[\p{L} ]+$'
+          pattern: '^[\p{L}0-9 ]+$'
           example: "Podstatná jména"
         description:
           type: string
           minLength: 3
           maxLength: 60
-          pattern: '^[\p{L} ]+$'
+          pattern: '^[\p{L}0-9 ]+$'
           example: "V lekci jsou běžná podstatná jména"
         shared:
           type: boolean

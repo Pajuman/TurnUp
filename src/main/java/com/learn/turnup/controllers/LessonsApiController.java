@@ -36,9 +36,10 @@ public class LessonsApiController implements LessonsApi {
     }
 
     @Override
-    public ResponseEntity<Void> createWords(UUID xUserId, UUID lessonId, List<@Valid NewWordDTO> newWordDTO) {
-        return lessonsService.createWords(xUserId, lessonId, newWordDTO);
+    public ResponseEntity<List<WordDTO>> createWords(UUID xUserId, UUID lessonId, List<@Valid NewWordDTO> newWordDTO) {
+        return null;
     }
+
 
     @Override
     public ResponseEntity<Void> deleteLesson(UUID xUserId, UUID lessonId) {
@@ -49,6 +50,7 @@ public class LessonsApiController implements LessonsApi {
     public ResponseEntity<List<WordDTO>> getWordsByLessonId(UUID xUserId, UUID lessonId) {
         return null;
     }
+
 
     @Override
     public ResponseEntity<Void> updateLesson(UUID xUserId, LessonDTO lessonDTO) {

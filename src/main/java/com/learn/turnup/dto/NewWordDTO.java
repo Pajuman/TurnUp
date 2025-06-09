@@ -18,7 +18,7 @@ import jakarta.annotation.Generated;
  * NewWordDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-07T10:45:16.129411600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T13:40:59.494461+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class NewWordDTO {
 
   private String question;
@@ -46,8 +46,8 @@ public class NewWordDTO {
    * Get question
    * @return question
    */
-  @NotNull @Pattern(regexp = "^[\\p{L} ]+$") @Size(min = 1, max = 40) 
-  @Schema(name = "question", example = "black dog", requiredMode = Schema.RequiredMode.REQUIRED)
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40) 
+  @Schema(name = "question", example = "1 black dog", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("question")
   public String getQuestion() {
     return question;
@@ -66,8 +66,8 @@ public class NewWordDTO {
    * Get answer
    * @return answer
    */
-  @NotNull @Pattern(regexp = "^[\\p{L} ]+$") @Size(min = 1, max = 40) 
-  @Schema(name = "answer", example = "černý pes", requiredMode = Schema.RequiredMode.REQUIRED)
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40) 
+  @Schema(name = "answer", example = "1 černý pes", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("answer")
   public String getAnswer() {
     return answer;

@@ -1,6 +1,5 @@
 package com.learn.turnup.services;
 
-import com.learn.turnup.dto.AppUserDTO;
 import com.learn.turnup.dto.BatchWordUpdateDTO;
 import com.learn.turnup.dto.WordDTO;
 import com.learn.turnup.entities.Lesson;

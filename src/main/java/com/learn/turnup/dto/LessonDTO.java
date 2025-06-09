@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * LessonDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-07T10:45:16.129411600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T13:40:59.494461+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class LessonDTO {
 
   private UUID id;
@@ -73,7 +73,7 @@ public class LessonDTO {
    * Get lessonName
    * @return lessonName
    */
-  @NotNull @Pattern(regexp = "^[\\p{L} ]+$") @Size(min = 3, max = 30) 
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 30) 
   @Schema(name = "lessonName", example = "Podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("lessonName")
   public String getLessonName() {
@@ -93,7 +93,7 @@ public class LessonDTO {
    * Get description
    * @return description
    */
-  @NotNull @Pattern(regexp = "^[\\p{L} ]+$") @Size(min = 3, max = 60) 
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 60) 
   @Schema(name = "description", example = "V lekci jsou běžná podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {

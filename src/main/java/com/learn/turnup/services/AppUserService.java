@@ -5,6 +5,7 @@ import com.learn.turnup.dto.LessonDTO;
 import com.learn.turnup.entities.AppUser;
 import com.learn.turnup.entities.Lesson;
 import com.learn.turnup.exceptions.GlobalExceptions.UnauthorizedException;
+import com.learn.turnup.exceptions.ValidationService;
 import com.learn.turnup.mappers.LessonMapper;
 import com.learn.turnup.repositories.AppUserRepository;
 import com.learn.turnup.repositories.LessonRepository;
@@ -17,10 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -29,21 +27,18 @@ public class AppUserService {
     private final AppUserRepository appUserRepository;
     private final LessonRepository lessonRepository;
     private final LessonMapper lessonMapper;
-    private final Validator validator;
+    private final ValidationService validationService;
 
     public List<LessonDTO> getLessonsOfLoggedInUser(UUID xUserId) {
-        if(!appUserRepository.existsById(xUserId)){
-            throw new UnauthorizedException("User id missing or invalid");
-        }
+        //400, 401
+        validationService.checkAppUserId(xUserId);
+
         List<Lesson> userLessons = lessonRepository.findAllByAppUserId(xUserId).orElse(Collections.emptyList());
-        return userLessons.stream().map(lessonMapper::toDto).toList();
+        return  userLessons.stream().map(lessonMapper::toDto).toList();
     }
 
     public UUID createUser(AppUserDTO appUserDTO) {
-        Set<ConstraintViolation<AppUserDTO>> violations = validator.validate(appUserDTO);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(violations);
-        }
+        //409
         if (appUserRepository.existsByAppUserName(appUserDTO.getAppUserName())) {
             throw new EntityExistsException("User already exists");
         }
@@ -56,11 +51,7 @@ public class AppUserService {
     }
 
     public UUID loginUser(AppUserDTO appUserDTO) {
-        Set<ConstraintViolation<AppUserDTO>> violations = validator.validate(appUserDTO);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(violations);
-        }
-
+        //401
         AppUser appUser = appUserRepository.findByAppUserNameAndPasswordHash(appUserDTO.getAppUserName(), appUserDTO.getPasswordHash()).orElseThrow(
                 () -> new UnauthorizedException("User name or password mismatch")
         );
@@ -68,20 +59,11 @@ public class AppUserService {
         return appUser.getId();
     }
 
-    public ResponseEntity<Void> deleteUser(UUID xUserId) {
-        appUserRepository.findById(xUserId).ifPresent(appUserRepository::delete);
+    public void updateUser(UUID xUserId, AppUserDTO appUserDTO) {
+        //400, 401
+        validationService.checkAppUserId(xUserId);
 
-        return ResponseEntity.noContent().build();
-    }
-
-    public ResponseEntity<Void> updateUser(UUID xUserId, AppUserDTO appUserDTO) {
-        Set<ConstraintViolation<AppUserDTO>> violations = validator.validate(appUserDTO);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(violations);
-        }
-        AppUser appUser = appUserRepository.findById(xUserId).orElseThrow(
-                () -> new UnauthorizedException("User id missing or invalid")
-        );
+        AppUser appUser = appUserRepository.findById(xUserId).orElse(null);
 
         AppUser userWithSameName = appUserRepository.findByAppUserName(appUserDTO.getAppUserName()).orElse(null);
 
@@ -92,7 +74,12 @@ public class AppUserService {
         appUser.setAppUserName(appUserDTO.getAppUserName());
         appUser.setPasswordHash(appUserDTO.getPasswordHash());
         appUserRepository.save(appUser);
+    }
 
-        return null;
+    public void deleteUser(UUID xUserId) {
+        //400, 401
+        validationService.checkAppUserId(xUserId);
+
+        appUserRepository.findById(xUserId).ifPresent(appUserRepository::delete);
     }
 }
