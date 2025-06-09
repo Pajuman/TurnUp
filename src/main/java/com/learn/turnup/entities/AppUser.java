@@ -1,6 +1,8 @@
 package com.learn.turnup.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,19 +23,14 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(
-            name = "app_user_name",
-            nullable = false,
-            unique = true,
-            columnDefinition = "TEXT"
-    )
+    @Column(name = "app_user_name", nullable = false, unique = true)
+    @Size(min = 3, max = 20)
+    @Pattern(regexp = "^[a-zA-Z0-9_]+$")
     private String appUserName;
 
-    @Column(
-            name = "password_hash",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
+    @Column(name = "password_hash", nullable = false)
+    @Size(min = 8, max = 16)
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]+$")
     private String passwordHash;
 
     @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
