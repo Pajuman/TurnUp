@@ -1,40 +1,48 @@
 package com.learn.turnup.services;
 
-import com.learn.turnup.dto.LessonDTO;
-import com.learn.turnup.dto.NewLessonDTO;
-import com.learn.turnup.dto.NewWordDTO;
-import com.learn.turnup.dto.WordDTO;
+import com.learn.turnup.dto.*;
 import com.learn.turnup.entities.AppUser;
 import com.learn.turnup.entities.Lesson;
 import com.learn.turnup.entities.Word;
+import com.learn.turnup.exceptions.GlobalExceptions.ForbiddenException;
+import com.learn.turnup.exceptions.GlobalExceptions.UnauthorizedException;
 import com.learn.turnup.mappers.LessonMapper;
 import com.learn.turnup.mappers.WordMapper;
 import com.learn.turnup.repositories.AppUserRepository;
 import com.learn.turnup.repositories.LessonRepository;
 import com.learn.turnup.repositories.WordRepository;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LessonsService {
     private final LessonRepository lessonRepository;
     private final WordRepository wordRepository;
     private final AppUserRepository appUserRepository;
     private final LessonMapper lessonMapper;
     private final WordMapper wordMapper;
+    private final Validator validator;
 
-
-    public ResponseEntity<Void> copySharedLesson(UUID xUserId, UUID lessonId) {
-        Lesson copiedLesson = lessonRepository.findById(lessonId).orElse(null);
-        AppUser targetUser = appUserRepository.findById(xUserId).orElse(null);
-        if(copiedLesson == null || targetUser == null || copiedLesson.getShared().equals(false)) {
-            return null;
+    public ResponseEntity<LessonDTO> copySharedLesson(UUID xUserId, UUID lessonId) {
+        //400
+        Lesson copiedLesson = lessonRepository.findById(lessonId).orElseThrow(() -> new UnauthorizedException("Lesson id not found or invalid")
+        );
+        AppUser targetUser = getAppUserOrException(xUserId);
+        //403
+        if(copiedLesson.getShared().equals(false)) {
+            throw new ForbiddenException("The lesson is not for sharing");
         }
 
         List<Word> copiedWords = wordRepository.findAllByLesson(copiedLesson).orElse(Collections.emptyList());
@@ -62,37 +70,39 @@ public class LessonsService {
 
         wordRepository.saveAll(newWords);
 
-        return null;
+        return ResponseEntity.ok(lessonMapper.toDto(finalNewLesson));
     }
 
-    public ResponseEntity<Void> createLesson(UUID xUserId, NewLessonDTO newLessonDTO) {
-        AppUser user = appUserRepository.findById(xUserId).orElse(null);
-        if(user == null){
-            return null;
+    public ResponseEntity<LessonDTO> createLesson(UUID xUserId, NewLessonDTO newLessonDTO) {
+        //400
+        Set<ConstraintViolation<NewLessonDTO>> violations = validator.validate(newLessonDTO);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
         }
+
+        //401
+        AppUser user = getAppUserOrException(xUserId);
+
         Lesson newLesson = lessonMapper.toEntity(newLessonDTO);
         newLesson.setAppUser(user);
 
-        lessonRepository.save(newLesson);
+        newLesson = lessonRepository.save(newLesson);
 
-        return null;
+        return ResponseEntity.ok(lessonMapper.toDto(newLesson));
     }
 
-    public ResponseEntity<Void> createWords(UUID xUserId, UUID lessonId, List<NewWordDTO> newWordDTOs) {
-        AppUser user = appUserRepository.findById(xUserId).orElse(null);
-        Lesson lesson = lessonRepository.findById(lessonId).orElse(null);
-        if(user == null || lesson == null){
-            return null;
-        }
+    public ResponseEntity<List<WordDTO>> createWords(UUID xUserId, UUID lessonId, List<NewWordDTO> newWordDTOs) {
+        AppUser user = getAppUserOrException(xUserId);
+        Lesson lesson = getLessonOrException(xUserId, lessonId);
 
         //filters out Words which already exist
         newWordDTOs = newWordDTOs.stream().filter(newWordDTO -> wordRepository.findByQuestionAndAnswer(newWordDTO.getQuestion(), newWordDTO.getAnswer()).isEmpty()).toList();
 
         List<Word> newWords = newWordDTOs.stream().map(wordMapper::toEntity).peek(word -> word.setLesson(lesson)).toList();
 
-        wordRepository.saveAll(newWords);
+        newWords = wordRepository.saveAll(newWords);
 
-        return null;
+        return ResponseEntity.ok(newWords.stream().map(wordMapper::toDto).toList());
     }
 
     public ResponseEntity<Void> deleteLesson(UUID xUserId, UUID lessonId) {
@@ -134,5 +144,20 @@ public class LessonsService {
         lessonRepository.save(lesson);
 
         return null;
+    }
+
+    private AppUser getAppUserOrException(UUID xUserId) {
+        return appUserRepository.findById(xUserId).orElseThrow(() -> new UnauthorizedException("User not found"));
+
+    }
+
+    private Lesson getLessonOrException(UUID xUserId, UUID lessonId) {
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new UnauthorizedException("Lesson not found"));
+        if(lesson.getAppUser().getId().equals(xUserId)) {
+            return lesson;
+        }
+        else{
+            throw new ForbiddenException("User has no access to this lesson");
+        }
     }
 }
