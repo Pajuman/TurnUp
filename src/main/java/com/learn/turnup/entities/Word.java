@@ -29,7 +29,7 @@ public class Word {
             columnDefinition = "TEXT"
     )
     @Size(min = 1, max = 40)
-    @Pattern(regexp = "^[\\p{L} ]+$")
+    @Pattern(regexp = "^[\\p{L}0-9 ]+$")
     private String question;
 
     @Column(
@@ -39,7 +39,7 @@ public class Word {
             columnDefinition = "TEXT"
     )
     @Size(min = 1, max = 40)
-    @Pattern(regexp = "^[\\p{L} ]+$")
+    @Pattern(regexp = "^[\\p{L}0-9 ]+$")
 
     private String answer;
     @Column(
