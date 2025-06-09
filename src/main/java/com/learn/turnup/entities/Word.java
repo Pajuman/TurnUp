@@ -1,6 +1,8 @@
 package com.learn.turnup.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,19 +21,26 @@ public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     @Column(
             name = "question",
             nullable = false,
             unique = false,
             columnDefinition = "TEXT"
     )
+    @Size(min = 1, max = 40)
+    @Pattern(regexp = "^[\\p{L} ]+$")
     private String question;
+
     @Column(
             name = "answer",
             nullable = false,
             unique = false,
             columnDefinition = "TEXT"
     )
+    @Size(min = 1, max = 40)
+    @Pattern(regexp = "^[\\p{L} ]+$")
+
     private String answer;
     @Column(
             name = "score",
