@@ -278,7 +278,13 @@ paths:
               $ref: '#/components/schemas/BatchWordUpdateDTO'
       responses:
         '204':
-          description: Words updated and/or deleted
+          description: All words successfully updated and/or deleted
+        '403':
+          description: Forbidden – User does not have access to one or more of the words; operation aborted
+        '400':
+          description: Bad Request – Invalid request structure or data
+        '401':
+          description: Unauthorized – Authentication required
 
 components:
   schemas:

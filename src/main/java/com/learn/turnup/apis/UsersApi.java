@@ -5,7 +5,6 @@
  */
 package com.learn.turnup.apis;
 
-
 import java.util.UUID;
 
 import com.learn.turnup.dto.AppUserDTO;
@@ -36,7 +35,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-07T10:45:16.129411600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T09:02:27.327632400+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "User", description = "Users own Lessons")
 public interface UsersApi {
@@ -103,7 +102,6 @@ public interface UsersApi {
      * @param xUserId  (required)
      * @return Lessons of logged in user (status code 200)
      *         or User id missing or invalid (status code 401)
-     *         or Unauthorized access to lesson (status code 403)
      */
     @Operation(
         operationId = "getLessonsOfLoggedInUser",
@@ -113,8 +111,7 @@ public interface UsersApi {
             @ApiResponse(responseCode = "200", description = "Lessons of logged in user", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = LessonDTO.class)))
             }),
-            @ApiResponse(responseCode = "401", description = "User id missing or invalid"),
-            @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson")
+            @ApiResponse(responseCode = "401", description = "User id missing or invalid")
         }
     )
     @RequestMapping(

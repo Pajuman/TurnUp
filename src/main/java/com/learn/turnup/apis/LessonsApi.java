@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-07T10:45:16.129411600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T09:02:27.327632400+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Lesson", description = "Lessons own Words")
 public interface LessonsApi {
@@ -48,7 +48,7 @@ public interface LessonsApi {
      *
      * @param xUserId  (required)
      * @param lessonId  (required)
-     * @return Lesson copied (status code 201)
+     * @return Lesson copied (status code 200)
      *         or User id missing or invalid (status code 401)
      *         or Unauthorized access to lesson (status code 403)
      */
@@ -57,17 +57,20 @@ public interface LessonsApi {
         summary = "Copy a shared lesson",
         tags = { "Lesson" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "Lesson copied"),
+            @ApiResponse(responseCode = "200", description = "Lesson copied", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = LessonDTO.class))
+            }),
             @ApiResponse(responseCode = "401", description = "User id missing or invalid"),
             @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson")
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/lessons/{lessonId}/copy"
+        value = "/lessons/{lessonId}/copy",
+        produces = { "application/json" }
     )
     
-    ResponseEntity<Void> copySharedLesson(
+    ResponseEntity<LessonDTO> copySharedLesson(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "lessonId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("lessonId") UUID lessonId
     );
@@ -78,7 +81,7 @@ public interface LessonsApi {
      *
      * @param xUserId  (required)
      * @param newLessonDTO  (required)
-     * @return Lesson created (status code 201)
+     * @return Lesson created (status code 200)
      *         or Invalid input (status code 400)
      *         or User id missing or invalid (status code 401)
      */
@@ -87,7 +90,9 @@ public interface LessonsApi {
         summary = "Create a new lesson",
         tags = { "Lesson" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "Lesson created"),
+            @ApiResponse(responseCode = "200", description = "Lesson created", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = LessonDTO.class))
+            }),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "401", description = "User id missing or invalid")
         }
@@ -95,10 +100,11 @@ public interface LessonsApi {
     @RequestMapping(
         method = RequestMethod.POST,
         value = "/lessons",
+        produces = { "application/json" },
         consumes = { "application/json" }
     )
     
-    ResponseEntity<Void> createLesson(
+    ResponseEntity<LessonDTO> createLesson(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "NewLessonDTO", description = "", required = true) @Valid @RequestBody NewLessonDTO newLessonDTO
     );

@@ -1,8 +1,8 @@
 package com.learn.turnup.controllers;
 
-import com.learn.turnup.apis.LessonsApi;
 import java.util.UUID;
 
+import com.learn.turnup.apis.LessonsApi;
 import com.learn.turnup.dto.LessonDTO;
 import com.learn.turnup.dto.NewLessonDTO;
 import com.learn.turnup.dto.NewWordDTO;
@@ -24,13 +24,14 @@ public class LessonsApiController implements LessonsApi {
 
     private final LessonsService lessonsService;
 
+
     @Override
-    public ResponseEntity<Void> copySharedLesson(UUID xUserId, UUID lessonId) {
+    public ResponseEntity<LessonDTO> copySharedLesson(UUID xUserId, UUID lessonId) {
         return lessonsService.copySharedLesson(xUserId, lessonId);
     }
 
     @Override
-    public ResponseEntity<Void> createLesson(UUID xUserId, NewLessonDTO newLessonDTO) {
+    public ResponseEntity<LessonDTO> createLesson(UUID xUserId, NewLessonDTO newLessonDTO) {
         return lessonsService.createLesson(xUserId, newLessonDTO);
     }
 
@@ -41,16 +42,16 @@ public class LessonsApiController implements LessonsApi {
 
     @Override
     public ResponseEntity<Void> deleteLesson(UUID xUserId, UUID lessonId) {
-        return lessonsService.deleteLesson(xUserId, lessonId);
+        return null;
     }
 
     @Override
     public ResponseEntity<List<WordDTO>> getWordsByLessonId(UUID xUserId, UUID lessonId) {
-        return lessonsService.getWordsByLessonId(xUserId, lessonId);
+        return null;
     }
 
     @Override
     public ResponseEntity<Void> updateLesson(UUID xUserId, LessonDTO lessonDTO) {
-        return lessonsService.updateLesson(xUserId, lessonDTO);
+        return null;
     }
 }
