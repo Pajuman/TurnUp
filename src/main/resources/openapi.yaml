@@ -113,8 +113,6 @@ paths:
                   $ref: '#/components/schemas/LessonDTO'
         '401':
           description: User id missing or invalid
-        '403':
-          description: Unauthorized access to lesson
 
   /lessons:
     post:
@@ -131,8 +129,12 @@ paths:
             schema:
               $ref: '#/components/schemas/NewLessonDTO'
       responses:
-        '201':
+        '200':
           description: Lesson created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonDTO'
         '400':
           description: Invalid input
         '401':
@@ -195,8 +197,12 @@ paths:
             type: string
             format: uuid
       responses:
-        '201':
+        '200':
           description: Lesson copied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonDTO'
         '401':
           description: User id missing or invalid
         '403':
