@@ -6,6 +6,7 @@ import com.learn.turnup.entities.Lesson;
 import com.learn.turnup.entities.Word;
 import com.learn.turnup.exceptions.GlobalExceptions.ForbiddenException;
 import com.learn.turnup.exceptions.GlobalExceptions.UnauthorizedException;
+import com.learn.turnup.exceptions.ValidationService;
 import com.learn.turnup.repositories.AppUserRepository;
 import com.learn.turnup.repositories.LessonRepository;
 import com.learn.turnup.repositories.WordRepository;
@@ -28,27 +29,17 @@ public class WordsService {
     private final WordRepository wordRepository;
     private final LessonRepository lessonRepository;
     private final AppUserRepository appUserRepository;
-    private final Validator validator;
+    private final ValidationService validationService;
 
-    public ResponseEntity<Void> updateWords(UUID xUserId, BatchWordUpdateDTO batchWordUpdateDTO) {
+    public void updateAndDeleteWords(UUID xUserId, BatchWordUpdateDTO batchWordUpdateDTO) {
         List<WordDTO> wordDTOsToUpdate = batchWordUpdateDTO.getUpdatedWords();
         List<UUID> updatedWordIds = batchWordUpdateDTO.getUpdatedWords().stream().map(WordDTO::getId).toList();
         List<Word> wordsToUpdate = wordRepository.findAllById(updatedWordIds);
         List<UUID> deletedWordIds = batchWordUpdateDTO.getDeletedWordIds();
         List<Word> wordsToDelete = wordRepository.findAllById(deletedWordIds);
 
-        //400
-        wordDTOsToUpdate.forEach(wordDTO -> {
-            Set<ConstraintViolation<WordDTO>> violations = validator.validate(wordDTO);
-            if (!violations.isEmpty()) {
-                throw new ConstraintViolationException(violations);
-            }
-        });
-
         //401
-        if(!appUserRepository.existsById(xUserId)){
-            throw new UnauthorizedException("User id missing or invalid");
-        }
+        validationService.checkAppUserId(xUserId);
 
         //403
         List<Lesson> userLessons = lessonRepository.findAllByAppUserId(xUserId).orElse(Collections.emptyList());
@@ -63,8 +54,6 @@ public class WordsService {
 
         wordRepository.deleteAll(wordsToDelete);
         updateWords(wordDTOsToUpdate, wordsToUpdate);
-
-        return null;
     }
 
     private void updateWords(List<WordDTO> wordDTOsToUpdate, List<Word> wordsToUpdate) {

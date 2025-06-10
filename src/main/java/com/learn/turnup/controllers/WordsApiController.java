@@ -21,6 +21,7 @@ public class WordsApiController implements WordsApi {
 
     @Override
     public ResponseEntity<Void> updateWords(UUID xUserId, BatchWordUpdateDTO batchWordUpdateDTO) {
-        return wordsService.updateWords(xUserId, batchWordUpdateDTO);
+        wordsService.updateAndDeleteWords(xUserId, batchWordUpdateDTO);
+        return ResponseEntity.noContent().build();
     }
 }
