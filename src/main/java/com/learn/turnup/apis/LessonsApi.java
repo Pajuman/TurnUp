@@ -5,7 +5,6 @@
  */
 package com.learn.turnup.apis;
 
-
 import java.util.UUID;
 
 import com.learn.turnup.dto.LessonDTO;
@@ -38,7 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T13:40:59.494461+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-10T10:26:27.055127200+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Lesson", description = "Lessons own Words")
 public interface LessonsApi {
@@ -193,6 +192,7 @@ public interface LessonsApi {
      *         or Invalid input (status code 400)
      *         or User ID is not recognized (status code 401)
      *         or Unauthorized access to lesson (status code 403)
+     *         or Lesson not found (status code 404)
      */
     @Operation(
         operationId = "getWordsByLessonId",
@@ -204,7 +204,8 @@ public interface LessonsApi {
             }),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
-            @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson")
+            @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson"),
+            @ApiResponse(responseCode = "404", description = "Lesson not found")
         }
     )
     @RequestMapping(

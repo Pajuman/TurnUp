@@ -8,7 +8,6 @@ import com.learn.turnup.dto.NewLessonDTO;
 import com.learn.turnup.dto.NewWordDTO;
 import com.learn.turnup.dto.WordDTO;
 import com.learn.turnup.services.LessonsService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,34 +25,35 @@ public class LessonsApiController implements LessonsApi {
 
 
     @Override
+    public ResponseEntity<List<WordDTO>> getWordsByLessonId(UUID xUserId, UUID lessonId) {
+        return ResponseEntity.ok(lessonsService.getWordsByLessonId(xUserId, lessonId));
+    }
+
+    @Override
     public ResponseEntity<LessonDTO> copySharedLesson(UUID xUserId, UUID lessonId) {
-        return lessonsService.copySharedLesson(xUserId, lessonId);
+        return ResponseEntity.ok(lessonsService.copySharedLesson(xUserId, lessonId));
     }
 
     @Override
     public ResponseEntity<LessonDTO> createLesson(UUID xUserId, NewLessonDTO newLessonDTO) {
-        return lessonsService.createLesson(xUserId, newLessonDTO);
+        return ResponseEntity.ok(lessonsService.createLesson(xUserId, newLessonDTO));
     }
 
     @Override
-    public ResponseEntity<List<WordDTO>> createWords(UUID xUserId, UUID lessonId, List<@Valid NewWordDTO> newWordDTO) {
-        return null;
-    }
-
-
-    @Override
-    public ResponseEntity<Void> deleteLesson(UUID xUserId, UUID lessonId) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<List<WordDTO>> getWordsByLessonId(UUID xUserId, UUID lessonId) {
-        return null;
+    public ResponseEntity<List<WordDTO>> createWords(UUID xUserId, UUID lessonId, List<NewWordDTO> newWordDTO) {
+        return ResponseEntity.ok(lessonsService.createWords(xUserId, lessonId, newWordDTO));
     }
 
 
     @Override
     public ResponseEntity<Void> updateLesson(UUID xUserId, LessonDTO lessonDTO) {
-        return null;
+        lessonsService.updateLesson(xUserId, lessonDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteLesson(UUID xUserId, UUID lessonId) {
+        lessonsService.deleteLesson(xUserId, lessonId);
+        return ResponseEntity.noContent().build();
     }
 }
