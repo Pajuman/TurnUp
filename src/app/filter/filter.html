@@ -1,0 +1,35 @@
+<i (click)="openFilterDialog($event); filterPanel.toggle($event)"
+   [ngClass]="isFilterActive ? 'pi-filter-fill' : 'pi-filter'"
+   class="pi"></i>
+<p-popover #filterPanel
+           [style]="{width: '300px'}"
+>
+
+  @for (option of options; track $index) {
+    <div class="filter-line">
+      @if (fieldName() === 'wordCount' || fieldName() === 'score') {
+        <input
+          type="checkbox"
+          [checked]="selectedOption === option" (change)="this.selectedOption = option"
+        />
+      } @else {
+        <input
+          type="checkbox"
+          [(ngModel)]="selectedOptions[option]"/>
+      }
+
+      <label>{{ option }}</label>
+    </div>
+  }
+
+  <div class="space-y-2">
+
+
+    <div class="flex justify-end gap-2 mt-3">
+      <p-button (onClick)="applyFilter(); filterPanel.toggle($event) " class="p-button-sm p-button-primary"
+                label="Apply"></p-button>
+      <p-button (onClick)="clearFilter();  " class="p-button-sm p-button-secondary"
+                label="Clear"></p-button>
+    </div>
+  </div>
+</p-popover>
