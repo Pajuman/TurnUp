@@ -1,0 +1,26 @@
+<h2>{{ mode() }}</h2>
+<span>{{ userName() }}</span>
+<div class="input-line">
+  <label for="newUserName">Přihlašovací jméno:</label>
+  <input [(ngModel)]="newUserName" id="newUserName" pInputText type="text"/>
+</div>
+<div class="p-float-label input-line">
+  <label for="password">Heslo:</label>
+  <input [(ngModel)]="password" id="password" pInputText type="password"/>
+</div>
+@if (mode() === LogDialogMode.Edit) {
+  <div class="p-float-label input-line">
+    <label for="newPassword">Nové heslo:</label>
+    <input [(ngModel)]="newPassword" id="newPassword" pInputText type="password"/>
+  </div>
+}
+@if (mode() !== LogDialogMode.LogIn) {
+  <div class="p-float-label input-line">
+    <label for="passwordRepeat">Opakujte heslo:</label>
+    <input [(ngModel)]="passwordRepeat" id="passwordRepeat" pInputText type="text"/>
+  </div>
+}
+<div class="confirm-buttons">
+  <p-button (onClick)="confirm()">Ok</p-button>
+  <p-button (onClick)="cancel()">Storno</p-button>
+</div>

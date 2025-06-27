@@ -1,0 +1,9 @@
+<img alt="Toggle language" height="24" ngSrc="../../assets/toggleLanguageDefault.png" width="24"/>
+<p-toggle-switch #switcher (onChange)="togglerSwitched($event)"
+                 [ngClass]="{
+    'toggle-default': switcher.checked(),
+    'toggle-reverted': !switcher.checked()
+  }"
+></p-toggle-switch>
+<img alt="Toggle language" height="24" ngSrc="assets/toggleLanguageSwitched.png" width="24"/>
+

@@ -1,0 +1,88 @@
+import { Lesson } from '../interfaces/interfaces';
+
+export enum LogDialogMode {
+  LogIn = 'Přihlášení:',
+  New = 'Nový uživatel:',
+  Edit = 'Změna uživatele:',
+}
+
+export enum SwitcherOption {
+  Language = 'Language:',
+  LessonsSource = 'LessonsSource',
+}
+
+export const PRACTICE_COUNT_OPTIONS = [
+  { label: '10', value: 10 },
+  { label: '20', value: 20 },
+  {
+    label: '40',
+    value: 40,
+  },
+];
+
+export const wordsOptions = ['0 - 10', '11 - 20', '> 20'];
+
+export const scoreOptions = ['< 0', '0', '> 0'];
+
+export const LESSONS: Lesson[] = [
+  {
+    id: '84d4a0a7-9b8d-4a50-a7ef-669757e13d05',
+    lessonName: 'Verbs',
+    description: 'Common verbs',
+    shared: false,
+    category: 'Grammar',
+    score: 2,
+    wordCount: 11,
+    status: 'own',
+  },
+  {
+    id: '28a19f3b-c720-4ba5-8a5f-4497e8ba933a',
+    lessonName: 'Verbs',
+    description: 'Common verbs',
+    shared: false,
+    category: 'Basics',
+    score: 0,
+    wordCount: 5,
+    status: 'own',
+  },
+  {
+    id: 'f297d7b0-b50f-4e77-93f3-44ccd143b94e',
+    lessonName: 'Verbs',
+    description: 'Common verbs',
+    shared: false,
+    category: 'Grammar',
+    score: null,
+    wordCount: 18,
+    status: 'foreign',
+  },
+  {
+    id: 'a8a10734-c34f-495e-b923-961e1387e982',
+    lessonName: 'Verbs',
+    description: 'Common verbs',
+    shared: false,
+    category: 'Speaking',
+    score: -3,
+    wordCount: 23,
+    status: 'own',
+  },
+  {
+    id: 'ee2ad74c-8194-40fe-ac9a-7cc8c535acaf',
+    lessonName: 'Verbs',
+    description: 'Common verbs',
+    shared: false,
+    category: 'Vocabulary',
+    score: null,
+    wordCount: 47,
+    status: 'foreign',
+  },
+  {
+    id: '68852ef0-1ac1-4306-a558-52e2b44be342',
+    lessonName: 'Travel',
+    description: 'V lekci jsou běžná podstatná jména',
+    shared: true,
+    category: 'Travel',
+    score: -1,
+    wordCount: 60,
+    status: 'own',
+  },
+];

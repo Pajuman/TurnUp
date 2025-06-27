@@ -1,0 +1,58 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-line {
+  display: flex;
+  flex-direction: row;
+}
+
+.toggle-default {
+
+}
+
+.toggle-reverted {
+
+}
+
+.user-header {
+  max-width: 720px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 1rem;
+
+  span {
+    padding-right: 0.5rem;
+  }
+
+  .link {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+      color: #0056b3;
+    }
+  }
+}
+
+.table-caption {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+
+

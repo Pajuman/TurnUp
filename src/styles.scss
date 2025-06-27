@@ -1,0 +1,59 @@
+@import 'primeicons/primeicons.css';
+
+@media (max-width: 360px) {
+  .hide-sm {
+    display: none !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hide-md {
+    display: none !important;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0; /* often used together */
+  box-sizing: border-box; /* recommended for better box sizing */
+
+  .p-datatable-filter-overlay {
+    background-color: aquamarine !important;
+  }
+}
+
+.p-popover-content {
+  background-color: antiquewhite !important;
+}
+
+.p-datatable {
+  padding: 1rem;
+}
+
+p-table {
+  table-layout: fixed;
+  max-width: 720px;
+  width: 100%;
+}
+
+tr:hover {
+  td:first-child {
+    background-color: aquamarine !important;
+    cursor: pointer;
+  }
+
+  td:first-child.not-own {
+    background-color: #fff47f !important;
+    cursor: copy;
+  }
+
+  td:not(:first-child) {
+    background-color: #7f81ff !important;
+    cursor: help;
+  }
+
+
+}
+
+
+
