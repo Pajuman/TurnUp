@@ -3,14 +3,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-package com.learn.turnup.apis;
+package org.openapitools.api;
 
+import org.openapitools.model.LessonDTO;
+import org.openapitools.model.NewLessonDTO;
+import org.openapitools.model.NewWordDTO;
 import java.util.UUID;
-
-import com.learn.turnup.dto.LessonDTO;
-import com.learn.turnup.dto.NewLessonDTO;
-import com.learn.turnup.dto.NewWordDTO;
-import com.learn.turnup.dto.WordDTO;
+import org.openapitools.model.WordDTO;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

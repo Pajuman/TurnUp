@@ -6,11 +6,14 @@ import com.learn.turnup.entities.Lesson;
 import com.learn.turnup.entities.Word;
 import com.learn.turnup.exceptions.GlobalExceptions.ForbiddenException;
 import com.learn.turnup.exceptions.GlobalExceptions.UnauthorizedException;
+import com.learn.turnup.exceptions.ValidationService;
 import com.learn.turnup.mappers.LessonMapper;
 import com.learn.turnup.mappers.WordMapper;
 import com.learn.turnup.repositories.AppUserRepository;
 import com.learn.turnup.repositories.LessonRepository;
 import com.learn.turnup.repositories.WordRepository;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
@@ -33,18 +36,40 @@ public class LessonsService {
     private final AppUserRepository appUserRepository;
     private final LessonMapper lessonMapper;
     private final WordMapper wordMapper;
-    private final Validator validator;
+    private final ValidationService validationService;
 
-    public ResponseEntity<LessonDTO> copySharedLesson(UUID xUserId, UUID lessonId) {
-        //400
-        Lesson copiedLesson = lessonRepository.findById(lessonId).orElseThrow(() -> new UnauthorizedException("Lesson id not found or invalid")
-        );
-        AppUser targetUser = getAppUserOrException(xUserId);
+
+    public List<WordDTO> getWordsByLessonId(UUID xUserId, UUID lessonId) {
+        //401
+        validationService.checkAppUserId(xUserId);
+        //404
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() ->
+                new EntityNotFoundException("Lesson not found"));
+        //403
+        if(!lesson.getAppUser().getId().equals(xUserId)){
+            throw new ForbiddenException("You are not allowed to access this lesson");
+        }
+        List<Word> words = wordRepository.findAllByLesson(lesson).orElse(Collections.emptyList());
+
+        return words.stream().map(wordMapper::toDto).toList();
+    }
+
+    public LessonDTO copySharedLesson(UUID xUserId, UUID lessonId) {
+        //401
+        validationService.checkAppUserId(xUserId);
+        //404
+        Lesson copiedLesson = lessonRepository.findById(lessonId).orElseThrow(() ->
+                new EntityNotFoundException("Lesson not found"));
         //403
         if(copiedLesson.getShared().equals(false)) {
             throw new ForbiddenException("The lesson is not for sharing");
         }
+        //409
+        if(lessonRepository.existsByLessonNameAndAppUser_Id(copiedLesson.getLessonName(), xUserId)) {
+            throw new EntityExistsException("Lesson name already exists");
+        }
 
+        AppUser targetUser = appUserRepository.findById(xUserId).orElse(null);
         List<Word> copiedWords = wordRepository.findAllByLesson(copiedLesson).orElse(Collections.emptyList());
 
         Lesson newLesson = new Lesson();
@@ -70,30 +95,37 @@ public class LessonsService {
 
         wordRepository.saveAll(newWords);
 
-        return ResponseEntity.ok(lessonMapper.toDto(finalNewLesson));
+        return lessonMapper.toDto(finalNewLesson);
     }
 
-    public ResponseEntity<LessonDTO> createLesson(UUID xUserId, NewLessonDTO newLessonDTO) {
-        //400
-        Set<ConstraintViolation<NewLessonDTO>> violations = validator.validate(newLessonDTO);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(violations);
+    public LessonDTO createLesson(UUID xUserId, NewLessonDTO newLessonDTO) {
+        //401
+        validationService.checkAppUserId(xUserId);
+        //409
+        if(lessonRepository.existsByLessonNameAndAppUser_Id(newLessonDTO.getLessonName(), xUserId)) {
+            throw new EntityExistsException("Lesson name already exists");
         }
 
-        //401
-        AppUser user = getAppUserOrException(xUserId);
+        AppUser user = appUserRepository.findById(xUserId).orElse(null);
 
         Lesson newLesson = lessonMapper.toEntity(newLessonDTO);
         newLesson.setAppUser(user);
 
         newLesson = lessonRepository.save(newLesson);
 
-        return ResponseEntity.ok(lessonMapper.toDto(newLesson));
+        return lessonMapper.toDto(newLesson);
     }
 
-    public ResponseEntity<List<WordDTO>> createWords(UUID xUserId, UUID lessonId, List<NewWordDTO> newWordDTOs) {
-        AppUser user = getAppUserOrException(xUserId);
-        Lesson lesson = getLessonOrException(xUserId, lessonId);
+    public List<WordDTO> createWords(UUID xUserId, UUID lessonId, List<NewWordDTO> newWordDTOs) {
+        //401
+        validationService.checkAppUserId(xUserId);
+        //404
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() ->
+                new EntityNotFoundException("Lesson not found"));
+        //403
+        if(!lesson.getAppUser().getId().equals(xUserId)) {
+            throw new ForbiddenException("You are not allowed to access this lesson");
+        }
 
         //filters out Words which already exist
         newWordDTOs = newWordDTOs.stream().filter(newWordDTO -> wordRepository.findByQuestionAndAnswer(newWordDTO.getQuestion(), newWordDTO.getAnswer()).isEmpty()).toList();
@@ -102,39 +134,22 @@ public class LessonsService {
 
         newWords = wordRepository.saveAll(newWords);
 
-        return ResponseEntity.ok(newWords.stream().map(wordMapper::toDto).toList());
+        return newWords.stream().map(wordMapper::toDto).toList();
     }
 
-    public ResponseEntity<Void> deleteLesson(UUID xUserId, UUID lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElse(null);
-        if(lesson != null && lesson.getAppUser().getId().equals(xUserId)) {
-            lessonRepository.delete(lesson);
+    public void updateLesson(UUID xUserId, LessonDTO lessonDTO) {
+        //401
+        validationService.checkAppUserId(xUserId);
+        //404
+        Lesson lesson = lessonRepository.findById(lessonDTO.getId()).orElseThrow(() ->
+                new EntityNotFoundException("Lesson not found"));
+        //403
+        if(!lesson.getAppUser().getId().equals(xUserId)){
+            throw new ForbiddenException("You are not allowed to access this lesson");
         }
-
-        return null;
-    }
-
-    public ResponseEntity<List<WordDTO>> getWordsByLessonId(UUID xUserId, UUID lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElse(null);
-        List<Word> words;
-        if(lesson != null && lesson.getAppUser().getId().equals(xUserId)) {
-            words = wordRepository.findAllByLesson(lesson).orElse(Collections.emptyList());
-        }
-        else{
-            words = Collections.emptyList();
-        }
-
-        List<WordDTO> wordDTOs = words.stream().map(wordMapper::toDto).toList();
-
-        return ResponseEntity.ok(wordDTOs);
-
-
-    }
-
-    public ResponseEntity<Void> updateLesson(UUID xUserId, LessonDTO lessonDTO) {
-        Lesson lesson = lessonRepository.findById(lessonDTO.getId()).orElse(null);
-        if(lesson == null || !lesson.getAppUser().getId().equals(xUserId)) {
-            return null;
+        //409
+        if(lessonRepository.existsByLessonNameAndAppUser_Id(lessonDTO.getLessonName(), xUserId)){
+            throw new EntityExistsException("Lesson name already exists");
         }
 
         lesson.setLessonName(lessonDTO.getLessonName());
@@ -142,22 +157,19 @@ public class LessonsService {
         lesson.setShared(lessonDTO.getShared());
 
         lessonRepository.save(lesson);
-
-        return null;
     }
 
-    private AppUser getAppUserOrException(UUID xUserId) {
-        return appUserRepository.findById(xUserId).orElseThrow(() -> new UnauthorizedException("User not found"));
-
-    }
-
-    private Lesson getLessonOrException(UUID xUserId, UUID lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new UnauthorizedException("Lesson not found"));
-        if(lesson.getAppUser().getId().equals(xUserId)) {
-            return lesson;
+    public void deleteLesson(UUID xUserId, UUID lessonId) {
+        //401
+        validationService.checkAppUserId(xUserId);
+        //403
+        Lesson lesson = lessonRepository.findById(lessonId).orElse(null);
+        if(lesson != null && !lesson.getAppUser().getId().equals(xUserId)){
+            throw new ForbiddenException("You are not allowed to access this lesson");
         }
-        else{
-            throw new ForbiddenException("User has no access to this lesson");
+
+        if(lesson != null) {
+            lessonRepository.delete(lesson);
         }
     }
 }

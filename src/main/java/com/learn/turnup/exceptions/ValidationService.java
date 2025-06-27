@@ -26,17 +26,13 @@ public class ValidationService  {
 //400
     private void validateAppUserId(UUID xUserId){
         Set<ConstraintViolation<UUID>> violations = validator.validate(xUserId);
-        log.warn("olééé 1");
         if (!violations.isEmpty()) {
-            log.warn("olééé 2");
 
             throw new ConstraintViolationException("Invalid appUserId", violations);
         }
     }
 //401
     private void checkAppUserExistence(UUID xUserId){
-        log.warn("olééé 3");
-
         if(!appUserRepository.existsById(xUserId)){
             throw new UnauthorizedException("User id missing or invalid");
         }
