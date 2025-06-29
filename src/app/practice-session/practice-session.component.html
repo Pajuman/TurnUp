@@ -1,0 +1,11 @@
+<div class="session-wrapper">
+  <span>{{`${currentCount()} / ${practiceCount()}`}}</span>
+  <card [word]="currentWord"></card>
+  <div class="button-group">
+    <p-button (onClick)="correct()">SPRÁVNĚ</p-button>
+    <p-button (onClick)="wrong()">ŠPATNĚ</p-button>
+  </div>
+  <p-button (onClick)="back()">ZPĚT</p-button>
+</div>
+
+
