@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { LessonsOverviewComponent } from './lessons-overview/lessons-overview.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [LessonsOverviewComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   standalone: true,

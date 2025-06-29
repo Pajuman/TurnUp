@@ -1,5 +1,5 @@
 import { Component, input, InputSignal, OnInit } from '@angular/core';
-import { LogDialogMode } from '../constants/constants';
+import { LogDialogMode } from '../../constants-interfaces/constants';
 import { InputText } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Button } from 'primeng/button';

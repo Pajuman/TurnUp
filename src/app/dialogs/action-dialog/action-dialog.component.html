@@ -1,0 +1,35 @@
+<p-dialog (onHide)="close()" [(visible)]="visible" [header]="action() === 'New' ? 'Nový výraz' : 'Uprav'"
+          [modal]="true" [style]="{ width: '25rem' }">
+  @if (item() === 'Word') {
+    <div class="flex items-center gap-4 mb-4">
+      <label class="font-semibold w-24" for="question">Výraz</label>
+      <input [(ngModel)]="question" autocomplete="off" class="flex-auto" id="question" pInputText/>
+    </div>
+    <div class="flex items-center gap-4 mb-8">
+      <label class="font-semibold w-24" for="answer">Překlad</label>
+      <input [(ngModel)]="answer" autocomplete="off" class="flex-auto" id="answer" pInputText/>
+    </div>
+  } @else if (item() === 'Lesson') {
+    <div class="flex items-center gap-4 mb-8">
+      <label class="font-semibold w-24" for="lessonName">Název</label>
+      <input [(ngModel)]="lessonName" autocomplete="off" class="flex-auto" id="lessonName" pInputText/>
+    </div>
+    <div class="flex items-center gap-4 mb-8">
+      <label class="font-semibold w-24" for="description">Popis</label>
+      <input [(ngModel)]="description" autocomplete="off" class="flex-auto" id="description" pInputText/>
+    </div>
+    <div class="flex items-center gap-4 mb-8">
+      <label class="font-semibold w-24" for="shared">Sdílení</label>
+      <input [(ngModel)]="shared" autocomplete="off" class="flex-auto" id="shared" pInputText/>
+    </div>
+    <div class="flex items-center gap-4 mb-8">
+      <label class="font-semibold w-24" for="category">Kategorie</label>
+      <input [(ngModel)]="category" autocomplete="off" class="flex-auto" id="category" pInputText/>
+    </div>
+  }
+
+  <div class="flex justify-end gap-2">
+    <p-button (click)="visible.set(false)" label="Storno" severity="secondary"/>
+    <p-button (click)="save.set(true); visible.set(false)" label="Uložit"/>
+  </div>
+</p-dialog>
