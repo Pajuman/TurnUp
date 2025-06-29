@@ -11,8 +11,20 @@
     </div>
   } @else if (item() === 'Lesson') {
     <div class="flex items-center gap-4 mb-8">
-      <label class="font-semibold w-24" for="name">Název</label>
-      <input [(ngModel)]="name" autocomplete="off" class="flex-auto" id="name" pInputText/>
+      <label class="font-semibold w-24" for="lessonName">Název</label>
+      <input [(ngModel)]="lessonName" autocomplete="off" class="flex-auto" id="lessonName" pInputText/>
+    </div>
+    <div class="flex items-center gap-4 mb-8">
+      <label class="font-semibold w-24" for="description">Popis</label>
+      <input [(ngModel)]="description" autocomplete="off" class="flex-auto" id="description" pInputText/>
+    </div>
+    <div class="flex items-center gap-4 mb-8">
+      <label class="font-semibold w-24" for="shared">Sdílení</label>
+      <input [(ngModel)]="shared" autocomplete="off" class="flex-auto" id="shared" pInputText/>
+    </div>
+    <div class="flex items-center gap-4 mb-8">
+      <label class="font-semibold w-24" for="category">Kategorie</label>
+      <input [(ngModel)]="category" autocomplete="off" class="flex-auto" id="category" pInputText/>
     </div>
   }
 

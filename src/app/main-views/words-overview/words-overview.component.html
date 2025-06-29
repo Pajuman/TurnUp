@@ -9,11 +9,11 @@
     <div class="table-caption">
       <i (click)="practiceLesson()" class="pi pi-play"></i>
       <p-selectButton
-        [(ngModel)]="practiceCount"
+        [(ngModel)]="lessonService.practiceCount"
         [options]="PRACTICE_COUNT_OPTIONS"
         optionLabel="label"
       ></p-selectButton>
-      <toggler (togglerSwitchedEvent)="togglerSwitched($event)" [type]="SWITCHER_OPTION.Language"></toggler>
+      <toggler></toggler>
       <p-button (click)="openDialog('New')">Nový výraz</p-button>
       <p-button (click)="saveAllChanges()">Uložit změny</p-button>
     </div>

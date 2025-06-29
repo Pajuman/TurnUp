@@ -11,7 +11,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Table, TableModule } from 'primeng/table';
 import { NgClass } from '@angular/common';
 import { Subject } from 'rxjs';
-import { scoreOptions, wordsOptions } from '../constants/constants';
+import {
+  scoreOptions,
+  wordsOptions,
+} from '../../constants-interfaces/constants';
 
 @Component({
   selector: 'filter',

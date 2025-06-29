@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Lesson, Word } from '../interfaces/interfaces';
+import {
+  Lesson,
+  PracticeCountOption,
+  Word,
+} from '../constants-interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -7,4 +11,9 @@ import { Lesson, Word } from '../interfaces/interfaces';
 export class LessonService {
   public activeLesson: Lesson = {} as Lesson;
   public activeLessonWords: Word[] = [];
+  public practiceCount: PracticeCountOption = {
+    label: '20',
+    value: 20,
+  };
+  public languageSwitched = false;
 }

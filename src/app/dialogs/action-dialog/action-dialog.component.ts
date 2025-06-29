@@ -8,7 +8,7 @@ import {
 import { Button } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { InputText } from 'primeng/inputtext';
-import { ActionDialogOutput } from '../interfaces/interfaces';
+import { ActionDialogOutput } from '../../constants-interfaces/interfaces';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -28,6 +28,11 @@ export class ActionDialogComponent {
   public visible = signal(false);
   public save = signal(false);
 
+  public lessonName = '';
+  public description = '';
+  public shared = false;
+  public category = '';
+
   close() {
     if (this.save()) {
       this.dataToSave.emit({
@@ -38,5 +43,9 @@ export class ActionDialogComponent {
     }
     this.question.set('');
     this.answer.set('');
+    this.lessonName = '';
+    this.description = '';
+    this.category = '';
+    this.shared = false;
   }
 }

@@ -1,4 +1,4 @@
-import { Lesson } from '../interfaces/interfaces';
+import { Lesson, Option } from './interfaces';
 
 export enum LogDialogMode {
   LogIn = 'Přihlášení:',
@@ -6,18 +6,18 @@ export enum LogDialogMode {
   Edit = 'Změna uživatele:',
 }
 
-export enum SwitcherOption {
-  Language = 'Language:',
-  LessonsSource = 'LessonsSource',
-}
-
-export const PRACTICE_COUNT_OPTIONS = [
+export const PRACTICE_COUNT_OPTIONS: Option[] = [
   { label: '10', value: 10 },
   { label: '20', value: 20 },
   {
     label: '40',
     value: 40,
   },
+];
+
+export const ACTION_OPTIONS = [
+  { label: 'Uprav', value: 'Edit' },
+  { label: 'Smaž', value: 'Delete' },
 ];
 
 export const wordsOptions = ['0 - 10', '11 - 20', '> 20'];
@@ -87,25 +87,36 @@ export const LESSONS: Lesson[] = [
   },
 ];
 
+export const LESSON_EXAMPLE = {
+  id: '68852ef0-1ac1-4306-a558-52e2b44be342',
+  lessonName: 'Travel',
+  description: 'V lekci jsou běžná podstatná jména',
+  shared: true,
+  category: 'Travel',
+  score: -1,
+  wordCount: 60,
+  status: 'own',
+};
+
 export const WORDS = [
-  { id: "1", question: "dům", answer: "house", score: 3 },
-  { id: "2", question: "kočka", answer: "cat", score: 1 },
-  { id: "3", question: "pes", answer: "dog", score: 3 },
-  { id: "4", question: "škola", answer: "school", score: 5 },
-  { id: "5", question: "auto", answer: "car", score: 3 },
-  { id: "6", question: "strom", answer: "tree", score: 2 },
-  { id: "7", question: "voda", answer: "water", score: 1 },
-  { id: "8", question: "slunce", answer: "sun", score: 3 },
-  { id: "9", question: "jablko", answer: "apple", score: 1 },
-  { id: "10", question: "kniha", answer: "book", score: 3 },
-  { id: "11", question: "město", answer: "city", score: 3 },
-  { id: "12", question: "vlak", answer: "train", score: 4 },
-  { id: "13", question: "letadlo", answer: "airplane", score: 4 },
-  { id: "14", question: "telefon", answer: "phone", score: 2 },
-  { id: "15", question: "židle", answer: "chair", score: 1 },
-  { id: "16", question: "okno", answer: "window", score: 2 },
-  { id: "17", question: "noha", answer: "leg", score: 1 },
-  { id: "18", question: "ruka", answer: "hand", score: 1 },
-  { id: "19", question: "chléb", answer: "bread", score: 1 },
-  { id: "20", question: "mléko", answer: "milk", score: 3 }
+  { id: '1', question: 'dům', answer: 'house', score: 3 },
+  { id: '2', question: 'kočka', answer: 'cat', score: 1 },
+  { id: '3', question: 'pes', answer: 'dog', score: 3 },
+  { id: '4', question: 'škola', answer: 'school', score: 5 },
+  { id: '5', question: 'auto', answer: 'car', score: 3 },
+  { id: '6', question: 'strom', answer: 'tree', score: 2 },
+  { id: '7', question: 'voda', answer: 'water', score: 1 },
+  { id: '8', question: 'slunce', answer: 'sun', score: 3 },
+  { id: '9', question: 'jablko', answer: 'apple', score: 1 },
+  { id: '10', question: 'kniha', answer: 'book', score: 3 },
+  { id: '11', question: 'město', answer: 'city', score: 3 },
+  { id: '12', question: 'vlak', answer: 'train', score: 4 },
+  { id: '13', question: 'letadlo', answer: 'airplane', score: 4 },
+  { id: '14', question: 'telefon', answer: 'phone', score: 2 },
+  { id: '15', question: 'židle', answer: 'chair', score: 1 },
+  { id: '16', question: 'okno', answer: 'window', score: 2 },
+  { id: '17', question: 'noha', answer: 'leg', score: 1 },
+  { id: '18', question: 'ruka', answer: 'hand', score: 1 },
+  { id: '19', question: 'chléb', answer: 'bread', score: 1 },
+  { id: '20', question: 'mléko', answer: 'milk', score: 3 },
 ];

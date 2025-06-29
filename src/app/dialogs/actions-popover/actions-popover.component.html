@@ -1,5 +1,5 @@
 <i (click)="popover.toggle($event)" class="pi pi-file-edit"></i>
 <p-popover #popover>
-  <p-listbox (onClick)="popover.hide(); optionSelected($event.option.label)" [highlightOnSelect]="false"
+  <p-listbox (onClick)="popover.hide(); optionSelected($event.option)" [highlightOnSelect]="false"
              [options]="ACTION_OPTIONS"/>
 </p-popover>

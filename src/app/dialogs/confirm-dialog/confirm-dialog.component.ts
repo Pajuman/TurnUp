@@ -8,7 +8,7 @@ import {
 import { Button } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
-import { ConfirmDialogOutput } from '../interfaces/interfaces';
+import { ConfirmDialogOutput } from '../../constants-interfaces/interfaces';
 
 @Component({
   selector: 'confirm-action-dialog',

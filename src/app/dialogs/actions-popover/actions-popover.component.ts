@@ -1,7 +1,8 @@
 import { Component, output, OutputEmitterRef } from '@angular/core';
 import { Popover } from 'primeng/popover';
 import { Listbox } from 'primeng/listbox';
-import { ActionOption } from '../interfaces/interfaces';
+import { ACTION_OPTIONS } from '../../constants-interfaces/constants';
+import { Option } from '../../constants-interfaces/interfaces';
 
 @Component({
   selector: 'actions-popover',
@@ -11,10 +12,10 @@ import { ActionOption } from '../interfaces/interfaces';
   standalone: true,
 })
 export class ActionsPopoverComponent {
-  ACTION_OPTIONS: ActionOption[] = [{ label: 'Edit' }, { label: 'Delete' }];
-  public readonly actionSelected: OutputEmitterRef<string> = output();
+  public readonly actionSelected: OutputEmitterRef<Option> = output();
+  protected readonly ACTION_OPTIONS = ACTION_OPTIONS;
 
-  public optionSelected(label: string) {
+  public optionSelected(label: Option) {
     this.actionSelected.emit(label);
   }
 }

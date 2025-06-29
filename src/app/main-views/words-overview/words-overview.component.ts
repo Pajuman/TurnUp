@@ -1,7 +1,6 @@
 import {
   Component,
-  input,
-  InputSignal,
+  inject,
   OnInit,
   Signal,
   signal,
@@ -10,25 +9,23 @@ import {
 } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { SelectButton } from 'primeng/selectbutton';
-import { TogglerComponent } from '../toggler/toggler.component';
-import {
-  PRACTICE_COUNT_OPTIONS,
-  SwitcherOption,
-  WORDS,
-} from '../constants/constants';
+import { TogglerComponent } from '../../features/toggler/toggler.component';
+import { PRACTICE_COUNT_OPTIONS } from '../../constants-interfaces/constants';
 import { FormsModule } from '@angular/forms';
-import { LessonDTO, WordDTO } from '../api';
 import {
   ActionDialogOutput,
   ConfirmDialogOutput,
+  Lesson,
   Option,
   PracticeCountOption,
   Word,
-} from '../interfaces/interfaces';
+} from '../../constants-interfaces/interfaces';
 import { Button } from 'primeng/button';
-import { ActionsPopoverComponent } from '../actions-popover/actions-popover.component';
-import { ActionDialogComponent } from '../action-dialog/action-dialog.component';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-popover.component';
+import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog.component';
+import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
+import { LessonService } from '../../services/lesson.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'words-overview',
@@ -47,32 +44,29 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   standalone: true,
 })
 export class WordsOverviewComponent implements OnInit {
-  public readonly lesson: InputSignal<LessonDTO> = input.required();
+  public lesson: WritableSignal<Lesson> = signal({} as Lesson);
   public words: WritableSignal<Word[]> = signal([]);
   public practiceCount: WritableSignal<PracticeCountOption> = signal({
     label: '20',
     value: 20,
   });
-  protected readonly SWITCHER_OPTION = SwitcherOption;
+  public readonly lessonService = inject(LessonService);
   protected readonly PRACTICE_COUNT_OPTIONS = PRACTICE_COUNT_OPTIONS;
   private editedWord?: Word;
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
     viewChild('actionDialog');
   private readonly confirmDialog: Signal<ConfirmDialogComponent | undefined> =
     viewChild('confirmDialog');
+  private router = inject(Router);
 
   public ngOnInit(): void {
-    //tady bude BE call
-    const fromBE = WORDS;
-    this.setWordsFromWordsDto(fromBE);
-  }
-
-  public togglerSwitched(event: any) {
-    console.log(event);
+    this.lesson.set(this.lessonService.activeLesson);
+    this.words.set(this.lessonService.activeLessonWords);
   }
 
   public practiceLesson() {
-    console.log(`jdu zkoušet ${this.lesson().lessonName}`);
+    this.lessonService.activeLessonWords = this.words();
+    this.router.navigate(['practice', this.lesson().lessonName]);
   }
 
   public saveWordChanges(event: ActionDialogOutput) {
@@ -111,17 +105,11 @@ export class WordsOverviewComponent implements OnInit {
   }
 
   public back() {
-    console.log('jdu zpět');
+    this.router.navigate(['']);
   }
 
   public confirmDeletion(confirmDialogOutput: ConfirmDialogOutput) {
     console.log(confirmDialogOutput);
-  }
-
-  private setWordsFromWordsDto(wordsDto: WordDTO[]) {
-    wordsDto.forEach((wordDto) =>
-      this.words.set([...this.words(), { ...wordDto, status: null }]),
-    );
   }
 
   private addWord(question: string, answer: string) {
