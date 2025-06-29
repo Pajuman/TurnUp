@@ -1,0 +1,8 @@
+<p-dialog [(visible)]="visible" [header]="'Upozornění'"
+          [modal]="true" [style]="{ width: '25rem' }">
+  <span>Jste si jistí, že chcete provézt akci smazání?</span>
+  <div class="flex justify-end gap-2">
+    <p-button (click)="confirm(false)" label="Storno" severity="secondary"/>
+    <p-button (click)="confirm(true); visible.set(false)" label="Ok"/>
+  </div>
+</p-dialog>
