@@ -1,0 +1,63 @@
+<p-button (click)="back()">Zpět</p-button>
+<h2>
+  {{ lesson().lessonName }}
+</h2>
+
+<p-table
+  [value]="words()">
+  <ng-template #caption>
+    <div class="table-caption">
+      <i (click)="practiceLesson()" class="pi pi-play"></i>
+      <p-selectButton
+        [(ngModel)]="practiceCount"
+        [options]="PRACTICE_COUNT_OPTIONS"
+        optionLabel="label"
+      ></p-selectButton>
+      <toggler (togglerSwitchedEvent)="togglerSwitched($event)" [type]="SWITCHER_OPTION.Language"></toggler>
+      <p-button (click)="openDialog('New')">Nový výraz</p-button>
+      <p-button (click)="saveAllChanges()">Uložit změny</p-button>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="colgroup">
+    <colgroup>
+      <col style="width: 35%;">
+      <col style="width: 35%;">
+      <col style="width: 15%;">
+      <col style="width: 15%;">
+    </colgroup>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="question">
+        Výraz
+        <p-sortIcon field="question"/>
+      </th>
+      <th pSortableColumn="answer">
+        Název
+        <p-sortIcon field="answer"/>
+      </th>
+      <th pSortableColumn="score">
+        Score
+        <p-sortIcon field="score"/>
+      </th>
+      <th>
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template let-row pTemplate="body">
+    <tr [class]="{'new': row.status === 'new', 'edited': row.status === 'edited', 'deleted': row.status === 'deleted'}">
+      <td>{{ row.question }}</td>
+      <td>{{ row.answer }}</td>
+      <td>{{ row.score }}</td>
+      <td>
+        <actions-popover (actionSelected)="wordActionSelected($event, row)"></actions-popover>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<action-dialog #actionDialog (dataToSave)="saveWordChanges($event)"></action-dialog>
+<confirm-action-dialog #confirmDialog (confirmOutput)="confirmDeletion($event)"></confirm-action-dialog>
+
