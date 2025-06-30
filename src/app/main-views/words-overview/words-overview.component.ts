@@ -8,16 +8,13 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { SelectButton } from 'primeng/selectbutton';
 import { TogglerComponent } from '../../features/toggler/toggler.component';
-import { PRACTICE_COUNT_OPTIONS } from '../../constants-interfaces/constants';
 import { FormsModule } from '@angular/forms';
 import {
   ActionDialogOutput,
   ConfirmDialogOutput,
   Lesson,
   Option,
-  PracticeCountOption,
   Word,
 } from '../../constants-interfaces/interfaces';
 import { Button } from 'primeng/button';
@@ -31,7 +28,6 @@ import { Router } from '@angular/router';
   selector: 'words-overview',
   imports: [
     TableModule,
-    SelectButton,
     TogglerComponent,
     FormsModule,
     Button,
@@ -46,12 +42,7 @@ import { Router } from '@angular/router';
 export class WordsOverviewComponent implements OnInit {
   public lesson: WritableSignal<Lesson> = signal({} as Lesson);
   public words: WritableSignal<Word[]> = signal([]);
-  public practiceCount: WritableSignal<PracticeCountOption> = signal({
-    label: '20',
-    value: 20,
-  });
   public readonly lessonService = inject(LessonService);
-  protected readonly PRACTICE_COUNT_OPTIONS = PRACTICE_COUNT_OPTIONS;
   private editedWord?: Word;
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
     viewChild('actionDialog');

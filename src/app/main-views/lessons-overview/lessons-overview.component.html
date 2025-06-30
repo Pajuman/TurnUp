@@ -23,7 +23,6 @@
 
   <ng-template #caption>
     <toggler></toggler>
-    <i (click)="clearAllFilters(lessonTable)" class="pi pi-filter-slash"></i>
     <p-button (click)="openDialog('New')">Nová lekce</p-button>
   </ng-template>
 
@@ -66,6 +65,7 @@
         <filter [clearAllFilters]="clearAllFilters$" [fieldName]="'score'" [table]="lessonTable"/>
       </th>
       <th>
+        <i (click)="clearAllFilters(lessonTable)" class="pi pi-filter-slash"></i>
       </th>
     </tr>
   </ng-template>

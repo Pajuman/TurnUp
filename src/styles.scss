@@ -68,5 +68,13 @@ td, th {
   padding-left: 2rem;
 }
 
+.button-group {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 2rem;
+  width: fit-content;
+}
+
 
 

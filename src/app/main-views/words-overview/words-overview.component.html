@@ -12,8 +12,10 @@
   [value]="words()">
   <ng-template #caption>
     <toggler></toggler>
-    <p-button (click)="openDialog('New')">Nový výraz</p-button>
-    <p-button (click)="saveAllChanges()">Uložit změny</p-button>
+    <div class="button-group">
+      <p-button (click)="saveAllChanges()">Uložit změny</p-button>
+      <p-button (click)="openDialog('New')">Nový výraz</p-button>
+    </div>
   </ng-template>
 
   <ng-template pTemplate="colgroup">
