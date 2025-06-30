@@ -3,7 +3,6 @@ import { Table, TableModule } from 'primeng/table';
 import {
   LESSONS,
   LogDialogMode,
-  PRACTICE_COUNT_OPTIONS,
   WORDS,
 } from '../../constants-interfaces/constants';
 import { Popover } from 'primeng/popover';
@@ -14,6 +13,7 @@ import {
   ConfirmDialogOutput,
   Lesson,
   Option,
+  UserDialogOutput,
   Word,
 } from '../../constants-interfaces/interfaces';
 import { TogglerComponent } from '../../features/toggler/toggler.component';
@@ -33,7 +33,6 @@ import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-p
   imports: [
     TableModule,
     Popover,
-    LogDialogComponent,
     FormsModule,
     TogglerComponent,
     Tooltip,
@@ -42,6 +41,7 @@ import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-p
     ActionDialogComponent,
     ConfirmDialogComponent,
     ActionsPopoverComponent,
+    LogDialogComponent,
   ],
   templateUrl: './lessons-overview.component.html',
   styleUrl: './lessons-overview.component.scss',
@@ -58,7 +58,6 @@ export class LessonsOverviewComponent implements OnInit {
   public clearAllFilters$ = new Subject<string>();
   public lessonService = inject(LessonService);
   protected readonly LOG_DIALOG_MODE = LogDialogMode;
-  protected readonly PRACTICE_COUNT_OPTIONS = PRACTICE_COUNT_OPTIONS;
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
     viewChild('actionDialog');
   private readonly confirmDialog: Signal<ConfirmDialogComponent | undefined> =
@@ -155,6 +154,10 @@ export class LessonsOverviewComponent implements OnInit {
     if (confirmDialogOutput.confirm) {
       //ToDo delete editedLesson
     }
+  }
+
+  public dialogOutput($event: UserDialogOutput) {
+    console.log($event);
   }
 
   private getWordsFromWordsDto(wordsDto: WordDTO[]) {

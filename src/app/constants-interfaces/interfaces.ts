@@ -1,4 +1,5 @@
 import { LessonDTO, WordDTO } from '../api';
+import { LogDialogMode } from './constants';
 
 export interface PracticeCountOption {
   label: string;
@@ -28,4 +29,10 @@ export interface ActionDialogOutput {
 export interface ConfirmDialogOutput {
   item: 'Lesson' | 'Word';
   confirm: boolean;
+}
+
+export interface UserDialogOutput {
+  action: LogDialogMode;
+  userName?: string;
+  password?: string | number;
 }
