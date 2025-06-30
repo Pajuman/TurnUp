@@ -1,4 +1,9 @@
-import { Component, output, OutputEmitterRef } from '@angular/core';
+import {
+  Component,
+  output,
+  OutputEmitterRef,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Popover } from 'primeng/popover';
 import { Listbox } from 'primeng/listbox';
 import { ACTION_OPTIONS } from '../../constants-interfaces/constants';
@@ -10,6 +15,7 @@ import { Option } from '../../constants-interfaces/interfaces';
   templateUrl: './actions-popover.component.html',
   styleUrl: './actions-popover.component.scss',
   standalone: true,
+  encapsulation: ViewEncapsulation.None,
 })
 export class ActionsPopoverComponent {
   public readonly actionSelected: OutputEmitterRef<Option> = output();
