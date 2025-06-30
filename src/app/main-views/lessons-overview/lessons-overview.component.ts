@@ -9,7 +9,6 @@ import {
 import { Popover } from 'primeng/popover';
 import { LogDialogComponent } from '../../dialogs/log-dialog/log-dialog.component';
 import { FormsModule } from '@angular/forms';
-import { SelectButton } from 'primeng/selectbutton';
 import {
   ActionDialogOutput,
   ConfirmDialogOutput,
@@ -36,7 +35,6 @@ import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-p
     Popover,
     LogDialogComponent,
     FormsModule,
-    SelectButton,
     TogglerComponent,
     Tooltip,
     Filter,
