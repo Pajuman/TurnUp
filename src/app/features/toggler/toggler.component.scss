@@ -1,8 +1,13 @@
 :host {
   display: flex;
   flex-direction: row;
+  gap: 2rem;
+  align-items: center;
+}
+
+.language-toggler {
+  display: flex;
+  flex-direction: row;
   gap: 0.5rem;
   align-items: center;
-  padding: 1rem;
-  width: fit-content;
 }

@@ -1,22 +1,19 @@
-<p-button (click)="back()">Zpět</p-button>
-<h2>
-  {{ lesson().lessonName }}
-</h2>
+<div class="caption">
+  <div class="back-button">
+    <p-button (click)="back()">Zpět</p-button>
+  </div>
 
+  <h2>
+    {{ lesson().lessonName }}
+  </h2>
+  <i (click)="practiceLesson()" class="pi pi-play"></i>
+</div>
 <p-table
   [value]="words()">
   <ng-template #caption>
-    <div class="table-caption">
-      <i (click)="practiceLesson()" class="pi pi-play"></i>
-      <p-selectButton
-        [(ngModel)]="lessonService.practiceCount"
-        [options]="PRACTICE_COUNT_OPTIONS"
-        optionLabel="label"
-      ></p-selectButton>
-      <toggler></toggler>
-      <p-button (click)="openDialog('New')">Nový výraz</p-button>
-      <p-button (click)="saveAllChanges()">Uložit změny</p-button>
-    </div>
+    <toggler></toggler>
+    <p-button (click)="openDialog('New')">Nový výraz</p-button>
+    <p-button (click)="saveAllChanges()">Uložit změny</p-button>
   </ng-template>
 
   <ng-template pTemplate="colgroup">
