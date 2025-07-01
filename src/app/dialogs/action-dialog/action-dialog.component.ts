@@ -3,6 +3,7 @@ import {
   output,
   OutputEmitterRef,
   signal,
+  ViewEncapsulation,
   WritableSignal,
 } from '@angular/core';
 import { Button } from 'primeng/button';
@@ -10,12 +11,15 @@ import { Dialog } from 'primeng/dialog';
 import { InputText } from 'primeng/inputtext';
 import { ActionDialogOutput } from '../../constants-interfaces/interfaces';
 import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { SHARED_OPTIONS } from '../../constants-interfaces/constants';
 
 @Component({
   selector: 'action-dialog',
-  imports: [Button, Dialog, InputText, FormsModule],
+  imports: [Button, Dialog, InputText, FormsModule, DropdownModule],
   templateUrl: './action-dialog.component.html',
   styleUrl: './action-dialog.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class ActionDialogComponent {
   public readonly dataToSave: OutputEmitterRef<ActionDialogOutput> = output();
@@ -32,6 +36,7 @@ export class ActionDialogComponent {
   public description = '';
   public shared = false;
   public category = '';
+  protected readonly SHARED_OPTIONS = SHARED_OPTIONS;
 
   close() {
     if (this.save()) {

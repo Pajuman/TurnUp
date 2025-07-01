@@ -20,6 +20,11 @@ export const ACTION_OPTIONS = [
   { label: 'Smaž', value: 'Delete' },
 ];
 
+export const SHARED_OPTIONS = [
+  { label: 'Ano', value: true },
+  { label: 'Ne', value: false },
+];
+
 export const wordsOptions = ['0 - 10', '11 - 20', '> 20'];
 
 export const scoreOptions = ['< 0', '0', '> 0'];
