@@ -11,10 +11,18 @@ import { InputText } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Button } from 'primeng/button';
 import { UserDialogOutput } from '../../constants-interfaces/interfaces';
+import { PasswordCharValidDirective } from '../../validators/password-char-valid.directive';
+import { RepeatPasswordValidDirective } from '../../validators/repeat-password-valid.directive';
 
 @Component({
   selector: 'log-dialog',
-  imports: [InputText, FormsModule, Button],
+  imports: [
+    InputText,
+    FormsModule,
+    Button,
+    PasswordCharValidDirective,
+    RepeatPasswordValidDirective,
+  ],
   templateUrl: './log-dialog.component.html',
   styleUrl: './log-dialog.component.scss',
   standalone: true,
@@ -22,9 +30,10 @@ import { UserDialogOutput } from '../../constants-interfaces/interfaces';
 export class LogDialogComponent implements OnInit {
   public readonly mode: InputSignal<LogDialogMode> = input.required();
   public readonly userId: InputSignal<string> = input.required();
-  public readonly userName: InputSignal<string> = input('');
-  public title = '';
-  public newUserName = '';
+  /*
+    public readonly userName: InputSignal<string> = input('');
+  */
+  public userName = '';
   public password = '';
   public newPassword = '';
   public passwordRepeat = '';
@@ -38,15 +47,17 @@ export class LogDialogComponent implements OnInit {
 
     const output: UserDialogOutput = {
       action: this.mode(),
-      userName: this.newUserName,
+      userName: this.userName,
       password: password,
     };
     this.dialogOutput.emit(output);
+    this.reset();
   }
 
   public cancel() {
     const output: UserDialogOutput = { action: this.mode() };
     this.dialogOutput.emit(output);
+    this.reset();
   }
 
   private getPassword() {
@@ -66,5 +77,14 @@ export class LogDialogComponent implements OnInit {
       }
     }
     return '';
+  }
+
+  private reset() {
+    setTimeout(() => {
+      this.userName = '';
+      this.password = '';
+      this.newPassword = '';
+      this.passwordRepeat = '';
+    }, 100);
   }
 }

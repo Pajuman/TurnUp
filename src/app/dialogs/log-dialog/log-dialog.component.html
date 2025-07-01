@@ -1,23 +1,59 @@
 <h2>{{ mode() }}</h2>
 <div class="content">
   <div class="dialog-row">
-    <label for="newUserName">Přihlašovací jméno:</label>
-    <input [(ngModel)]="newUserName" id="newUserName" pInputText type="text"/>
+    <label for="userName">Přihlašovací jméno:</label>
+    <input #userNameInput="ngModel" [(ngModel)]="userName" [maxLength]="20" [minlength]="3" [required]="true"
+           id="userName" pInputText
+           type="text"/>
   </div>
+  <div>@if (userNameInput.invalid && userNameInput.touched) {
+    <small [hidden]="!userNameInput.errors?.['required']">Name is required.</small>
+    <small [hidden]="!userNameInput.errors?.['minlength']">Min 3 characters.</small>
+  }
+  </div>
+
   <div class="dialog-row">
     <label for="password">Heslo:</label>
-    <input [(ngModel)]="password" id="password" pInputText type="password"/>
+    <input #passwordInput="ngModel" [(ngModel)]="password" [maxLength]="12" [minlength]="8" [required]="true"
+           id="password" pInputText passwordCharValid
+           type="password"/>
+  </div>
+  <div>@if (passwordInput.invalid && passwordInput.touched) {
+    <small [hidden]="!passwordInput.errors?.['required']">Password is required.</small>
+    <small [hidden]="!passwordInput.errors?.['minlength']">Min 8 characters.</small>
+    <small [hidden]="!passwordInput.errors?.['strongPassword']">Heslo musí obsahovat velké písmeno, symbol a
+      číslici.</small>
+  }
   </div>
   @if (mode() === LogDialogMode.Edit) {
     <div class="dialog-row">
       <label for="newPassword">Nové heslo:</label>
-      <input [(ngModel)]="newPassword" id="newPassword" pInputText type="password"/>
+      <input #newPasswordInput="ngModel" [(ngModel)]="newPassword" [maxLength]="12" [minlength]="8" [required]="true"
+             id="newPassword" passwordCharValid pInputText type="password"/>
+    </div>
+    <div>@if (newPasswordInput.invalid && newPasswordInput.touched) {
+      <small [hidden]="!newPasswordInput.errors?.['required']">Password is required.</small>
+      <small [hidden]="!newPasswordInput.errors?.['minlength']">Min 8 characters.</small>
+      <small [hidden]="!newPasswordInput.errors?.['strongPassword']">Heslo musí obsahovat velké písmeno, symbol a
+        číslici.</small>
+    }
     </div>
   }
   @if (mode() !== LogDialogMode.LogIn) {
     <div class="dialog-row">
       <label for="passwordRepeat">Opakujte heslo:</label>
-      <input [(ngModel)]="passwordRepeat" id="passwordRepeat" pInputText type="password"/>
+      <input #passwordRepeatInput="ngModel" [(ngModel)]="passwordRepeat" [maxLength]="12" [minlength]="8"
+             [required]="true" [repeatPasswordValid]="password ?? newPassword" passwordCharValid id="passwordRepeat"
+             pInputText
+             type="password"/>
+    </div>
+    <div>@if (passwordRepeatInput.invalid && passwordRepeatInput.touched) {
+      <small [hidden]="!passwordRepeatInput.errors?.['required']">Password is required.</small>
+      <small [hidden]="!passwordRepeatInput.errors?.['minlength']">Min 8 characters.</small>
+      <small [hidden]="!passwordRepeatInput.errors?.['strongPassword']">Heslo musí obsahovat velké písmeno, symbol a
+        číslici.</small>
+      <small [hidden]="!passwordRepeatInput.errors?.['repeatPasswordValid']">Hesla se liší.</small>
+    }
     </div>
   }
   <div class="buttons">
