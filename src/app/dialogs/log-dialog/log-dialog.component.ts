@@ -5,10 +5,12 @@ import {
   OnInit,
   output,
   OutputEmitterRef,
+  Signal,
+  viewChild,
 } from '@angular/core';
 import { LogDialogMode } from '../../constants-interfaces/constants';
 import { InputText } from 'primeng/inputtext';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Button } from 'primeng/button';
 import { UserDialogOutput } from '../../constants-interfaces/interfaces';
 import { PasswordCharValidDirective } from '../../validators/password-char-valid.directive';
@@ -39,6 +41,7 @@ export class LogDialogComponent implements OnInit {
   public passwordRepeat = '';
   public readonly dialogOutput: OutputEmitterRef<UserDialogOutput> = output();
   protected readonly LogDialogMode = LogDialogMode;
+  private readonly form: Signal<NgForm | undefined> = viewChild('form');
 
   ngOnInit(): void {}
 
@@ -58,6 +61,10 @@ export class LogDialogComponent implements OnInit {
     const output: UserDialogOutput = { action: this.mode() };
     this.dialogOutput.emit(output);
     this.reset();
+  }
+
+  public resetForm() {
+    this.form()?.reset();
   }
 
   private getPassword() {
