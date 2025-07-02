@@ -1,41 +1,92 @@
 <p-dialog (onHide)="close()" [(visible)]="visible" [header]="action() === 'New' ? 'Nový výraz' : 'Uprav'"
           [modal]="true" [style]="{ width: '25rem' }">
-  @if (item() === 'Word') {
-    <div class="dialog-row">
-      <label for="question">Výraz</label>
-      <input [(ngModel)]="question" autocomplete="off" class="flex-auto" id="question" pInputText/>
-    </div>
-    <div class="dialog-row">
-      <label for="answer">Překlad</label>
-      <input [(ngModel)]="answer" autocomplete="off" class="flex-auto" id="answer" pInputText/>
-    </div>
-  } @else if (item() === 'Lesson') {
-    <div class="dialog-row">
-      <label for="lessonName">Název</label>
-      <input [(ngModel)]="lessonName" autocomplete="off" class="flex-auto" id="lessonName" pInputText/>
-    </div>
-    <div class="dialog-row">
-      <label class="" for="description">Popis</label>
-      <input [(ngModel)]="description" autocomplete="off" class="flex-auto" id="description" pInputText/>
-    </div>
-    <div class="dialog-row">
-      <label for="shared">Sdílení</label>
-      <p-dropdown
-        id="shared"
-        [options]="SHARED_OPTIONS"
-        [(ngModel)]="shared"
-        optionLabel="label"
-        class="flex-auto">
-      </p-dropdown>
-    </div>
-    <div class="dialog-row">
-      <label for="category">Kategorie</label>
-      <input [(ngModel)]="category" autocomplete="off" class="flex-auto" id="category" pInputText/>
-    </div>
-  }
+  <form #form="ngForm">
 
-  <div class="buttons">
-    <p-button (click)="visible.set(false)" label="Storno" severity="secondary"/>
-    <p-button (click)="save.set(true); visible.set(false)" label="Uložit"/>
-  </div>
+    @if (item() === 'Word') {
+      <div class="dialog-row">
+        <label for="question">Výraz</label>
+        <input #questionInput="ngModel" [(ngModel)]="question" autocomplete="off" name="question" class="flex-auto"
+               id="question" maxlength="30" minlength="3" required pInputText/>
+      </div>
+      <small [class.in-visible]="!(questionInput.invalid && questionInput.touched)">
+        @if (questionInput.errors?.['required']) {
+          <span>Výraz je nutný.</span>
+        } @else if (questionInput.errors?.['minlength']) {
+          <span>Minimálně 3 znaky.</span>
+        } @else {
+          <span></span>
+        }
+      </small>
+      <div class="dialog-row">
+        <label for="answer">Překlad</label>
+        <input #answerInput="ngModel" [(ngModel)]="answer" autocomplete="off" name="answer" class="flex-auto"
+               id="answer" maxlength="30" minlength="3" required pInputText/>
+      </div>
+      <small [class.in-visible]="!(answerInput.invalid && answerInput.touched)">
+        @if (answerInput.errors?.['required']) {
+          <span>Překlad je nutný.</span>
+        } @else if (answerInput.errors?.['minlength']) {
+          <span>Minimálně 3 znaky.</span>
+        } @else {
+          <span></span>
+        }
+      </small>
+    } @else if (item() === 'Lesson') {
+      <div class="dialog-row">
+        <label for="lessonName">Název</label>
+        <input #lessonNameInput="ngModel" [(ngModel)]="lessonName" autocomplete="off" name="lessonName"
+               class="flex-auto"
+               id="lessonName" maxlength="30" minlength="3" required pInputText/></div>
+      <small [class.in-visible]="!(lessonNameInput.invalid && lessonNameInput.touched)">
+        @if (lessonNameInput.errors?.['required']) {
+          <span>Název je nutný.</span>
+        } @else if (lessonNameInput.errors?.['minlength']) {
+          <span>Minimálně 3 znaky.</span>
+        } @else {
+          <span></span>
+        }
+      </small>
+      <div class="dialog-row">
+        <label class="" for="description">Popis</label>
+        <input #descriptionInput="ngModel" [(ngModel)]="description" autocomplete="off" name="description"
+               class="flex-auto"
+               id="description" maxlength="60" minlength="3" required pInputText/></div>
+      <small [class.in-visible]="!(descriptionInput.invalid && descriptionInput.touched)">
+        @if (descriptionInput.errors?.['required']) {
+          <span>Popis je nutný.</span>
+        } @else if (descriptionInput.errors?.['minlength']) {
+          <span>Minimálně 3 znaky.</span>
+        } @else {
+          <span></span>
+        }
+      </small>
+      <div class="dialog-row">
+        <label for="shared">Sdílení</label>
+        <p-dropdown
+          id="shared"
+          [options]="SHARED_OPTIONS"
+          [(ngModel)]="shared"
+          optionLabel="label"
+          class="flex-auto">
+        </p-dropdown>
+      </div>
+      <div class="dialog-row">
+        <label for="category">Kategorie</label>
+        <input #categoryInput="ngModel" [(ngModel)]="category" autocomplete="off" name="category"
+               class="flex-auto"
+               id="category" maxlength="20" minlength="1" required pInputText/></div>
+      <small [class.in-visible]="!(categoryInput.invalid && categoryInput.touched)">
+        @if (categoryInput.errors?.['required']) {
+          <span>Kategorie je nutná.</span>
+        } @else {
+          <span></span>
+        }
+      </small>
+    }
+
+    <div class="buttons">
+      <p-button (click)="visible.set(false)" label="Storno" severity="secondary"/>
+      <p-button (click)="save.set(true); visible.set(false)" [disabled]="form.invalid" label="Uložit"/>
+    </div>
+  </form>
 </p-dialog>

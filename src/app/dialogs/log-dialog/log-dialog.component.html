@@ -9,11 +9,16 @@
              name="userName" pInputText
              type="text"/>
     </div>
-    <div>@if (userNameInput.invalid && userNameInput.touched) {
-      <small [style.visibility]="userNameInput.errors?.['required'] ? 'visible' : 'hidden'">Name is required.</small>
-      <small [style.visibility]="userNameInput.errors?.['minlength'] ? 'visible' : 'hidden'">Min 3 characters.</small>
-    }
-    </div>
+
+    <small [class.in-visible]="!(userNameInput.invalid && userNameInput.touched)">
+      @if (userNameInput.errors?.['required']) {
+        <span>Přihlašovací jméno je nutné.</span>
+      } @else if (userNameInput.errors?.['minlength']) {
+        <span>Minimálně 3 znaky.</span>
+      } @else {
+        <span></span>
+      }
+    </small>
 
     <div class="dialog-row">
       <label for="password">Heslo:</label>
@@ -22,15 +27,20 @@
              name="password" pInputText passwordCharValid
              type="password"/>
     </div>
-    <div>@if (passwordInput.invalid && passwordInput.touched) {
-      <small [style.visibility]="passwordInput.errors?.['required'] ? 'visible' : 'hidden'">Password is
-        required.</small>
-      <small [style.visibility]="passwordInput.errors?.['minlength'] ? 'visible' : 'hidden'">Min 8 characters.</small>
-      <small [style.visibility]="passwordInput.errors?.['strongPassword'] ? 'visible' : 'hidden'">Heslo musí obsahovat
+    <small [class.in-visible]="!(passwordInput.invalid && passwordInput.touched)">
+      @if (passwordInput.errors?.['required']) {
+        <span>Heslo je nutné.</span>
+      } @else if (passwordInput.errors?.['minlength']) {
+        <span>Minimálně 8 znaků.</span>
+      } @else if (passwordInput.errors?.['strongPassword']) {
+        <span>Heslo musí obsahovat
         velké písmeno, symbol a
-        číslici.</small>
-    }
-    </div>
+        číslici.</span>
+      } @else {
+        <span></span>
+      }
+    </small>
+
     @if (mode() === LogDialogMode.Edit) {
       <div class="dialog-row">
         <label for="newPassword">Nové heslo:</label>
@@ -38,17 +48,19 @@
                name="newPassword"
                id="newPassword" passwordCharValid pInputText type="password"/>
       </div>
-      <div>@if (newPasswordInput.invalid && newPasswordInput.touched) {
-        <small [style.visibility]="newPasswordInput.errors?.['required'] ? 'visible' : 'hidden'">Password is
-          required.</small>
-        <small [style.visibility]="newPasswordInput.errors?.['minlength'] ? 'visible' : 'hidden'">Min 8
-          characters.</small>
-        <small [style.visibility]="newPasswordInput.errors?.['strongPassword'] ? 'visible' : 'hidden'">Heslo musí
-          obsahovat velké písmeno,
-          symbol a
-          číslici.</small>
-      }
-      </div>
+      <small [class.in-visible]="!(newPasswordInput.invalid && newPasswordInput.touched)">
+        @if (newPasswordInput.errors?.['required']) {
+          <span>Heslo je nutné.</span>
+        } @else if (newPasswordInput.errors?.['minlength']) {
+          <span>Minimálně 8 znaků.</span>
+        } @else if (newPasswordInput.errors?.['strongPassword']) {
+          <span>Heslo musí obsahovat
+        velké písmeno, symbol a
+        číslici.</span>
+        } @else {
+          <span></span>
+        }
+      </small>
     }
     @if (mode() !== LogDialogMode.LogIn) {
       <div class="dialog-row">
@@ -59,17 +71,19 @@
                pInputText
                type="password"/>
       </div>
-      <div>@if (passwordRepeatInput.invalid && passwordRepeatInput.touched) {
-        <small [style.visibility]="passwordRepeatInput.errors?.['required'] ? 'visible' : 'hidden'">Password is
-          required.</small>
-        <small [style.visibility]="passwordRepeatInput.errors?.['minlength'] ? 'visible' : 'hidden'">Min 8
-          characters.</small>
-        <small [style.visibility]="passwordRepeatInput.errors?.['strongPassword'] ? 'visible' : 'hidden'">Heslo musí
-          obsahovat velké písmeno, symbol a číslici.</small>
-        <small [style.visibility]="passwordRepeatInput.errors?.['repeatPasswordValid'] ? 'visible' : 'hidden'">Hesla se
-          liší.</small>
-      }
-      </div>
+      <small [class.in-visible]="!(passwordRepeatInput.invalid && passwordRepeatInput.touched)">
+        @if (passwordRepeatInput.errors?.['required']) {
+          <span>Password is required.</span>
+        } @else if (passwordRepeatInput.errors?.['minlength']) {
+          <span>Minimálně 8 znaků.</span>
+        } @else if (passwordRepeatInput.errors?.['strongPassword']) {
+          <span>Heslo musí obsahovat
+        velké písmeno, symbol a
+        číslici.</span>
+        } @else {
+          <span></span>
+        }
+      </small>
     }
 
     <div class="buttons">

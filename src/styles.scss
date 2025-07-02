@@ -126,5 +126,16 @@ td, th {
 }
 
 small {
+  display: inline-block;
+  min-height: 1rem;
   color: red;
+
+  span {
+    display: inline-block;
+    min-width: 1rem;
+  }
+}
+
+.in-visible {
+  visibility: hidden;
 }
