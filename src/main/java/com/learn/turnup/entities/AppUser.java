@@ -29,7 +29,6 @@ public class AppUser {
     private String appUserName;
 
     @Column(name = "password_hash", nullable = false)
-    @Size(min = 8, max = 16)
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]+$")
     private String passwordHash;
 

@@ -13,10 +13,13 @@ public interface LessonMapper {
     Lesson toEntity(NewLessonDTO dto);
 
     @Mappings({
-            @Mapping(source = "id", target = "id"),
-            @Mapping(source = "lessonName", target = "lessonName"),
-            @Mapping(source = "description", target = "description"),
-            @Mapping(source = "shared", target = "shared")
+    @Mapping(source = "id", target = "id"),
+    @Mapping(source = "lessonName", target = "lessonName"),
+    @Mapping(source = "description", target = "description"),
+    @Mapping(source = "shared", target = "shared"),
+    @Mapping(source = "language", target = "language"),
+    @Mapping(source = "score", target = "score"),
+
     })
     LessonDTO toDto(Lesson dto);
 }

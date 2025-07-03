@@ -18,7 +18,7 @@ import jakarta.annotation.Generated;
  * AppUserDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-10T10:26:27.055127200+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class AppUserDTO {
 
   private String appUserName;
@@ -66,7 +66,7 @@ public class AppUserDTO {
    * Get passwordHash
    * @return passwordHash
    */
-  @NotNull @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]+$") @Size(min = 8, max = 16) 
+  @NotNull @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]+$") 
   @Schema(name = "passwordHash", example = "P@ssw0rd123", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("passwordHash")
   public String getPasswordHash() {

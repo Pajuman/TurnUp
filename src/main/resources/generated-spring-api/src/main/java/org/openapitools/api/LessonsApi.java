@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-10T10:26:27.055127200+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Lesson", description = "Lessons own Words")
 public interface LessonsApi {
@@ -50,6 +50,8 @@ public interface LessonsApi {
      *         or Invalid input (status code 400)
      *         or User ID is not recognized (status code 401)
      *         or Unauthorized access to lesson (status code 403)
+     *         or Lesson not found (status code 404)
+     *         or Lesson name already exists (status code 409)
      */
     @Operation(
         operationId = "copySharedLesson",
@@ -61,7 +63,9 @@ public interface LessonsApi {
             }),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
-            @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson")
+            @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson"),
+            @ApiResponse(responseCode = "404", description = "Lesson not found"),
+            @ApiResponse(responseCode = "409", description = "Lesson name already exists")
         }
     )
     @RequestMapping(
@@ -122,6 +126,7 @@ public interface LessonsApi {
      *         or Invalid input (status code 400)
      *         or User ID is not recognized (status code 401)
      *         or Unauthorized access to lesson (status code 403)
+     *         or Lesson not found (status code 404)
      */
     @Operation(
         operationId = "createWords",
@@ -133,7 +138,8 @@ public interface LessonsApi {
             }),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
-            @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson")
+            @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson"),
+            @ApiResponse(responseCode = "404", description = "Lesson not found")
         }
     )
     @RequestMapping(
@@ -224,9 +230,11 @@ public interface LessonsApi {
      *
      * @param xUserId  (required)
      * @param lessonDTO  (required)
-     * @return Lesson updated (status code 201)
+     * @return Lesson updated (status code 204)
      *         or Invalid input (status code 400)
      *         or User ID is not recognized (status code 401)
+     *         or Unauthorized access to lesson (status code 403)
+     *         or Lesson not found (status code 404)
      *         or Lesson name already exists (status code 409)
      */
     @Operation(
@@ -234,9 +242,11 @@ public interface LessonsApi {
         summary = "Update a lesson",
         tags = { "Lesson" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "Lesson updated"),
+            @ApiResponse(responseCode = "204", description = "Lesson updated"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
+            @ApiResponse(responseCode = "403", description = "Unauthorized access to lesson"),
+            @ApiResponse(responseCode = "404", description = "Lesson not found"),
             @ApiResponse(responseCode = "409", description = "Lesson name already exists")
         }
     )

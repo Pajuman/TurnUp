@@ -380,6 +380,10 @@ components:
     BatchWordUpdateDTO:
       type: object
       properties:
+        newWords:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewWordDTO'
         updatedWords:
           type: array
           items:
@@ -398,7 +402,7 @@ components:
           format: uuid
         lessonName:
           type: string
-          minLength: 3
+          minLength: 2
           maxLength: 30
           pattern: '^[\p{L}0-9 ]+$'
           example: "Podstatná jména"
@@ -408,12 +412,29 @@ components:
           maxLength: 60
           pattern: '^[\p{L}0-9 ]+$'
           example: "V lekci jsou běžná podstatná jména"
+        category:
+          type: string
+          minLength: 2
+          maxLength: 30
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "AJ"
+        score:
+          type: integer
+          format: flow
+          example: 3,5
+        wordCount:
+          type: integer
+          format: int32
+          example: 15
         shared:
           type: boolean
       required:
         - id
         - lessonName
         - description
+        - language
+        - score
+        - wordCount
         - shared
 
     NewLessonDTO:
@@ -427,15 +448,22 @@ components:
           example: "Podstatná jména"
         description:
           type: string
-          minLength: 3
+          minLength: 2
           maxLength: 60
           pattern: '^[\p{L}0-9 ]+$'
           example: "V lekci jsou běžná podstatná jména"
+        category:
+          type: string
+          minLength: 2
+          maxLength: 30
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "AJ"
         shared:
           type: boolean
       required:
         - lessonName
         - description
+        - category
         - shared
 
     AppUserDTO:
@@ -449,8 +477,6 @@ components:
           example: "john_doe"
         passwordHash:
           type: string
-          minLength: 8
-          maxLength: 16
           pattern: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]+$'
           example: "P@ssw0rd123"
       required:

@@ -48,10 +48,51 @@ public class Lesson {
     )
     private Boolean shared;
 
+  @Column(
+    name = "language",
+    nullable = false,
+    unique = false
+  )
+  @Size(min = 1, max = 30)
+  @Pattern(regexp = "^[\\p{L} ]+$")
+  private String language;
+
+  @Transient
+  private int wordCount;
+
+  public int getWordCount() {
+    return words != null ? words.size() : 0;
+  }
+
+  public void addWord(Word word) {
+    words.add(word);
+    word.setLesson(this);
+  }
+
+  public void removeWord(Word word) {
+    words.remove(word);
+    word.setLesson(null);
+  }
+
+  @Transient
+  public double getScore() {
+    if (words == null || words.isEmpty()) {
+      return 0.0;
+    }
+
+    double average = words.stream()
+      .filter(w -> w.getScore() != null)
+      .mapToDouble(Word::getScore)
+      .average()
+      .orElse(0.0);
+
+    return Math.round(average * 10.0) / 10.0;
+  }
+
     @ManyToOne
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Word> words;
 }

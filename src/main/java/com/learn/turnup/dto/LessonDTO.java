@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * LessonDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T13:40:59.494461+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class LessonDTO {
 
   private UUID id;
@@ -27,6 +27,12 @@ public class LessonDTO {
   private String lessonName;
 
   private String description;
+
+  private String language;
+
+  private Integer score;
+
+  private Integer wordCount;
 
   private Boolean shared;
 
@@ -37,10 +43,13 @@ public class LessonDTO {
   /**
    * Constructor with only required parameters
    */
-  public LessonDTO(UUID id, String lessonName, String description, Boolean shared) {
+  public LessonDTO(UUID id, String lessonName, String description, String language, Integer score, Integer wordCount, Boolean shared) {
     this.id = id;
     this.lessonName = lessonName;
     this.description = description;
+    this.language = language;
+    this.score = score;
+    this.wordCount = wordCount;
     this.shared = shared;
   }
 
@@ -53,7 +62,7 @@ public class LessonDTO {
    * Get id
    * @return id
    */
-  @NotNull @Valid 
+  @NotNull @Valid
   @Schema(name = "id", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public UUID getId() {
@@ -73,7 +82,7 @@ public class LessonDTO {
    * Get lessonName
    * @return lessonName
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 30) 
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 30)
   @Schema(name = "lessonName", example = "Podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("lessonName")
   public String getLessonName() {
@@ -93,7 +102,7 @@ public class LessonDTO {
    * Get description
    * @return description
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 60) 
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 60)
   @Schema(name = "description", example = "V lekci jsou běžná podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
@@ -102,6 +111,66 @@ public class LessonDTO {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public LessonDTO language(String language) {
+    this.language = language;
+    return this;
+  }
+
+  /**
+   * Get language
+   * @return language
+   */
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 30)
+  @Schema(name = "language", example = "AJ", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("language")
+  public String getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+
+  public LessonDTO score(Integer score) {
+    this.score = score;
+    return this;
+  }
+
+  /**
+   * Get score
+   * @return score
+   */
+  @NotNull
+  @Schema(name = "score", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("score")
+  public Integer getScore() {
+    return score;
+  }
+
+  public void setScore(Integer score) {
+    this.score = score;
+  }
+
+  public LessonDTO wordCount(Integer wordCount) {
+    this.wordCount = wordCount;
+    return this;
+  }
+
+  /**
+   * Get wordCount
+   * @return wordCount
+   */
+  @NotNull
+  @Schema(name = "wordCount", example = "15", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("wordCount")
+  public Integer getWordCount() {
+    return wordCount;
+  }
+
+  public void setWordCount(Integer wordCount) {
+    this.wordCount = wordCount;
   }
 
   public LessonDTO shared(Boolean shared) {
@@ -113,7 +182,7 @@ public class LessonDTO {
    * Get shared
    * @return shared
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "shared", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("shared")
   public Boolean getShared() {
@@ -136,12 +205,15 @@ public class LessonDTO {
     return Objects.equals(this.id, lessonDTO.id) &&
         Objects.equals(this.lessonName, lessonDTO.lessonName) &&
         Objects.equals(this.description, lessonDTO.description) &&
+        Objects.equals(this.language, lessonDTO.language) &&
+        Objects.equals(this.score, lessonDTO.score) &&
+        Objects.equals(this.wordCount, lessonDTO.wordCount) &&
         Objects.equals(this.shared, lessonDTO.shared);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, lessonName, description, shared);
+    return Objects.hash(id, lessonName, description, language, score, wordCount, shared);
   }
 
   @Override
@@ -151,6 +223,9 @@ public class LessonDTO {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    lessonName: ").append(toIndentedString(lessonName)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    language: ").append(toIndentedString(language)).append("\n");
+    sb.append("    score: ").append(toIndentedString(score)).append("\n");
+    sb.append("    wordCount: ").append(toIndentedString(wordCount)).append("\n");
     sb.append("    shared: ").append(toIndentedString(shared)).append("\n");
     sb.append("}");
     return sb.toString();

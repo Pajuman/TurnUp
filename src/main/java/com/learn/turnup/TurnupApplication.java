@@ -19,8 +19,7 @@ public class TurnupApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TurnupApplication.class, args);
 	}
-/*
-	@Bean
+	/*@Bean
 	CommandLineRunner loadLessons(AppUserRepository userRepository,
 								  LessonRepository lessonRepository,
 								  WordRepository wordRepository) {
@@ -37,11 +36,11 @@ public class TurnupApplication {
 				AppUser charlie = users.get(2);
 
 				List<Lesson> lessons = lessonRepository.saveAll(List.of(
-						createLesson("Basics", "Introductory lesson", false, alice),
-						createLesson("Verbs", "Common verbs", true, alice),
-						createLesson("Food", "Vocabulary about food", false, bob),
-						createLesson("Travel", "Travel-related phrases", true, charlie),
-						createLesson("Numbers", "Counting and numbers", false, bob)
+						createLesson("Basics", "Introductory lesson", false, "AJ", alice),
+						createLesson("Verbs", "Common verbs", true,"AJ", alice),
+						createLesson("Food", "Vocabulary about food", false,"AJ", bob),
+						createLesson("Travel", "Travel-related phrases", true,"AJ", charlie),
+						createLesson("Numbers", "Counting and numbers", false,"AJ", bob)
 				));
 
 				// Generate 4 words per lesson (5 lessons × 4 = 20)
@@ -61,13 +60,13 @@ public class TurnupApplication {
 		};
 	}
 
-	private Lesson createLesson(String name, String desc, boolean shared, AppUser user) {
+	private Lesson createLesson(String name, String desc, boolean shared, String language, AppUser user) {
 		Lesson lesson = new Lesson();
 		lesson.setLessonName(name);
 		lesson.setDescription(desc);
 		lesson.setShared(shared);
+    lesson.setLanguage(language);
 		lesson.setAppUser(user);
 		return lesson;
-	}
-*/
+	}*/
 }

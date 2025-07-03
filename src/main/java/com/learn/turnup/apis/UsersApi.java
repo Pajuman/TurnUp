@@ -5,7 +5,6 @@
  */
 package com.learn.turnup.apis;
 
-
 import java.util.UUID;
 
 import com.learn.turnup.dto.AppUserDTO;
@@ -36,7 +35,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T13:40:59.494461+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "User", description = "Users own Lessons")
 public interface UsersApi {
@@ -67,7 +66,7 @@ public interface UsersApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    
+
     ResponseEntity<UUID> createUser(
         @Parameter(name = "AppUserDTO", description = "", required = true) @Valid @RequestBody AppUserDTO appUserDTO
     );
@@ -95,7 +94,7 @@ public interface UsersApi {
         method = RequestMethod.DELETE,
         value = "/users"
     )
-    
+
     ResponseEntity<Void> deleteUser(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId
     );
@@ -128,7 +127,7 @@ public interface UsersApi {
         value = "/users/me/lessons",
         produces = { "application/json" }
     )
-    
+
     ResponseEntity<List<LessonDTO>> getLessonsOfLoggedInUser(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId
     );
@@ -160,7 +159,7 @@ public interface UsersApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    
+
     ResponseEntity<UUID> loginUser(
         @Parameter(name = "AppUserDTO", description = "", required = true) @Valid @RequestBody AppUserDTO appUserDTO
     );
@@ -192,7 +191,7 @@ public interface UsersApi {
         value = "/users",
         consumes = { "application/json" }
     )
-    
+
     ResponseEntity<Void> updateUser(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "AppUserDTO", description = "", required = true) @Valid @RequestBody AppUserDTO appUserDTO

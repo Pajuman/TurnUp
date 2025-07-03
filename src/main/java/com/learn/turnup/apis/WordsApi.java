@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-09T13:40:59.494461+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Word", description = "Words are lowest entities")
 public interface WordsApi {
@@ -65,7 +65,7 @@ public interface WordsApi {
         value = "/words",
         consumes = { "application/json" }
     )
-    
+
     ResponseEntity<Void> updateWords(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "BatchWordUpdateDTO", description = "", required = true) @Valid @RequestBody BatchWordUpdateDTO batchWordUpdateDTO

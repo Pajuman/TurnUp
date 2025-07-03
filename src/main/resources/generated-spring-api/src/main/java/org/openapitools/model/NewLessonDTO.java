@@ -18,12 +18,14 @@ import jakarta.annotation.Generated;
  * NewLessonDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-10T10:26:27.055127200+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class NewLessonDTO {
 
   private String lessonName;
 
   private String description;
+
+  private String category;
 
   private Boolean shared;
 
@@ -34,9 +36,10 @@ public class NewLessonDTO {
   /**
    * Constructor with only required parameters
    */
-  public NewLessonDTO(String lessonName, String description, Boolean shared) {
+  public NewLessonDTO(String lessonName, String description, String category, Boolean shared) {
     this.lessonName = lessonName;
     this.description = description;
+    this.category = category;
     this.shared = shared;
   }
 
@@ -69,7 +72,7 @@ public class NewLessonDTO {
    * Get description
    * @return description
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 60) 
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 60) 
   @Schema(name = "description", example = "V lekci jsou běžná podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
@@ -78,6 +81,26 @@ public class NewLessonDTO {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public NewLessonDTO category(String category) {
+    this.category = category;
+    return this;
+  }
+
+  /**
+   * Get category
+   * @return category
+   */
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 30) 
+  @Schema(name = "category", example = "AJ", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("category")
+  public String getCategory() {
+    return category;
+  }
+
+  public void setCategory(String category) {
+    this.category = category;
   }
 
   public NewLessonDTO shared(Boolean shared) {
@@ -111,12 +134,13 @@ public class NewLessonDTO {
     NewLessonDTO newLessonDTO = (NewLessonDTO) o;
     return Objects.equals(this.lessonName, newLessonDTO.lessonName) &&
         Objects.equals(this.description, newLessonDTO.description) &&
+        Objects.equals(this.category, newLessonDTO.category) &&
         Objects.equals(this.shared, newLessonDTO.shared);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(lessonName, description, shared);
+    return Objects.hash(lessonName, description, category, shared);
   }
 
   @Override
@@ -125,6 +149,7 @@ public class NewLessonDTO {
     sb.append("class NewLessonDTO {\n");
     sb.append("    lessonName: ").append(toIndentedString(lessonName)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    shared: ").append(toIndentedString(shared)).append("\n");
     sb.append("}");
     return sb.toString();
