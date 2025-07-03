@@ -1,17 +1,17 @@
 package com.learn.turnup.controllers;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Debugger {
-  @Value("${spring.profiles.active:default}")
-  private String activeProfile;
+  private static final Logger logger = LoggerFactory.getLogger(Debugger.class);
 
   @PostConstruct
   public void logProfile() {
-    System.out.println("Active Spring Profile: " + activeProfile);
+    logger.info("Active Spring Profile logged here!");
   }
 }
