@@ -412,7 +412,7 @@ components:
           maxLength: 60
           pattern: '^[\p{L}0-9 ]+$'
           example: "V lekci jsou běžná podstatná jména"
-        category:
+        language:
           type: string
           minLength: 2
           maxLength: 30
@@ -452,7 +452,7 @@ components:
           maxLength: 60
           pattern: '^[\p{L}0-9 ]+$'
           example: "V lekci jsou běžná podstatná jména"
-        category:
+        language:
           type: string
           minLength: 2
           maxLength: 30
@@ -463,7 +463,7 @@ components:
       required:
         - lessonName
         - description
-        - category
+        - language
         - shared
 
     AppUserDTO:

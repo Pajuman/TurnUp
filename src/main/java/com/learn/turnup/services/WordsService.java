@@ -22,17 +22,20 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.learn.turnup.exceptions.DefaultUser.denyForDefaultUser;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class WordsService {
     private final WordRepository wordRepository;
     private final LessonRepository lessonRepository;
-    private final AppUserRepository appUserRepository;
     private final ValidationService validationService;
 
     public void updateAndDeleteWords(UUID xUserId, BatchWordUpdateDTO batchWordUpdateDTO) {
-        List<WordDTO> wordDTOsToUpdate = batchWordUpdateDTO.getUpdatedWords();
+      denyForDefaultUser(xUserId);
+
+      List<WordDTO> wordDTOsToUpdate = batchWordUpdateDTO.getUpdatedWords();
         List<UUID> updatedWordIds = batchWordUpdateDTO.getUpdatedWords().stream().map(WordDTO::getId).toList();
         List<Word> wordsToUpdate = wordRepository.findAllById(updatedWordIds);
         List<UUID> deletedWordIds = batchWordUpdateDTO.getDeletedWordIds();

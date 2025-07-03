@@ -28,13 +28,13 @@ public class UsersApiController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<UUID> createUser(AppUserDTO appUserDTO) {
-        return ResponseEntity.ok(appUserService.createUser(appUserDTO));
+    public ResponseEntity<UUID> loginUser(AppUserDTO appUserDTO) {
+      return ResponseEntity.ok(appUserService.loginUser(appUserDTO));
     }
 
     @Override
-    public ResponseEntity<UUID> loginUser(AppUserDTO appUserDTO) {
-        return ResponseEntity.ok(appUserService.loginUser(appUserDTO));
+    public ResponseEntity<UUID> createUser(AppUserDTO appUserDTO) {
+        return ResponseEntity.ok(appUserService.createUser(appUserDTO));
     }
 
     @Override

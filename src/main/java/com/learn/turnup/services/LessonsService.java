@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import static com.learn.turnup.exceptions.DefaultUser.denyForDefaultUser;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -55,7 +57,9 @@ public class LessonsService {
     }
 
     public LessonDTO copySharedLesson(UUID xUserId, UUID lessonId) {
-        //401
+      denyForDefaultUser(xUserId);
+
+      //401
         validationService.checkAppUserId(xUserId);
         //404
         Lesson copiedLesson = lessonRepository.findById(lessonId).orElseThrow(() ->
@@ -99,7 +103,9 @@ public class LessonsService {
     }
 
     public LessonDTO createLesson(UUID xUserId, NewLessonDTO newLessonDTO) {
-        //401
+      denyForDefaultUser(xUserId);
+
+      //401
         validationService.checkAppUserId(xUserId);
         //409
         if(lessonRepository.existsByLessonNameAndAppUser_Id(newLessonDTO.getLessonName(), xUserId)) {
@@ -117,7 +123,9 @@ public class LessonsService {
     }
 
     public List<WordDTO> createWords(UUID xUserId, UUID lessonId, List<NewWordDTO> newWordDTOs) {
-        //401
+      denyForDefaultUser(xUserId);
+
+      //401
         validationService.checkAppUserId(xUserId);
         //404
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() ->
@@ -138,7 +146,9 @@ public class LessonsService {
     }
 
     public void updateLesson(UUID xUserId, LessonDTO lessonDTO) {
-        //401
+      denyForDefaultUser(xUserId);
+
+      //401
         validationService.checkAppUserId(xUserId);
         //404
         Lesson lesson = lessonRepository.findById(lessonDTO.getId()).orElseThrow(() ->
@@ -160,7 +170,9 @@ public class LessonsService {
     }
 
     public void deleteLesson(UUID xUserId, UUID lessonId) {
-        //401
+      denyForDefaultUser(xUserId);
+
+      //401
         validationService.checkAppUserId(xUserId);
         //403
         Lesson lesson = lessonRepository.findById(lessonId).orElse(null);

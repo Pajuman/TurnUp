@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static com.learn.turnup.exceptions.DefaultUser.denyForDefaultUser;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -34,8 +36,25 @@ public class AppUserService {
         //400, 401
         validationService.checkAppUserId(xUserId);
 
-        List<Lesson> userLessons = lessonRepository.findAllByAppUserId(xUserId).orElse(Collections.emptyList());
-        return  userLessons.stream().map(lessonMapper::toDto).toList();
+      List<Lesson> userLessons = lessonRepository.findAllByAppUserId(xUserId).orElse(Collections.emptyList());
+      List<Lesson> sharedLessons = lessonRepository.findAllBySharedIsTrueAndAppUserIdNot(xUserId).orElse(Collections.emptyList());
+
+      List<LessonDTO> alteredSharedLessonDTOs = sharedLessons.stream()
+        .map(lesson -> {
+          LessonDTO dto = lessonMapper.toDto(lesson);
+          dto.setScore(-1000);
+          return dto;
+        })
+        .toList();
+
+      List<LessonDTO> userLessonDTOs = userLessons.stream()
+        .map(lessonMapper::toDto)
+        .toList();
+
+      List<LessonDTO> result = new ArrayList<>(userLessonDTOs);
+      result.addAll(alteredSharedLessonDTOs);
+
+      return result;
     }
 
     public UUID createUser(AppUserDTO appUserDTO) {
@@ -61,7 +80,9 @@ public class AppUserService {
     }
 
     public void updateUser(UUID xUserId, AppUserDTO appUserDTO) {
-        //400, 401
+      denyForDefaultUser(xUserId);
+
+      //400, 401
         validationService.checkAppUserId(xUserId);
 
         AppUser appUser = appUserRepository.findById(xUserId).orElse(null);
@@ -78,7 +99,9 @@ public class AppUserService {
     }
 
     public void deleteUser(UUID xUserId) {
-        //400, 401
+      denyForDefaultUser(xUserId);
+
+      //400, 401
         validationService.checkAppUserId(xUserId);
 
         appUserRepository.findById(xUserId).ifPresent(appUserRepository::delete);
