@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url:jdbc: postgresql://${PROD_DB_HOST}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
+    name: some_name
+
+  sql:
+    init:
+      mode: always

@@ -1,0 +1,493 @@
+openapi: 3.0.0
+info:
+  title: Word API
+  version: 1.0.0
+servers:
+  - url: /api
+tags:
+  - name: User
+    description: Users own Lessons
+  - name: Lesson
+    description: Lessons own Words
+  - name: Word
+    description: Words are lowest entities
+
+paths:
+  /users:
+    post:
+      summary: Create a user
+      tags:
+        - User
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserDTO'
+      responses:
+        '200':
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '400':
+          description: Invalid input
+        '409':
+          description: User name already exists
+
+    put:
+      summary: Update a user
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+      tags:
+        - User
+      operationId: updateUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserDTO'
+      responses:
+        '201':
+          description: User updated
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+        '409':
+          description: User name already exists
+    delete:
+      summary: Delete a user
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+      tags:
+        - User
+      operationId: deleteUser
+      responses:
+        '204':
+          description: User deleted
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+
+  /users/login:
+    post:
+      summary: Login a user
+      tags:
+        - User
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserDTO'
+      responses:
+        '200':
+          description: User logged in
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+
+  /users/me/lessons:
+    get:
+      summary: Get all lessons of logged in user
+      tags:
+        - User
+      operationId: getLessonsOfLoggedInUser
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+      responses:
+        '200':
+          description: Lessons of logged in user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LessonDTO'
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+        '404':
+          description: No lessons found for user
+
+  /lessons:
+    post:
+      summary: Create a new lesson
+      tags:
+        - Lesson
+      operationId: createLesson
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewLessonDTO'
+      responses:
+        '200':
+          description: Lesson created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonDTO'
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+        '409':
+          description: Lesson name already exists
+
+    put:
+      summary: Update a lesson
+      tags:
+        - Lesson
+      operationId: updateLesson
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonDTO'
+      responses:
+        '204':
+          description: Lesson updated
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+        '403':
+          description: Unauthorized access to lesson
+        '404':
+          description: Lesson not found
+        '409':
+          description: Lesson name already exists
+
+  /lessons/{lessonId}:
+    delete:
+      summary: Delete a lesson
+      tags:
+        - Lesson
+      operationId: deleteLesson
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Lesson deleted
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+        '403':
+          description: Unauthorized access to lesson
+
+  /lessons/{lessonId}/copy:
+    post:
+      summary: Copy a shared lesson
+      tags:
+        - Lesson
+      operationId: copySharedLesson
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Lesson copied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LessonDTO'
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+        '403':
+          description: Unauthorized access to lesson
+        '404':
+          description: Lesson not found
+        '409':
+          description: Lesson name already exists
+
+  /lessons/{lessonId}/words:
+    get:
+      summary: Get all words of a lesson
+      tags:
+        - Lesson
+      operationId: getWordsByLessonId
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Words of the lesson
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WordDTO'
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+        '403':
+          description: Unauthorized access to lesson
+        '404':
+          description: Lesson not found
+
+    post:
+      summary: Create new words in a lesson
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Lesson
+      operationId: createWords
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/NewWordDTO'
+      responses:
+        '200':
+          description: Words created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WordDTO'
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+        '403':
+          description: Unauthorized access to lesson
+        '404':
+          description: Lesson not found
+
+  /words:
+    put:
+      summary: Update and/or delete words
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+      tags:
+        - Word
+      operationId: updateWords
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchWordUpdateDTO'
+      responses:
+        '204':
+          description: All words successfully updated and/or deleted
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+        '403':
+          description: Unauthorized access to words
+
+components:
+  schemas:
+    WordDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        question:
+          type: string
+          minLength: 1
+          maxLength: 40
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "1 black dog"
+        answer:
+          type: string
+          minLength: 1
+          maxLength: 40
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "1 černý pes"
+        score:
+          type: integer
+      required:
+        - id
+        - question
+        - answer
+        - score
+
+    NewWordDTO:
+      type: object
+      properties:
+        question:
+          type: string
+          minLength: 1
+          maxLength: 40
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "1 black dog"
+        answer:
+          type: string
+          minLength: 1
+          maxLength: 40
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "1 černý pes"
+      required:
+        - question
+        - answer
+
+    BatchWordUpdateDTO:
+      type: object
+      properties:
+        newWords:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewWordDTO'
+        updatedWords:
+          type: array
+          items:
+            $ref: '#/components/schemas/WordDTO'
+        deletedWordIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+
+    LessonDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        lessonName:
+          type: string
+          minLength: 2
+          maxLength: 30
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "Podstatná jména"
+        description:
+          type: string
+          minLength: 3
+          maxLength: 60
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "V lekci jsou běžná podstatná jména"
+        language:
+          type: string
+          minLength: 2
+          maxLength: 30
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "AJ"
+        score:
+          type: integer
+          format: flow
+          example: 3,5
+        wordCount:
+          type: integer
+          format: int32
+          example: 15
+        shared:
+          type: boolean
+      required:
+        - id
+        - lessonName
+        - description
+        - language
+        - score
+        - wordCount
+        - shared
+
+    NewLessonDTO:
+      type: object
+      properties:
+        lessonName:
+          type: string
+          minLength: 3
+          maxLength: 30
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "Podstatná jména"
+        description:
+          type: string
+          minLength: 2
+          maxLength: 60
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "V lekci jsou běžná podstatná jména"
+        language:
+          type: string
+          minLength: 2
+          maxLength: 30
+          pattern: '^[\p{L}0-9 ]+$'
+          example: "AJ"
+        shared:
+          type: boolean
+      required:
+        - lessonName
+        - description
+        - language
+        - shared
+
+    AppUserDTO:
+      type: object
+      properties:
+        appUserName:
+          type: string
+          minLength: 3
+          maxLength: 20
+          pattern: '^[a-zA-Z0-9_]+$'
+          example: "john_doe"
+        passwordHash:
+          type: string
+          pattern: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]+$'
+          example: "P@ssw0rd123"
+      required:
+        - appUserName
+        - passwordHash
+
+  parameters:
+    UserIdHeader:
+      name: X-User-Id
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uuid
