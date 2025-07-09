@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build turnup --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "generate:api": "openapi-generator-cli generate -i C:\\Users\\Já\\IdeaProjects\\turnup\\src\\main\\resources\\openapi.yaml -g typescript-angular -o src/app/api --additional-properties providedIn=root"
