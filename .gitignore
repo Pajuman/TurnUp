@@ -13,9 +13,9 @@ yarn-error.log
 
 # IDEs and editors
 .idea/
-HELP.md
+backend/HELP.md
 target/
-.mvn/wrapper/maven-wrapper.jar
+backend/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
