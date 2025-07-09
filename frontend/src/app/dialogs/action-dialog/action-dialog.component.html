@@ -63,13 +63,24 @@
       <div class="dialog-row">
         <label for="shared">Sdílení</label>
         <p-dropdown
+          [required]="true"
+          #sharedDropdown="ngModel"
+          name="shared"
           id="shared"
           [options]="SHARED_OPTIONS"
           [(ngModel)]="shared"
+          [ngStyle]="sharedDropdown.invalid && sharedDropdown.touched ? { outline: '1px solid #f87171'} : {outline: '1px solid #cbd5e1'}"
           optionLabel="label"
           class="flex-auto">
         </p-dropdown>
       </div>
+      <small [class.in-visible]="!(sharedDropdown.invalid && sharedDropdown.touched)">
+        @if (sharedDropdown.errors?.['required']) {
+          <span>Je nutné vyplnit, zda chcete sdílet lekci s ostatními.</span>
+        } @else {
+          <span></span>
+        }
+      </small>
       <div class="dialog-row">
         <label for="category">Kategorie</label>
         <input #categoryInput="ngModel" [(ngModel)]="category" autocomplete="off" name="category"

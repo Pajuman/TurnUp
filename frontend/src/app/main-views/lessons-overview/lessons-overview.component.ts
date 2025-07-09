@@ -3,6 +3,7 @@ import { Table, TableModule } from 'primeng/table';
 import {
   LESSONS,
   LogDialogMode,
+  SHARED_OPTIONS,
   WORDS,
 } from '../../constants-interfaces/constants';
 import { Popover } from 'primeng/popover';
@@ -130,7 +131,9 @@ export class LessonsOverviewComponent implements OnInit {
     if (action === 'Edit' && editedLesson) {
       this.actionDialog()!.lessonName = editedLesson.lessonName;
       this.actionDialog()!.description = editedLesson.description;
-      this.actionDialog()!.shared = editedLesson.shared;
+      this.actionDialog()!.shared = editedLesson.shared
+        ? SHARED_OPTIONS[0]
+        : SHARED_OPTIONS[1];
       this.actionDialog()!.category = editedLesson.category;
     }
     this.actionDialog()!.item.set('Lesson');

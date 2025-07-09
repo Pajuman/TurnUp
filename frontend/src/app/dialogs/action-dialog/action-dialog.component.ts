@@ -15,10 +15,11 @@ import { ActionDialogOutput } from '../../constants-interfaces/interfaces';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { SHARED_OPTIONS } from '../../constants-interfaces/constants';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'action-dialog',
-  imports: [Button, Dialog, InputText, FormsModule, DropdownModule],
+  imports: [Button, Dialog, InputText, FormsModule, DropdownModule, NgStyle],
   templateUrl: './action-dialog.component.html',
   styleUrl: './action-dialog.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -37,7 +38,7 @@ export class ActionDialogComponent {
 
   public lessonName = '';
   public description = '';
-  public shared = false;
+  public shared?: { label: string; value: boolean };
   public category = '';
   protected readonly SHARED_OPTIONS = SHARED_OPTIONS;
 
@@ -55,6 +56,6 @@ export class ActionDialogComponent {
     this.lessonName = '';
     this.description = '';
     this.category = '';
-    this.shared = false;
+    this.shared = undefined;
   }
 }
