@@ -2,7 +2,9 @@ import {
   Component,
   output,
   OutputEmitterRef,
+  Signal,
   signal,
+  viewChild,
   ViewEncapsulation,
   WritableSignal,
 } from '@angular/core';
@@ -10,7 +12,7 @@ import { Button } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { InputText } from 'primeng/inputtext';
 import { ActionDialogOutput } from '../../constants-interfaces/interfaces';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { SHARED_OPTIONS } from '../../constants-interfaces/constants';
 
@@ -23,6 +25,7 @@ import { SHARED_OPTIONS } from '../../constants-interfaces/constants';
 })
 export class ActionDialogComponent {
   public readonly dataToSave: OutputEmitterRef<ActionDialogOutput> = output();
+  public readonly form: Signal<NgForm | undefined> = viewChild('form');
 
   public item: WritableSignal<'Lesson' | 'Word'> = signal('Word');
   public action: WritableSignal<'New' | 'Edit'> = signal('New');
@@ -46,6 +49,7 @@ export class ActionDialogComponent {
         answer: this.answer(),
       });
     }
+    this.form()?.resetForm();
     this.question.set('');
     this.answer.set('');
     this.lessonName = '';

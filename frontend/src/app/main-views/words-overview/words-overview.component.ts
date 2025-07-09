@@ -91,6 +91,7 @@ export class WordsOverviewComponent implements OnInit {
       this.actionDialog()!.answer.set(currentWord.answer);
     }
 
+    this.actionDialog()!.save.set(false);
     this.actionDialog()!.action.set(action);
     this.actionDialog()!.visible.set(true);
   }
