@@ -10,7 +10,7 @@ import { Popover } from 'primeng/popover';
 import { LogDialogComponent } from '../../dialogs/log-dialog/log-dialog.component';
 import { FormsModule } from '@angular/forms';
 import {
-  ActionDialogOutput,
+  ActionLessonDialogOutput,
   ConfirmDialogOutput,
   Lesson,
   Option,
@@ -129,33 +129,48 @@ export class LessonsOverviewComponent implements OnInit {
     editedLesson: Lesson | null = null,
   ) {
     if (action === 'Edit' && editedLesson) {
-      this.actionDialog()!.lessonName = editedLesson.lessonName;
-      this.actionDialog()!.description = editedLesson.description;
-      this.actionDialog()!.shared = editedLesson.shared
-        ? SHARED_OPTIONS[0]
-        : SHARED_OPTIONS[1];
-      this.actionDialog()!.category = editedLesson.category;
+      this.actionDialog()!.lessonName.set(editedLesson.lessonName);
+      this.actionDialog()!.description.set(editedLesson.description);
+      this.actionDialog()!.shared.set(
+        editedLesson.shared ? SHARED_OPTIONS[0] : SHARED_OPTIONS[1],
+      );
+      this.actionDialog()!.category.set(editedLesson.category);
     }
     this.actionDialog()!.item.set('Lesson');
     this.actionDialog()!.action.set(action);
     this.actionDialog()!.visible.set(true);
   }
 
-  public saveLessonChanges(event: ActionDialogOutput) {
-    /* if (event.action === 'New') {
-                   this.addLesson(event.question, event.answer);
-                 } else if (
-                   event.action === 'Edit' &&
-                   (event.question !== this.editedWord?.question ||
-                     event.answer !== this.editedWord.answer)
-                 ) {
-                   this.editLesson(event.question, event.answer);
-                 }*/
+  public saveLessonChanges(event: any) {
+    const output = event as ActionLessonDialogOutput;
+
+    const newOrEditedLesson = {
+      lessonName: output.lessonName,
+      description: output.description,
+      shared: output.shared,
+      category: output.category,
+      score: 0,
+      status: 'own',
+    } as Lesson;
+    if (output.action === 'New') {
+      this.addLesson(newOrEditedLesson);
+    } else if (
+      output.action === 'Edit' &&
+      (output.lessonName !== this.editedLesson?.lessonName ||
+        output.category !== this.editedLesson.category ||
+        output.description !== this.editedLesson.description ||
+        output.shared !== this.editedLesson.shared)
+    ) {
+      this.editLesson(newOrEditedLesson);
+    }
   }
 
   public confirmDeletion(confirmDialogOutput: ConfirmDialogOutput) {
     if (confirmDialogOutput.confirm) {
-      //ToDo delete editedLesson
+      const index = this.lessons.findIndex(
+        (l) => l.id === this.editedLesson?.id,
+      );
+      this.lessons.splice(index, 1);
     }
   }
 
@@ -169,9 +184,8 @@ export class LessonsOverviewComponent implements OnInit {
     return words;
   }
 
-  private addLesson() {
-    const newLesson: Lesson = {} as Lesson;
-    this.lessons.push(newLesson);
+  private addLesson(newLessonData: Lesson) {
+    this.lessons.push(newLessonData);
   }
 
   private editLesson(newLessonData: Lesson) {

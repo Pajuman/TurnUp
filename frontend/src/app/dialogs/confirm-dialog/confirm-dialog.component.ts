@@ -1,10 +1,11 @@
 import {
   Component,
+  input,
+  InputSignal,
   output,
   OutputEmitterRef,
   signal,
   ViewEncapsulation,
-  WritableSignal,
 } from '@angular/core';
 import { Button } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
@@ -21,8 +22,8 @@ import { ConfirmDialogOutput } from '../../constants-interfaces/interfaces';
 export class ConfirmDialogComponent {
   public readonly confirmOutput: OutputEmitterRef<ConfirmDialogOutput> =
     output();
+  public item: InputSignal<'Lesson' | 'Word'> = input.required();
   public visible = signal(false);
-  public item: WritableSignal<'Lesson' | 'Word'> = signal('Word');
 
   public confirm(confirmed: boolean) {
     this.visible.set(false);

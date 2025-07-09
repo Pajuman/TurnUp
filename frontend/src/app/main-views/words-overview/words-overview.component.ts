@@ -11,7 +11,7 @@ import { TableModule } from 'primeng/table';
 import { TogglerComponent } from '../../features/toggler/toggler.component';
 import { FormsModule } from '@angular/forms';
 import {
-  ActionDialogOutput,
+  ActionWordDialogOutput,
   ConfirmDialogOutput,
   Lesson,
   Option,
@@ -60,15 +60,17 @@ export class WordsOverviewComponent implements OnInit {
     this.router.navigate(['practice', this.lesson().lessonName]);
   }
 
-  public saveWordChanges(event: ActionDialogOutput) {
-    if (event.action === 'New') {
-      this.addWord(event.question, event.answer);
+  public saveWordChanges(event: any) {
+    const output = event as ActionWordDialogOutput;
+
+    if (output.action === 'New') {
+      this.addWord(output.question, output.answer);
     } else if (
-      event.action === 'Edit' &&
-      (event.question !== this.editedWord?.question ||
-        event.answer !== this.editedWord.answer)
+      output.action === 'Edit' &&
+      (output.question !== this.editedWord?.question ||
+        output.answer !== this.editedWord.answer)
     ) {
-      this.editWord(event.question, event.answer);
+      this.editWord(output.question, output.answer);
     }
   }
 
@@ -124,7 +126,6 @@ export class WordsOverviewComponent implements OnInit {
   }
 
   private openConfirmDialog() {
-    this.confirmDialog()?.item.set('Word');
     this.confirmDialog()?.visible.set(true);
   }
 }

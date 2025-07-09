@@ -92,4 +92,5 @@
   </ng-template>
 </p-table>
 <action-dialog #actionDialog (dataToSave)="saveLessonChanges($event)"></action-dialog>
-<confirm-action-dialog #confirmDialog (confirmOutput)="confirmDeletion($event)"></confirm-action-dialog>
+<confirm-action-dialog #confirmDialog (confirmOutput)="confirmDeletion($event)"
+                       [item]="'Lesson'"></confirm-action-dialog>

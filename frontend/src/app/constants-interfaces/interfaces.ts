@@ -20,10 +20,18 @@ export interface Word extends WordDTO {
   status: 'new' | 'edited' | 'deleted' | null;
 }
 
-export interface ActionDialogOutput {
+export interface ActionWordDialogOutput {
   action: 'New' | 'Edit';
   question: string;
   answer: string;
+}
+
+export interface ActionLessonDialogOutput {
+  action: 'New' | 'Edit';
+  lessonName: string;
+  description: string;
+  shared: boolean;
+  category: string;
 }
 
 export interface ConfirmDialogOutput {
