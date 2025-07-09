@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b32b2486-3b40-40ab-8887-2adb85d0a477" name="Changes" comment="debug">
+    <list default="true" id="b32b2486-3b40-40ab-8887-2adb85d0a477" name="Changes" comment="set temporary H2 so that deploy without DB can be made">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +66,9 @@
 }]]></component>
   <component name="RunManager">
     <configuration name="TurnupApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="SPRING_PROFILES_ACTIVE" value="production" />
+      </envs>
       <option name="MAIN_CLASS_NAME" value="com.learn.turnup.TurnupApplication" />
       <module name="turnup" />
       <extension name="coverage">
@@ -133,13 +138,22 @@
       <option name="project" value="LOCAL" />
       <updated>1752062539972</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="set temporary H2 so that deploy without DB can be made">
+      <option name="closed" value="true" />
+      <created>1752063972939</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1752063972939</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="change java 21 to 17" />
     <MESSAGE value="application-production.properties added" />
     <MESSAGE value="debug" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug" />
+    <MESSAGE value="set temporary H2 so that deploy without DB can be made" />
+    <option name="LAST_COMMIT_MESSAGE" value="set temporary H2 so that deploy without DB can be made" />
   </component>
 </project>
