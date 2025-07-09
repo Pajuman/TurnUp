@@ -9,7 +9,7 @@
     <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.New)">Registrovat</span>
   }
   <p-popover #logDialogPopOver (onHide)="logDialog.resetForm()">
-    <log-dialog #logDialog (dialogOutput)="dialogOutput($event); logDialogPopOver.toggle($event) "
+    <log-dialog #logDialog (dialogOutput)="logDialogOutput($event); logDialogPopOver.toggle($event) "
                 [mode]="logDialogMode"
                 [userId]="userId"
     ></log-dialog>

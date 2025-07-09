@@ -156,7 +156,7 @@ export class LessonsOverviewComponent implements OnInit {
     }
   }
 
-  public dialogOutput($event: UserDialogOutput) {
+  public logDialogOutput($event: UserDialogOutput) {
     console.log($event);
   }
 
