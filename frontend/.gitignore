@@ -12,7 +12,7 @@ npm-debug.log
 yarn-error.log
 
 # IDEs and editors
-.idea/
+../.idea/
 backend/HELP.md
 target/
 backend/.mvn/wrapper/maven-wrapper.jar
