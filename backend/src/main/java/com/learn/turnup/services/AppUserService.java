@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -31,6 +32,7 @@ public class AppUserService {
     private final LessonRepository lessonRepository;
     private final LessonMapper lessonMapper;
     private final ValidationService validationService;
+    private final PasswordEncoder passwordEncoder;
 
     public List<LessonDTO> getLessonsOfLoggedInUser(UUID xUserId) {
         //400, 401
@@ -62,21 +64,21 @@ public class AppUserService {
         if (appUserRepository.existsByAppUserName(appUserDTO.getAppUserName())) {
             throw new EntityExistsException("User already exists");
         }
+        String hashedPassword = passwordEncoder.encode(appUserDTO.getPasswordHash());
 
         AppUser appUser = new AppUser();
         appUser.setAppUserName(appUserDTO.getAppUserName());
-        appUser.setPasswordHash(appUserDTO.getPasswordHash());
+        appUser.setPasswordHash(hashedPassword);
 
         return appUserRepository.save(appUser).getId();
     }
 
     public UUID loginUser(AppUserDTO appUserDTO) {
-        //401
-        AppUser appUser = appUserRepository.findByAppUserNameAndPasswordHash(appUserDTO.getAppUserName(), appUserDTO.getPasswordHash()).orElseThrow(
-                () -> new UnauthorizedException("User name or password mismatch")
-        );
-
-        return appUser.getId();
+        return appUserRepository.findByAppUserName(appUserDTO.getAppUserName())
+                .filter(user -> passwordEncoder.matches(appUserDTO.getPasswordHash(), user.getPasswordHash()))
+                .map(AppUser::getId)
+                //401
+                .orElseThrow(() -> new UnauthorizedException("User name or password mismatch"));
     }
 
     public void updateUser(UUID xUserId, AppUserDTO appUserDTO) {

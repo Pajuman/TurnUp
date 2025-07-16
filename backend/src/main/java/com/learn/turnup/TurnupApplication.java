@@ -10,6 +10,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -19,54 +21,9 @@ public class TurnupApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TurnupApplication.class, args);
 	}
-	/*@Bean
-	CommandLineRunner loadLessons(AppUserRepository userRepository,
-								  LessonRepository lessonRepository,
-								  WordRepository wordRepository) {
-		return args -> {
-			if (lessonRepository.count() == 0 && wordRepository.count() == 0) {
-				List<AppUser> users = userRepository.findAll();
-				if (users.size() < 3) {
-					System.out.println("Not enough users to assign lessons.");
-					return;
-				}
 
-				AppUser alice = users.get(0);
-				AppUser bob = users.get(1);
-				AppUser charlie = users.get(2);
-
-				List<Lesson> lessons = lessonRepository.saveAll(List.of(
-						createLesson("Basics", "Introductory lesson", false, "AJ", alice),
-						createLesson("Verbs", "Common verbs", true,"AJ", alice),
-						createLesson("Food", "Vocabulary about food", false,"AJ", bob),
-						createLesson("Travel", "Travel-related phrases", true,"AJ", charlie),
-						createLesson("Numbers", "Counting and numbers", false,"AJ", bob)
-				));
-
-				// Generate 4 words per lesson (5 lessons × 4 = 20)
-				int counter = 1;
-				for (Lesson lesson : lessons) {
-					for (int i = 0; i < 4; i++) {
-						Word word = new Word();
-						word.setQuestion("Question " + counter);
-						word.setAnswer("Answer " + counter);
-						word.setScore((byte) 0);
-						word.setLesson(lesson);
-						wordRepository.save(word);
-						counter++;
-					}
-				}
-			}
-		};
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
-
-	private Lesson createLesson(String name, String desc, boolean shared, String language, AppUser user) {
-		Lesson lesson = new Lesson();
-		lesson.setLessonName(name);
-		lesson.setDescription(desc);
-		lesson.setShared(shared);
-    lesson.setLanguage(language);
-		lesson.setAppUser(user);
-		return lesson;
-	}*/
 }

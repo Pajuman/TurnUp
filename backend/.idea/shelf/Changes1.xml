@@ -1,0 +1,19 @@
+<changelist name="Changes1" date="1752223818400" recycled="false">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Changes1/shelved.patch" />
+  <option name="DESCRIPTION" value="Changes" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/learn/turnup/repositories/AppUserRepository.class" />
+    <option name="AFTER_PATH" value="target/classes/com/learn/turnup/repositories/AppUserRepository.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Changes1/AppUserRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/learn/turnup/services/AppUserService.class" />
+    <option name="AFTER_PATH" value="target/classes/com/learn/turnup/services/AppUserService.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Changes1/AppUserService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/learn/turnup/TurnupApplication.class" />
+    <option name="AFTER_PATH" value="target/classes/com/learn/turnup/TurnupApplication.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Changes1/TurnupApplication.class" />
+  </binary>
+</changelist>

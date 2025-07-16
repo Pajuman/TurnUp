@@ -4,10 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b32b2486-3b40-40ab-8887-2adb85d0a477" name="Changes" comment="set CORS config">
+    <list default="true" id="b32b2486-3b40-40ab-8887-2adb85d0a477" name="Changes" comment="DB connection">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes1/AppUserRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes1/AppUserService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes1/TurnupApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes1/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/config/CorsConfig$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/config/CorsConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-production.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/TurnupApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/TurnupApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/repositories/AppUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/repositories/AppUserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/AppUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/AppUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-production.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/TurnupApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/TurnupApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/repositories/AppUserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/repositories/AppUserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/AppUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/AppUserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/LessonMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/LessonMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/WordMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/WordMapperImpl.java" afterDir="false" />
     </list>
@@ -26,7 +42,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="master" />
+        <entry key="$PROJECT_DIR$/.." value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
