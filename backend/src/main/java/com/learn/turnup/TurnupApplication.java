@@ -1,12 +1,5 @@
 package com.learn.turnup;
 
-import com.learn.turnup.entities.AppUser;
-import com.learn.turnup.entities.Lesson;
-import com.learn.turnup.entities.Word;
-import com.learn.turnup.repositories.AppUserRepository;
-import com.learn.turnup.repositories.LessonRepository;
-import com.learn.turnup.repositories.WordRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
