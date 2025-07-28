@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b32b2486-3b40-40ab-8887-2adb85d0a477" name="Changes" comment="removed spring security and used crypto instead" />
+    <list default="true" id="b32b2486-3b40-40ab-8887-2adb85d0a477" name="Changes" comment="DB for production settings" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -165,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753713776782</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="DB for production settings">
+      <option name="closed" value="true" />
+      <created>1753714180231</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1753714180231</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -175,6 +183,7 @@
     <MESSAGE value="set temporary H2 so that deploy without DB can be made" />
     <MESSAGE value="set CORS config" />
     <MESSAGE value="removed spring security and used crypto instead" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed spring security and used crypto instead" />
+    <MESSAGE value="DB for production settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="DB for production settings" />
   </component>
 </project>
