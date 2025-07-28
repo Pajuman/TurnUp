@@ -1,0 +1,12 @@
+<changelist name="Changes2" date="1753712119089" recycled="false">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Changes2/shelved.patch" />
+  <option name="DESCRIPTION" value="Changes" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/learn/turnup/config/CorsConfig$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/learn/turnup/config/CorsConfig.class" />
+    <option name="AFTER_PATH" value="target/classes/com/learn/turnup/config/CorsConfig.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Changes2/CorsConfig.class" />
+  </binary>
+</changelist>
