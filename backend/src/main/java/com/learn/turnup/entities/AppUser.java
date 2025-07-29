@@ -29,7 +29,6 @@ public class AppUser {
     private String appUserName;
 
     @Column(name = "password_hash", nullable = false)
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]+$")
     private String passwordHash;
 
     @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
