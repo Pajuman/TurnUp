@@ -64,6 +64,7 @@ public class AppUserService {
         if (appUserRepository.existsByAppUserName(appUserDTO.getAppUserName())) {
             throw new EntityExistsException("User already exists");
         }
+
         String hashedPassword = passwordEncoder.encode(appUserDTO.getPasswordHash());
 
         AppUser appUser = new AppUser();
