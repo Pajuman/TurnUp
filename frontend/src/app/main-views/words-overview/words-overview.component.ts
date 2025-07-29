@@ -21,7 +21,7 @@ import { Button } from 'primeng/button';
 import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-popover.component';
 import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog.component';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
-import { LessonService } from '../../services/lesson.service';
+import { StateService } from '../../services/state.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -42,7 +42,7 @@ import { Router } from '@angular/router';
 export class WordsOverviewComponent implements OnInit {
   public lesson: WritableSignal<Lesson> = signal({} as Lesson);
   public words: WritableSignal<Word[]> = signal([]);
-  public readonly lessonService = inject(LessonService);
+  public readonly lessonService = inject(StateService);
   private editedWord?: Word;
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
     viewChild('actionDialog');

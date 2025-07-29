@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { FormsModule } from '@angular/forms';
 import { NgClass, NgOptimizedImage } from '@angular/common';
-import { LessonService } from '../../services/lesson.service';
+import { StateService } from '../../services/state.service';
 import { SelectButton } from 'primeng/selectbutton';
 import { PRACTICE_COUNT_OPTIONS } from '../../constants-interfaces/constants';
 
@@ -13,6 +13,6 @@ import { PRACTICE_COUNT_OPTIONS } from '../../constants-interfaces/constants';
   styleUrl: './toggler.component.scss',
 })
 export class TogglerComponent {
-  public readonly lessonService = inject(LessonService);
+  public readonly lessonService = inject(StateService);
   protected readonly PRACTICE_COUNT_OPTIONS = PRACTICE_COUNT_OPTIONS;
 }
