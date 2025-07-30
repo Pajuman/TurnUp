@@ -11,7 +11,7 @@
   <p-popover #logDialogPopOver (onHide)="logDialog.resetForm()">
     <log-dialog #logDialog (dialogOutput)="logDialogOutput($event); logDialogPopOver.toggle($event) "
                 [mode]="logDialogMode"
-                [userId]="userId"
+                [userId]="userId()"
     ></log-dialog>
   </p-popover>
 </div>
@@ -20,7 +20,7 @@
   #lessonTable
   [sortField]="'status'"
   [sortOrder]="-1"
-  [value]="lessons"
+  [value]="lessons()"
 >
 
   <ng-template #caption>

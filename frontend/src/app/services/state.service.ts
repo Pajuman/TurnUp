@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import {
   Lesson,
   PracticeCountOption,
@@ -16,4 +16,6 @@ export class StateService {
     value: 20,
   };
   public languageSwitched = false;
+  public userId = signal('');
+  public lessons: WritableSignal<Lesson[]> = signal([]);
 }

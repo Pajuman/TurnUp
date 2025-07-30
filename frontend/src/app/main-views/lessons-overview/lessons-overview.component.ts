@@ -1,7 +1,14 @@
-import { Component, inject, OnInit, Signal, viewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  Signal,
+  viewChild,
+  WritableSignal,
+} from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
 import {
-  LESSONS,
   LogDialogMode,
   SHARED_OPTIONS,
   WORDS,
@@ -20,10 +27,10 @@ import {
 import { TogglerComponent } from '../../features/toggler/toggler.component';
 import { Tooltip } from 'primeng/tooltip';
 import { Filter } from '../../features/filter/filter';
-import { Subject } from 'rxjs';
+import { Subject, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { StateService } from '../../services/state.service';
-import { UserService, WordDTO } from '../../api';
+import { LessonDTO, UserService, WordDTO } from '../../api';
 import { Button } from 'primeng/button';
 import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog.component';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
@@ -49,11 +56,11 @@ import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-p
   standalone: true,
 })
 export class LessonsOverviewComponent implements OnInit {
-  public lessons: Lesson[] = [];
+  public userId = signal('');
+  public lessons: WritableSignal<Lesson[]> = signal([]);
   public userName = 'Demo';
   public loggedIn = false;
   public logDialogMode: LogDialogMode = LogDialogMode.New;
-  public userId = '';
   public searchValue = '';
   public isFilterActive = false;
   public clearAllFilters$ = new Subject<string>();
@@ -67,12 +74,26 @@ export class LessonsOverviewComponent implements OnInit {
     viewChild('logDialogPopOver');
   private router = inject(Router);
   private userService = inject(UserService);
-
+  private stateService = inject(StateService);
   private editedLesson?: Lesson;
 
   ngOnInit(): void {
-    //ToDo BE lessons pro Demo
-    this.lessons = LESSONS;
+    this.userId = this.stateService.userId;
+    this.lessons = this.stateService.lessons;
+    if (!this.userId()) {
+      this.userService
+        .loginUser({
+          appUserName: 'demo',
+          passwordHash: 'P@ssword123',
+        })
+        .pipe(
+          tap((userId) => this.stateService.userId.set(userId)),
+          switchMap((userId) =>
+            this.userService.getLessonsOfLoggedInUser(userId),
+          ),
+        )
+        .subscribe((lessons) => this.setUserLesson(lessons));
+    }
   }
 
   public openUserDialog(event: Event, mode: LogDialogMode) {
@@ -168,10 +189,10 @@ export class LessonsOverviewComponent implements OnInit {
 
   public confirmDeletion(confirmDialogOutput: ConfirmDialogOutput) {
     if (confirmDialogOutput.confirm) {
-      const index = this.lessons.findIndex(
+      const index = this.lessons().findIndex(
         (l) => l.id === this.editedLesson?.id,
       );
-      this.lessons.splice(index, 1);
+      this.lessons().splice(index, 1);
     }
   }
 
@@ -186,7 +207,10 @@ export class LessonsOverviewComponent implements OnInit {
   }
 
   private addLesson(newLessonData: Lesson) {
-    this.lessons.push(newLessonData);
+    this.stateService.lessons.set([
+      ...this.stateService.lessons(),
+      newLessonData,
+    ]);
   }
 
   private editLesson(newLessonData: Lesson) {
@@ -196,5 +220,16 @@ export class LessonsOverviewComponent implements OnInit {
       this.editedLesson.category = newLessonData.category;
       this.editedLesson.description = newLessonData.description;
     }
+  }
+
+  private setUserLesson(lessonDtos: LessonDTO[]) {
+    const lessons: Lesson[] = [];
+    lessonDtos.forEach((lessonDto) => {
+      const lesson: Lesson = lessonDto as Lesson;
+      lesson.status = lessonDto.score < 0 ? 'foreign' : 'own';
+      lessons.push(lesson);
+    });
+
+    this.stateService.lessons.set(lessons);
   }
 }
