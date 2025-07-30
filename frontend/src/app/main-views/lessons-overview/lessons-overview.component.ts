@@ -59,7 +59,7 @@ import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-p
 export class LessonsOverviewComponent implements OnInit {
   public userId = signal('');
   public lessons: WritableSignal<Lesson[]> = signal([]);
-  public userName = signal('Demo');
+  public userName = signal('');
   public loggedIn = false;
   public logDialogMode: LogDialogMode = LogDialogMode.New;
   public searchValue = '';
@@ -81,6 +81,7 @@ export class LessonsOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.stateService.userId;
     this.lessons = this.stateService.lessons;
+    this.userName = this.stateService.userName;
     if (!this.userId()) {
       this.userService
         .loginUser(DEMO_USER)
@@ -220,6 +221,10 @@ export class LessonsOverviewComponent implements OnInit {
       this.userName.set(event.userName ?? '');
       this.loggedIn = true;
     });
+  }
+
+  public logOut() {
+    this.stateService.reset();
   }
 
   private getWordsFromWordsDto(wordsDto: WordDTO[]) {

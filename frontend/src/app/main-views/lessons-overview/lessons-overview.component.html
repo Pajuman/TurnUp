@@ -1,10 +1,10 @@
 <div class="caption">
-  @if (loggedIn) {
+  @if (userName() && userName() != 'Demo') {
     <span>{{ userName() }}</span>
-    <span class="link">Odhlásit</span>
+    <span class="link" (click)="logOut()">Odhlásit</span>
     <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.Edit)">Editovat</span>
   } @else {
-    <span>{{ userName() }}</span>
+    <span>{{ userName() ?? '' }}</span>
     <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.LogIn)">Přihlásit</span>
     <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.New)">Registrovat</span>
   }

@@ -18,4 +18,11 @@ export class StateService {
   public languageSwitched = false;
   public userId = signal('');
   public lessons: WritableSignal<Lesson[]> = signal([]);
+  public userName = signal('Demo');
+
+  public reset() {
+    this.userId.set('');
+    this.lessons.set([]);
+    this.userName.set('');
+  }
 }
