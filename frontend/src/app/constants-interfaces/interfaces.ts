@@ -41,6 +41,6 @@ export interface ConfirmDialogOutput {
 
 export interface UserDialogOutput {
   action: LogDialogMode;
-  userName?: string;
-  password?: string | number;
+  userName: string;
+  password: string;
 }

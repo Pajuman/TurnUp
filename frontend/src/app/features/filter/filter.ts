@@ -12,8 +12,8 @@ import { Table, TableModule } from 'primeng/table';
 import { NgClass } from '@angular/common';
 import { Subject } from 'rxjs';
 import {
-  scoreOptions,
-  wordsOptions,
+  SCORE_OPTIONS,
+  WORD_OPTIONS,
 } from '../../constants-interfaces/constants';
 
 @Component({
@@ -42,9 +42,9 @@ export class Filter implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     if (this.fieldName() === 'wordCount') {
-      this.options = wordsOptions;
+      this.options = WORD_OPTIONS;
     } else if (this.fieldName() === 'score') {
-      this.options = scoreOptions;
+      this.options = SCORE_OPTIONS;
     } else {
       this.setOptions();
     }

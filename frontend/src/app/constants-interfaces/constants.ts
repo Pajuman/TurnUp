@@ -15,6 +15,11 @@ export const PRACTICE_COUNT_OPTIONS: Option[] = [
   },
 ];
 
+export const DEMO_USER = {
+  appUserName: 'demo',
+  passwordHash: 'P@ssword123',
+};
+
 export const ACTION_OPTIONS = [
   { label: 'Uprav', value: 'Edit' },
   { label: 'Smaž', value: 'Delete' },
@@ -25,9 +30,9 @@ export const SHARED_OPTIONS = [
   { label: 'Ne', value: false },
 ];
 
-export const wordsOptions = ['0 - 10', '11 - 20', '> 20'];
+export const WORD_OPTIONS = ['0 - 10', '11 - 20', '> 20'];
 
-export const scoreOptions = ['< 0', '0', '> 0'];
+export const SCORE_OPTIONS = ['< 0', '0', '> 0'];
 
 export const LESSONS: Lesson[] = [
   {

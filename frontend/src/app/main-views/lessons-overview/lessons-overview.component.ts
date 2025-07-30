@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
 import {
+  DEMO_USER,
   LogDialogMode,
   SHARED_OPTIONS,
   WORDS,
@@ -27,10 +28,10 @@ import {
 import { TogglerComponent } from '../../features/toggler/toggler.component';
 import { Tooltip } from 'primeng/tooltip';
 import { Filter } from '../../features/filter/filter';
-import { Subject, switchMap, tap } from 'rxjs';
+import { Observable, Subject, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { StateService } from '../../services/state.service';
-import { LessonDTO, UserService, WordDTO } from '../../api';
+import { AppUserDTO, LessonDTO, UserService, WordDTO } from '../../api';
 import { Button } from 'primeng/button';
 import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog.component';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
@@ -58,7 +59,7 @@ import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-p
 export class LessonsOverviewComponent implements OnInit {
   public userId = signal('');
   public lessons: WritableSignal<Lesson[]> = signal([]);
-  public userName = 'Demo';
+  public userName = signal('Demo');
   public loggedIn = false;
   public logDialogMode: LogDialogMode = LogDialogMode.New;
   public searchValue = '';
@@ -82,10 +83,7 @@ export class LessonsOverviewComponent implements OnInit {
     this.lessons = this.stateService.lessons;
     if (!this.userId()) {
       this.userService
-        .loginUser({
-          appUserName: 'demo',
-          passwordHash: 'P@ssword123',
-        })
+        .loginUser(DEMO_USER)
         .pipe(
           tap((userId) => this.stateService.userId.set(userId)),
           switchMap((userId) =>
@@ -196,8 +194,32 @@ export class LessonsOverviewComponent implements OnInit {
     }
   }
 
-  public logDialogOutput($event: UserDialogOutput) {
-    console.log($event);
+  public logDialogOutput(event: UserDialogOutput) {
+    if (!event.userName && !event.password) {
+      return;
+    }
+    let userObs$: Observable<string>;
+    const user = {
+      appUserName: event.userName,
+      passwordHash: event.password,
+    } as AppUserDTO;
+    switch (event.action) {
+      case LogDialogMode.New:
+        userObs$ = this.userService.createUser(user);
+        break;
+      case LogDialogMode.LogIn:
+        userObs$ = this.userService.loginUser(user);
+        break;
+      case LogDialogMode.Edit:
+        userObs$ = this.userService.updateUser(this.userId(), user);
+        break;
+    }
+
+    userObs$.subscribe((userId) => {
+      this.stateService.userId.set(userId);
+      this.userName.set(event.userName ?? '');
+      this.loggedIn = true;
+    });
   }
 
   private getWordsFromWordsDto(wordsDto: WordDTO[]) {
