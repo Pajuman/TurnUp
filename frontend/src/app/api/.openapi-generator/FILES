@@ -4,7 +4,7 @@ README.md
 api.base.service.ts
 api.module.ts
 api/api.ts
-api/lesson.service.ts
+api/state.service.ts
 api/user.service.ts
 api/word.service.ts
 configuration.ts

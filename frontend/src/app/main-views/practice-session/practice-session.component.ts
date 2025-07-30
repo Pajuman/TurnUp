@@ -8,7 +8,7 @@ import {
 import { CardComponent } from '../../features/card/card.component';
 import { Button } from 'primeng/button';
 import { WordDTO } from '../../api';
-import { LessonService } from '../../services/lesson.service';
+import { StateService } from '../../services/state.service';
 import { Word } from '../../constants-interfaces/interfaces';
 import { Router } from '@angular/router';
 
@@ -31,7 +31,7 @@ export class PracticeSessionComponent implements OnInit {
   private currentWordArrayIndex = 0;
   private currentWordIndex = 0;
   private previousWords: string[] = [];
-  private readonly lessonService = inject(LessonService);
+  private readonly lessonService = inject(StateService);
   private readonly router = inject(Router);
 
   ngOnInit(): void {

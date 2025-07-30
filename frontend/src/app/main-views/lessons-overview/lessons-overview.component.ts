@@ -22,8 +22,8 @@ import { Tooltip } from 'primeng/tooltip';
 import { Filter } from '../../features/filter/filter';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { LessonService } from '../../services/lesson.service';
-import { WordDTO } from '../../api';
+import { StateService } from '../../services/state.service';
+import { UserService, WordDTO } from '../../api';
 import { Button } from 'primeng/button';
 import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog.component';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
@@ -57,7 +57,7 @@ export class LessonsOverviewComponent implements OnInit {
   public searchValue = '';
   public isFilterActive = false;
   public clearAllFilters$ = new Subject<string>();
-  public lessonService = inject(LessonService);
+  public lessonService = inject(StateService);
   protected readonly LOG_DIALOG_MODE = LogDialogMode;
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
     viewChild('actionDialog');
@@ -66,6 +66,7 @@ export class LessonsOverviewComponent implements OnInit {
   private logDialogPopOver: Signal<Popover | undefined> =
     viewChild('logDialogPopOver');
   private router = inject(Router);
+  private userService = inject(UserService);
 
   private editedLesson?: Lesson;
 

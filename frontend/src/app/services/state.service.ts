@@ -8,7 +8,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class LessonService {
+export class StateService {
   public activeLesson: Lesson = {} as Lesson;
   public activeLessonWords: Word[] = [];
   public practiceCount: PracticeCountOption = {
