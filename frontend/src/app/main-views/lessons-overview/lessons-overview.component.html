@@ -3,8 +3,9 @@
     <span>{{ userName() }}</span>
     <span class="link" (click)="logOut()">Odhlásit</span>
     <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.Edit)">Editovat</span>
+    <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.Delete)">Smazat</span>
   } @else {
-    <span>{{ userName() ?? '' }}</span>
+    <span>{{ userName() }}</span>
     <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.LogIn)">Přihlásit</span>
     <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.New)">Registrovat</span>
   }
@@ -92,5 +93,4 @@
   </ng-template>
 </p-table>
 <action-dialog #actionDialog (dataToSave)="saveLessonChanges($event)"></action-dialog>
-<confirm-action-dialog #confirmDialog (confirmOutput)="confirmDeletion($event)"
-                       [item]="'Lesson'"></confirm-action-dialog>
+<confirm-action-dialog #confirmDialog></confirm-action-dialog>

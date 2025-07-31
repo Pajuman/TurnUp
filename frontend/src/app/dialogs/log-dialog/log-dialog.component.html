@@ -2,28 +2,30 @@
 <div class="content">
 
   <form #form="ngForm">
+    @if (mode() != LogDialogMode.Delete) {
+      <div class="dialog-row">
+        @if (mode() == LogDialogMode.LogIn) {
+          <label for="userName">Přihlašovací jméno:</label>
+        } @else {
+          <label for="userName">Nové přihlašovací jméno:</label>
+        }
+        <input #userNameInput="ngModel" [(ngModel)]="userName" [maxLength]="20" [minlength]="3"
+               [required]="mode() != LogDialogMode.Edit"
+               id="userName"
+               name="userName" pInputText
+               type="text"/>
+      </div>
 
-    <div class="dialog-row">
-      @if (mode() == LogDialogMode.LogIn) {
-        <label for="userName">Přihlašovací jméno:</label>
-      } @else {
-        <label for="userName">Nové přihlašovací jméno:</label>
-      }
-      <input #userNameInput="ngModel" [(ngModel)]="userName" [maxLength]="20" [minlength]="3" [required]="true"
-             id="userName"
-             name="userName" pInputText
-             type="text"/>
-    </div>
-
-    <small [class.in-visible]="!(userNameInput.invalid && userNameInput.touched)">
-      @if (userNameInput.errors?.['required']) {
-        <span>Přihlašovací jméno je nutné.</span>
-      } @else if (userNameInput.errors?.['minlength']) {
-        <span>Minimálně 3 znaky.</span>
-      } @else {
-        <span></span>
-      }
-    </small>
+      <small [class.in-visible]="!(userNameInput.invalid && userNameInput.touched)">
+        @if (userNameInput.errors?.['required']) {
+          <span>Přihlašovací jméno je nutné.</span>
+        } @else if (userNameInput.errors?.['minlength']) {
+          <span>Minimálně 3 znaky.</span>
+        } @else {
+          <span></span>
+        }
+      </small>
+    }
 
     <div class="dialog-row">
       <label for="password">Heslo:</label>
@@ -49,7 +51,8 @@
     @if (mode() === LogDialogMode.Edit) {
       <div class="dialog-row">
         <label for="newPassword">Nové heslo:</label>
-        <input #newPasswordInput="ngModel" [(ngModel)]="newPassword" [maxLength]="12" [minlength]="8" [required]="true"
+        <input #newPasswordInput="ngModel" [(ngModel)]="newPassword" [maxLength]="12" [minlength]="8"
+               [required]="passwordRepeat"
                name="newPassword"
                id="newPassword" passwordCharValid pInputText type="password"/>
       </div>
@@ -67,24 +70,28 @@
         }
       </small>
     }
-    @if (mode() !== LogDialogMode.LogIn) {
+    @if (mode() !== LogDialogMode.LogIn && mode() !== LogDialogMode.Delete) {
       <div class="dialog-row">
         <label for="passwordRepeat">Znovu nové heslo:</label>
         <input #passwordRepeatInput="ngModel" [(ngModel)]="passwordRepeat" [maxLength]="12" [minlength]="8"
-               [required]="true" [repeatPasswordValid]="password || newPassword" name="passwordRepeat" passwordCharValid
+               [required]="newPassword" [repeatPasswordValid]="mode() == LogDialogMode.Edit ? newPassword : password"
+               name="passwordRepeat"
+               passwordCharValid
                id="passwordRepeat"
                pInputText
                type="password"/>
       </div>
       <small [class.in-visible]="!(passwordRepeatInput.invalid && passwordRepeatInput.touched)">
         @if (passwordRepeatInput.errors?.['required']) {
-          <span>Password is required.</span>
+          <span>Hesolo je nutné.</span>
         } @else if (passwordRepeatInput.errors?.['minlength']) {
           <span>Minimálně 8 znaků.</span>
         } @else if (passwordRepeatInput.errors?.['strongPassword']) {
           <span>Heslo musí obsahovat
         velké písmeno, symbol a
         číslici.</span>
+        } @else if (passwordRepeatInput.errors?.['repeatPasswordValid']) {
+          <span>Hesla se neshodují.</span>
         } @else {
           <span></span>
         }

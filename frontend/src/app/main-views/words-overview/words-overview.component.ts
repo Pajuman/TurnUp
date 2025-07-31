@@ -12,7 +12,6 @@ import { TogglerComponent } from '../../features/toggler/toggler.component';
 import { FormsModule } from '@angular/forms';
 import {
   ActionWordDialogOutput,
-  ConfirmDialogOutput,
   Lesson,
   Option,
   Word,
@@ -100,10 +99,6 @@ export class WordsOverviewComponent implements OnInit {
 
   public back() {
     this.router.navigate(['']);
-  }
-
-  public confirmDeletion(confirmDialogOutput: ConfirmDialogOutput) {
-    console.log(confirmDialogOutput);
   }
 
   private addWord(question: string, answer: string) {

@@ -32,9 +32,6 @@ import { RepeatPasswordValidDirective } from '../../validators/repeat-password-v
 export class LogDialogComponent implements OnInit {
   public readonly mode: InputSignal<LogDialogMode> = input.required();
   public readonly userId: InputSignal<string> = input.required();
-  /*
-    public readonly userName: InputSignal<string> = input('');
-  */
   public userName = '';
   public password = '';
   public newPassword = '';
@@ -72,7 +69,10 @@ export class LogDialogComponent implements OnInit {
   }
 
   private getPassword() {
-    if (this.mode() === LogDialogMode.LogIn) {
+    if (
+      this.mode() === LogDialogMode.LogIn ||
+      this.mode() === LogDialogMode.Delete
+    ) {
       return this.password;
     } else if (this.mode() === LogDialogMode.New) {
       if (this.password === this.passwordRepeat) {
@@ -81,11 +81,7 @@ export class LogDialogComponent implements OnInit {
         console.log('špatně heslo');
       }
     } else {
-      if (this.newPassword === this.passwordRepeat) {
-        return this.newPassword;
-      } else {
-        console.log('špatně heslo');
-      }
+      return this.newPassword ?? this.password;
     }
     return '';
   }

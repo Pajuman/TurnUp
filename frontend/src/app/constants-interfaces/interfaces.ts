@@ -34,11 +34,6 @@ export interface ActionLessonDialogOutput {
   category: string;
 }
 
-export interface ConfirmDialogOutput {
-  item: 'Lesson' | 'Word';
-  confirm: boolean;
-}
-
 export interface UserDialogOutput {
   action: LogDialogMode;
   userName: string;

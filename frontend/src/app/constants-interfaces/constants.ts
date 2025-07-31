@@ -4,6 +4,7 @@ export enum LogDialogMode {
   LogIn = 'Přihlášení:',
   New = 'Nový uživatel:',
   Edit = 'Změna uživatele:',
+  Delete = 'Smazat uživatele',
 }
 
 export const PRACTICE_COUNT_OPTIONS: Option[] = [

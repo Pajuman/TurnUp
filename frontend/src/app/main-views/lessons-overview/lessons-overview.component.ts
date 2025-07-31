@@ -19,7 +19,6 @@ import { LogDialogComponent } from '../../dialogs/log-dialog/log-dialog.componen
 import { FormsModule } from '@angular/forms';
 import {
   ActionLessonDialogOutput,
-  ConfirmDialogOutput,
   Lesson,
   Option,
   UserDialogOutput,
@@ -28,7 +27,7 @@ import {
 import { TogglerComponent } from '../../features/toggler/toggler.component';
 import { Tooltip } from 'primeng/tooltip';
 import { Filter } from '../../features/filter/filter';
-import { Observable, Subject, switchMap, tap } from 'rxjs';
+import { first, Observable, Subject, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { StateService } from '../../services/state.service';
 import { AppUserDTO, LessonDTO, UserService, WordDTO } from '../../api';
@@ -60,7 +59,6 @@ export class LessonsOverviewComponent implements OnInit {
   public userId = signal('');
   public lessons: WritableSignal<Lesson[]> = signal([]);
   public userName = signal('');
-  public loggedIn = false;
   public logDialogMode: LogDialogMode = LogDialogMode.New;
   public searchValue = '';
   public isFilterActive = false;
@@ -142,6 +140,16 @@ export class LessonsOverviewComponent implements OnInit {
       this.openDialog('Edit', row);
     } else if (actionSelected.value === 'Delete') {
       this.confirmDialog()?.visible.set(true);
+      this.confirmDialog()
+        ?.confirmation$.pipe(first())
+        .subscribe((confirmation) => {
+          if (confirmation) {
+            const index = this.lessons().findIndex(
+              (l) => l.id === this.editedLesson?.id,
+            );
+            this.lessons().splice(index, 1);
+          }
+        });
     }
   }
 
@@ -186,25 +194,38 @@ export class LessonsOverviewComponent implements OnInit {
     }
   }
 
-  public confirmDeletion(confirmDialogOutput: ConfirmDialogOutput) {
-    if (confirmDialogOutput.confirm) {
-      const index = this.lessons().findIndex(
-        (l) => l.id === this.editedLesson?.id,
-      );
-      this.lessons().splice(index, 1);
-    }
-  }
-
   public logDialogOutput(event: UserDialogOutput) {
     if (!event.userName && !event.password) {
       return;
     }
-    let userObs$: Observable<string>;
+
     const user = {
-      appUserName: event.userName,
+      appUserName: event.userName ?? this.userName(),
       passwordHash: event.password,
     } as AppUserDTO;
-    switch (event.action) {
+
+    if (event.action === LogDialogMode.Delete) {
+      this.confirmDialog()?.visible.set(true);
+      this.confirmDialog()
+        ?.confirmation$.pipe(first())
+        .subscribe((confirmation) => {
+          if (confirmation) {
+            this.appUserAction(event.action, user);
+          }
+        });
+    } else {
+      this.appUserAction(event.action, user);
+    }
+  }
+
+  public logOut() {
+    this.stateService.reset();
+  }
+
+  private appUserAction(mode: LogDialogMode, user: AppUserDTO) {
+    let userObs$: Observable<string>;
+
+    switch (mode) {
       case LogDialogMode.New:
         userObs$ = this.userService.createUser(user);
         break;
@@ -214,17 +235,17 @@ export class LessonsOverviewComponent implements OnInit {
       case LogDialogMode.Edit:
         userObs$ = this.userService.updateUser(this.userId(), user);
         break;
+      case LogDialogMode.Delete:
+        userObs$ = this.userService.deleteUser(this.userId());
+        break;
     }
-
     userObs$.subscribe((userId) => {
       this.stateService.userId.set(userId);
-      this.userName.set(event.userName ?? '');
-      this.loggedIn = true;
+      this.userName.set(user.appUserName ?? '');
+      if (mode === LogDialogMode.Delete) {
+        this.logOut();
+      }
     });
-  }
-
-  public logOut() {
-    this.stateService.reset();
   }
 
   private getWordsFromWordsDto(wordsDto: WordDTO[]) {
