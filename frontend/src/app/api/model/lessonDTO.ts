@@ -13,7 +13,7 @@ export interface LessonDTO {
   lessonName: string;
   description: string;
   shared: boolean;
-  category: string;
+  language: string;
   score: number;
   wordCount: number;
 }

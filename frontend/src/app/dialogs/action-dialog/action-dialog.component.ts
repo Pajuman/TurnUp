@@ -45,7 +45,7 @@ export class ActionDialogComponent {
   public description = signal('');
   public shared: WritableSignal<{ label: string; value: boolean } | undefined> =
     signal(undefined);
-  public category = signal('');
+  public language = signal('');
   protected readonly SHARED_OPTIONS = SHARED_OPTIONS;
 
   close() {
@@ -62,7 +62,7 @@ export class ActionDialogComponent {
           lessonName: this.lessonName(),
           description: this.description(),
           shared: this.shared()?.value ?? false,
-          category: this.category(),
+          language: this.language(),
         });
       }
     }
@@ -75,7 +75,7 @@ export class ActionDialogComponent {
     this.answer.set('');
     this.lessonName.set('');
     this.description.set('');
-    this.category.set('');
+    this.language.set('');
     this.shared.set(undefined);
   }
 }

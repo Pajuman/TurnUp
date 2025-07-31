@@ -83,7 +83,7 @@
       </small>
       <div class="dialog-row">
         <label for="category">Kategorie</label>
-        <input #categoryInput="ngModel" [(ngModel)]="category" autocomplete="off" name="category"
+        <input #categoryInput="ngModel" [(ngModel)]="language" autocomplete="off" name="category"
                class="flex-auto"
                id="category" maxlength="20" minlength="1" required pInputText/></div>
       <small [class.in-visible]="!(categoryInput.invalid && categoryInput.touched)">

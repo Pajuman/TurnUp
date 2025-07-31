@@ -31,7 +31,7 @@ export interface ActionLessonDialogOutput {
   lessonName: string;
   description: string;
   shared: boolean;
-  category: string;
+  language: string;
 }
 
 export interface UserDialogOutput {

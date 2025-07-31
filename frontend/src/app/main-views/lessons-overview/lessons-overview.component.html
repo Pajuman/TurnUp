@@ -81,7 +81,7 @@
         <td (click)="copyLesson(row.id)" class="not-own"><i class="pi pi-copy  small-icon"></i></td>
       }
       <td (click)="toDetail(row)">{{ row.lessonName }}</td>
-      <td (click)="toDetail(row)" class="hide-sm hide-md">{{ row.category }}</td>
+      <td (click)="toDetail(row)" class="hide-sm hide-md">{{ row.language }}</td>
       <td (click)="toDetail(row)" class="hide-sm hide-md">{{ row.wordCount }}</td>
       <td class="hide-sm">{{ row.status === 'own' ? row.score : null }}</td>
       <td>

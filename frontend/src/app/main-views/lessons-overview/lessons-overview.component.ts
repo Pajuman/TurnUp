@@ -27,7 +27,7 @@ import {
 import { TogglerComponent } from '../../features/toggler/toggler.component';
 import { Tooltip } from 'primeng/tooltip';
 import { Filter } from '../../features/filter/filter';
-import { first, Observable, Subject, switchMap, tap } from 'rxjs';
+import { first, Subject, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { StateService } from '../../services/state.service';
 import { AppUserDTO, LessonDTO, UserService, WordDTO } from '../../api';
@@ -65,31 +65,23 @@ export class LessonsOverviewComponent implements OnInit {
   public clearAllFilters$ = new Subject<string>();
   public lessonService = inject(StateService);
   protected readonly LOG_DIALOG_MODE = LogDialogMode;
+  private editedLesson?: Lesson;
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
     viewChild('actionDialog');
   private readonly confirmDialog: Signal<ConfirmDialogComponent | undefined> =
     viewChild('confirmDialog');
-  private logDialogPopOver: Signal<Popover | undefined> =
+  private readonly logDialogPopOver: Signal<Popover | undefined> =
     viewChild('logDialogPopOver');
   private router = inject(Router);
   private userService = inject(UserService);
   private stateService = inject(StateService);
-  private editedLesson?: Lesson;
 
   ngOnInit(): void {
     this.userId = this.stateService.userId;
     this.lessons = this.stateService.lessons;
     this.userName = this.stateService.userName;
     if (!this.userId()) {
-      this.userService
-        .loginUser(DEMO_USER)
-        .pipe(
-          tap((userId) => this.stateService.userId.set(userId)),
-          switchMap((userId) =>
-            this.userService.getLessonsOfLoggedInUser(userId),
-          ),
-        )
-        .subscribe((lessons) => this.setUserLesson(lessons));
+      this.loginAndSetLessons(DEMO_USER);
     }
   }
 
@@ -163,7 +155,7 @@ export class LessonsOverviewComponent implements OnInit {
       this.actionDialog()!.shared.set(
         editedLesson.shared ? SHARED_OPTIONS[0] : SHARED_OPTIONS[1],
       );
-      this.actionDialog()!.category.set(editedLesson.category);
+      this.actionDialog()!.language.set(editedLesson.language);
     }
     this.actionDialog()!.item.set('Lesson');
     this.actionDialog()!.action.set(action);
@@ -177,7 +169,7 @@ export class LessonsOverviewComponent implements OnInit {
       lessonName: output.lessonName,
       description: output.description,
       shared: output.shared,
-      category: output.category,
+      language: output.language,
       score: 0,
       status: 'own',
     } as Lesson;
@@ -186,7 +178,7 @@ export class LessonsOverviewComponent implements OnInit {
     } else if (
       output.action === 'Edit' &&
       (output.lessonName !== this.editedLesson?.lessonName ||
-        output.category !== this.editedLesson.category ||
+        output.language !== this.editedLesson.language ||
         output.description !== this.editedLesson.description ||
         output.shared !== this.editedLesson.shared)
     ) {
@@ -223,29 +215,27 @@ export class LessonsOverviewComponent implements OnInit {
   }
 
   private appUserAction(mode: LogDialogMode, user: AppUserDTO) {
-    let userObs$: Observable<string>;
-
     switch (mode) {
       case LogDialogMode.New:
-        userObs$ = this.userService.createUser(user);
+        this.userService.createUser(user).subscribe((userId) => {
+          this.stateService.userId.set(userId);
+          this.userName.set(user.appUserName ?? '');
+        });
         break;
       case LogDialogMode.LogIn:
-        userObs$ = this.userService.loginUser(user);
+        this.loginAndSetLessons(user);
         break;
       case LogDialogMode.Edit:
-        userObs$ = this.userService.updateUser(this.userId(), user);
+        this.userService.updateUser(this.userId(), user).subscribe(() => {
+          this.userName.set(user.appUserName ?? '');
+        });
         break;
       case LogDialogMode.Delete:
-        userObs$ = this.userService.deleteUser(this.userId());
+        this.userService.deleteUser(this.userId()).subscribe(() => {
+          this.logOut();
+        });
         break;
     }
-    userObs$.subscribe((userId) => {
-      this.stateService.userId.set(userId);
-      this.userName.set(user.appUserName ?? '');
-      if (mode === LogDialogMode.Delete) {
-        this.logOut();
-      }
-    });
   }
 
   private getWordsFromWordsDto(wordsDto: WordDTO[]) {
@@ -265,7 +255,7 @@ export class LessonsOverviewComponent implements OnInit {
     if (this.editedLesson) {
       this.editedLesson.lessonName = newLessonData.lessonName;
       this.editedLesson.shared = newLessonData.shared;
-      this.editedLesson.category = newLessonData.category;
+      this.editedLesson.language = newLessonData.language;
       this.editedLesson.description = newLessonData.description;
     }
   }
@@ -279,5 +269,20 @@ export class LessonsOverviewComponent implements OnInit {
     });
 
     this.stateService.lessons.set(lessons);
+  }
+
+  private loginAndSetLessons(user: AppUserDTO) {
+    this.userService
+      .loginUser(user)
+      .pipe(
+        tap((userId) => this.stateService.userId.set(userId)),
+        switchMap((userId) =>
+          this.userService.getLessonsOfLoggedInUser(userId),
+        ),
+      )
+      .subscribe((lessons) => {
+        this.setUserLesson(lessons);
+        this.stateService.userName.set(user.appUserName);
+      });
   }
 }
