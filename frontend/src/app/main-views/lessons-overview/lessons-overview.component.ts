@@ -63,7 +63,6 @@ export class LessonsOverviewComponent implements OnInit {
   public searchValue = '';
   public isFilterActive = false;
   public clearAllFilters$ = new Subject<string>();
-  public lessonService = inject(StateService);
   protected readonly LOG_DIALOG_MODE = LogDialogMode;
   private editedLesson?: Lesson;
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
@@ -107,17 +106,16 @@ export class LessonsOverviewComponent implements OnInit {
   }
 
   public toDetail(lesson: Lesson) {
-    this.lessonService.activeLesson = lesson;
+    this.stateService.activeLesson = lesson;
     //ToDo BE call to get words
     const wordsDto = WORDS;
-    this.lessonService.activeLessonWords = this.getWordsFromWordsDto(wordsDto);
+    this.stateService.activeLessonWords = this.getWordsFromWordsDto(wordsDto);
 
     this.router.navigate(['lesson', lesson.lessonName]);
   }
 
   public practiceLesson(lesson: Lesson) {
-    this.lessonService.activeLesson = lesson;
-    console.log(this.lessonService.practiceCount);
+    this.stateService.activeLesson = lesson;
     this.router.navigate(['practice', lesson.lessonName]);
   }
 
