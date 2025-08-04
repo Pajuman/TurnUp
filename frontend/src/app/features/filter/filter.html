@@ -10,15 +10,20 @@
       @if (fieldName() === 'wordCount') {
         <input
           type="checkbox"
+          [id]="'wordCount-' + $index"
           [checked]="selectedOption === option" (change)="this.selectedOption = option"
         />
       } @else {
         <input
           type="checkbox"
+          [id]="'option-' + $index"
+
           [(ngModel)]="selectedOptions[option]"/>
       }
 
-      <label>{{ option }}</label>
+      <label [for]="fieldName() === 'wordCount' ? 'wordCount-' + $index : 'option-' + $index">
+        {{ option }}
+      </label>
     </div>
   }
 
