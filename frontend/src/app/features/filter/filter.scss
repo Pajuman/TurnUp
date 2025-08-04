@@ -1,0 +1,10 @@
+.filter-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem 1rem 0;
+
+  label {
+    padding-left: 1rem;
+  }
+}

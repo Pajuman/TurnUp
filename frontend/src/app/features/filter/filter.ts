@@ -2,6 +2,7 @@ import {
   Component,
   input,
   InputSignal,
+  OnChanges,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -15,6 +16,7 @@ import {
   SCORE_OPTIONS,
   WORD_OPTIONS,
 } from '../../constants-interfaces/constants';
+import { Lesson } from '../../constants-interfaces/interfaces';
 
 @Component({
   selector: 'filter',
@@ -29,18 +31,23 @@ import {
   templateUrl: './filter.html',
   styleUrl: './filter.scss',
 })
-export class Filter implements OnInit, OnDestroy {
+export class Filter implements OnInit, OnDestroy, OnChanges {
   public readonly table: InputSignal<Table> = input.required();
+  public readonly lessons: InputSignal<Lesson[]> = input.required();
   public readonly fieldName: InputSignal<string> = input.required();
   public readonly clearAllFilters: InputSignal<Subject<string>> =
     input.required();
-
   public isFilterActive = false;
+
   public selectedOptions: { [key: string]: boolean } = {};
   public selectedOption: string | null = null;
   public options: string[] = [];
 
   public ngOnInit(): void {
+    this.clearAllFilters().subscribe(() => this.clearFilter());
+  }
+
+  public ngOnChanges(): void {
     if (this.fieldName() === 'wordCount') {
       this.options = WORD_OPTIONS;
     } else if (this.fieldName() === 'score') {
@@ -48,7 +55,6 @@ export class Filter implements OnInit, OnDestroy {
     } else {
       this.setOptions();
     }
-    this.clearAllFilters().subscribe(() => this.clearFilter());
   }
 
   public applyFilter() {

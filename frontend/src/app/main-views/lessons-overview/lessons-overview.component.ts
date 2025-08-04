@@ -63,6 +63,7 @@ export class LessonsOverviewComponent implements OnInit {
   public searchValue = '';
   public isFilterActive = false;
   public clearAllFilters$ = new Subject<string>();
+  public readonly stateService = inject(StateService);
   protected readonly LOG_DIALOG_MODE = LogDialogMode;
   private editedLesson?: Lesson;
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
@@ -71,9 +72,8 @@ export class LessonsOverviewComponent implements OnInit {
     viewChild('confirmDialog');
   private readonly logDialogPopOver: Signal<Popover | undefined> =
     viewChild('logDialogPopOver');
-  private router = inject(Router);
-  private userService = inject(UserService);
-  private stateService = inject(StateService);
+  private readonly router = inject(Router);
+  private readonly userService = inject(UserService);
 
   ngOnInit(): void {
     this.userId = this.stateService.userId;

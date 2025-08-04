@@ -45,27 +45,32 @@
       <th pSortableColumn="status">
         Status
         <p-sortIcon field="status"/>
-        <filter [clearAllFilters]="clearAllFilters$" [fieldName]="'status'" [table]="lessonTable"/>
+        <filter [clearAllFilters]="clearAllFilters$" [fieldName]="'status'" [lessons]="lessons()"
+                [table]="lessonTable"/>
       </th>
       <th pSortableColumn="lessonName">
         Název
         <p-sortIcon field="lessonName"/>
-        <filter [clearAllFilters]="clearAllFilters$" [fieldName]="'lessonName'" [table]="lessonTable"/>
+        <filter [clearAllFilters]="clearAllFilters$" [fieldName]="'lessonName'" [lessons]="lessons()"
+                [table]="lessonTable"/>
       </th>
       <th class="hide-sm hide-md" pSortableColumn="language">
         Kategorie
         <p-sortIcon field="language"/>
-        <filter [clearAllFilters]="clearAllFilters$" [fieldName]="'language'" [table]="lessonTable"/>
+        <filter [clearAllFilters]="clearAllFilters$" [fieldName]="'language'" [lessons]="lessons()"
+                [table]="lessonTable"/>
       </th>
       <th class="hide-sm hide-md" pSortableColumn="wordCount">
         Slovíček
         <p-sortIcon field="wordCount"/>
-        <filter [clearAllFilters]="clearAllFilters$" [fieldName]="'wordCount'" [table]="lessonTable"/>
+        <filter [clearAllFilters]="clearAllFilters$" [fieldName]="'wordCount'" [lessons]="lessons()"
+                [table]="lessonTable"/>
       </th>
       <th class="hide-sm" pSortableColumn="score">
         Score
         <p-sortIcon field="score"/>
-        <filter [clearAllFilters]="clearAllFilters$" [fieldName]="'score'" [table]="lessonTable"/>
+        <filter [clearAllFilters]="clearAllFilters$" [fieldName]="'score'" [lessons]="lessons()"
+                [table]="lessonTable"/>
       </th>
       <th>
         <i (click)="clearAllFilters(lessonTable)" class="pi pi-filter-slash"></i>

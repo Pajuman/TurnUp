@@ -23,13 +23,11 @@
   }
 
   <div class="space-y-2">
-
-
-    <div class="flex justify-end gap-2 mt-3">
-      <p-button (onClick)="applyFilter(); filterPanel.toggle($event) " class="p-button-sm p-button-primary"
-                label="Apply"></p-button>
-      <p-button (onClick)="clearFilter();  " class="p-button-sm p-button-secondary"
-                label="Clear"></p-button>
+    <div class="button-group">
+      <p-button (click)="applyFilter(); filterPanel.toggle($event) " label="Apply"
+                styleClass="p-button-sm p-button-primary"></p-button>
+      <p-button (click)="clearFilter();  " label="Clear"
+                styleClass="p-button-sm p-button-secondary"></p-button>
     </div>
   </div>
 </p-popover>

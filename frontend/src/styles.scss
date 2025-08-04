@@ -86,7 +86,7 @@ td, th {
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  padding: 2rem;
+  padding: 1rem;
   width: fit-content;
 }
 
@@ -138,4 +138,10 @@ small {
 
 .in-visible {
   visibility: hidden;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #007ad9;
 }
