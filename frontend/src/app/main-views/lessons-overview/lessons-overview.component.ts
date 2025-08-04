@@ -30,7 +30,14 @@ import { Filter } from '../../features/filter/filter';
 import { first, Subject, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { StateService } from '../../services/state.service';
-import { AppUserDTO, LessonDTO, UserService, WordDTO } from '../../api';
+import {
+  AppUserDTO,
+  LessonDTO,
+  LessonService,
+  NewLessonDTO,
+  UserService,
+  WordDTO,
+} from '../../api';
 import { Button } from 'primeng/button';
 import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog.component';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
@@ -74,6 +81,7 @@ export class LessonsOverviewComponent implements OnInit {
     viewChild('logDialogPopOver');
   private readonly router = inject(Router);
   private readonly userService = inject(UserService);
+  private readonly lessonService = inject(LessonService);
 
   ngOnInit(): void {
     this.userId = this.stateService.userId;
@@ -131,14 +139,17 @@ export class LessonsOverviewComponent implements OnInit {
     } else if (actionSelected.value === 'Delete') {
       this.confirmDialog()?.visible.set(true);
       this.confirmDialog()
-        ?.confirmation$.pipe(first())
-        .subscribe((confirmation) => {
-          if (confirmation) {
-            const index = this.lessons().findIndex(
-              (l) => l.id === this.editedLesson?.id,
-            );
-            this.lessons().splice(index, 1);
-          }
+        ?.confirmation$.pipe(
+          first(),
+          switchMap(() =>
+            this.lessonService.deleteLesson(this.userId(), row.id),
+          ),
+        )
+        .subscribe(() => {
+          this.lessons.set(
+            this.lessons().filter((lesson) => lesson.id !== row.id),
+          );
+          this.editedLesson = undefined;
         });
     }
   }
@@ -242,31 +253,54 @@ export class LessonsOverviewComponent implements OnInit {
     return words;
   }
 
-  private addLesson(newLessonData: Lesson) {
-    this.stateService.lessons.set([
-      ...this.stateService.lessons(),
-      newLessonData,
-    ]);
+  private addLesson(lessonData: Lesson) {
+    const newLessonDto: NewLessonDTO = { ...lessonData };
+    this.lessonService
+      .createLesson(this.userId(), newLessonDto)
+      .subscribe((lessonDto) => {
+        const lesson = this.lessonDtoToLesson(lessonDto);
+        this.stateService.lessons.set([...this.stateService.lessons(), lesson]);
+      });
   }
 
-  private editLesson(newLessonData: Lesson) {
-    if (this.editedLesson) {
-      this.editedLesson.lessonName = newLessonData.lessonName;
-      this.editedLesson.shared = newLessonData.shared;
-      this.editedLesson.language = newLessonData.language;
-      this.editedLesson.description = newLessonData.description;
+  private editLesson(lessonData: Lesson) {
+    if (!this.editedLesson) {
+      return;
     }
+
+    const editedLessonDto: LessonDTO = {
+      ...this.editedLesson,
+      lessonName: lessonData.lessonName,
+      shared: lessonData.shared,
+      language: lessonData.language,
+      description: lessonData.description,
+      score: lessonData.score ?? 0,
+    };
+
+    this.lessonService
+      .updateLesson(this.userId(), editedLessonDto)
+      .subscribe(() => {
+        this.editedLesson!.lessonName = lessonData.lessonName;
+        this.editedLesson!.shared = lessonData.shared;
+        this.editedLesson!.language = lessonData.language;
+        this.editedLesson!.description = lessonData.description;
+      });
   }
 
-  private setUserLesson(lessonDtos: LessonDTO[]) {
+  private setUserLessons(lessonDtos: LessonDTO[]) {
     const lessons: Lesson[] = [];
     lessonDtos.forEach((lessonDto) => {
-      const lesson: Lesson = lessonDto as Lesson;
-      lesson.status = lessonDto.score < 0 ? 'foreign' : 'own';
-      lessons.push(lesson);
+      lessons.push(this.lessonDtoToLesson(lessonDto));
     });
 
     this.stateService.lessons.set(lessons);
+  }
+
+  private lessonDtoToLesson(lessonDto: LessonDTO): Lesson {
+    const lesson: Lesson = lessonDto as Lesson;
+    lesson.status = lessonDto.score < 0 ? 'foreign' : 'own';
+
+    return lesson;
   }
 
   private loginAndSetLessons(user: AppUserDTO) {
@@ -279,7 +313,7 @@ export class LessonsOverviewComponent implements OnInit {
         ),
       )
       .subscribe((lessons) => {
-        this.setUserLesson(lessons);
+        this.setUserLessons(lessons);
         this.stateService.userName.set(user.appUserName);
       });
   }
