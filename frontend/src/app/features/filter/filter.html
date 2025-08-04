@@ -7,7 +7,7 @@
 
   @for (option of options; track $index) {
     <div class="filter-line">
-      @if (fieldName() === 'wordCount' || fieldName() === 'score') {
+      @if (fieldName() === 'wordCount') {
         <input
           type="checkbox"
           [checked]="selectedOption === option" (change)="this.selectedOption = option"

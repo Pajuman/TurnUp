@@ -12,10 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Table, TableModule } from 'primeng/table';
 import { NgClass } from '@angular/common';
 import { Subject } from 'rxjs';
-import {
-  SCORE_OPTIONS,
-  WORD_OPTIONS,
-} from '../../constants-interfaces/constants';
+import { WORD_OPTIONS } from '../../constants-interfaces/constants';
 import { Lesson } from '../../constants-interfaces/interfaces';
 
 @Component({
@@ -50,8 +47,6 @@ export class Filter implements OnInit, OnDestroy, OnChanges {
   public ngOnChanges(): void {
     if (this.fieldName() === 'wordCount') {
       this.options = WORD_OPTIONS;
-    } else if (this.fieldName() === 'score') {
-      this.options = SCORE_OPTIONS;
     } else {
       this.setOptions();
     }
@@ -70,25 +65,15 @@ export class Filter implements OnInit, OnDestroy, OnChanges {
           this.table()?.filter([21, 1000], this.fieldName(), 'between');
           break;
       }
-    } else if (this.fieldName() === 'score') {
-      switch (this.selectedOption) {
-        case '< 0':
-          this.table()?.filter([0, 5], this.fieldName(), 'between');
-          break;
-        case '0':
-          this.table()?.filter(0, this.fieldName(), 'equals');
-          break;
-        case '> 0':
-          this.table()?.filter([-5, 0], this.fieldName(), 'between');
-          break;
-      }
     } else {
       const selectedOptions = Object.entries(this.selectedOptions)
         .filter(([_, checked]) => checked)
         .map(([option]) => option);
       this.table()?.filter(selectedOptions, this.fieldName(), 'in');
     }
-    this.isFilterActive = true;
+    if (this.selectedOption && this.selectedOption?.length > 0) {
+      this.isFilterActive = true;
+    }
   }
 
   public clearFilter() {
@@ -107,9 +92,11 @@ export class Filter implements OnInit, OnDestroy, OnChanges {
   }
 
   private setOptions() {
-    this.table().value.forEach((lesson) => {
-      if (!this.options.includes(lesson[this.fieldName()])) {
-        this.options.push(lesson[this.fieldName()]);
+    this.lessons().forEach((lesson) => {
+      if (
+        !this.options.includes(<string>lesson[this.fieldName() as keyof Lesson])
+      ) {
+        this.options.push(<string>lesson[this.fieldName() as keyof Lesson]);
       }
     });
   }
