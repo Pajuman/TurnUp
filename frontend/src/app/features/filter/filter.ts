@@ -71,7 +71,7 @@ export class Filter implements OnInit, OnDestroy, OnChanges {
         .map(([option]) => option);
       this.table()?.filter(selectedOptions, this.fieldName(), 'in');
     }
-    if (this.selectedOption && this.selectedOption?.length > 0) {
+    if (Object.keys(this.selectedOptions).length > 0) {
       this.isFilterActive = true;
     }
   }
