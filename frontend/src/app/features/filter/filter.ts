@@ -72,7 +72,9 @@ export class Filter implements OnInit, OnDestroy, OnChanges {
     } else {
       const selectedOptions = Object.entries(this.selectedOptions)
         .filter(([_, checked]) => checked)
-        .map(([option]) => option);
+        .map(([option]) =>
+          this.fieldName() === 'score' ? Number(option) : option,
+        );
       this.table()?.filter(selectedOptions, this.fieldName(), 'in');
     }
     if (Object.keys(this.selectedOptions).length > 0) {
