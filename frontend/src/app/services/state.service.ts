@@ -4,6 +4,7 @@ import {
   PracticeCountOption,
   Word,
 } from '../constants-interfaces/interfaces';
+import { Popover } from 'primeng/popover';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,15 @@ export class StateService {
   public userId = signal('');
   public lessons: WritableSignal<Lesson[]> = signal([]);
   public userName = signal('Demo');
+
+  private openedPopOver?: Popover;
+
+  public closePreviousPopover(newlyOpenedPopover: Popover) {
+    if (this.openedPopOver) {
+      this.openedPopOver.hide();
+    }
+    this.openedPopOver = newlyOpenedPopover;
+  }
 
   public reset() {
     this.userId.set('');

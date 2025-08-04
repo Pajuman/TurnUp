@@ -1,5 +1,6 @@
 import {
   Component,
+  inject,
   input,
   InputSignal,
   OnChanges,
@@ -14,6 +15,7 @@ import { NgClass } from '@angular/common';
 import { Subject } from 'rxjs';
 import { WORD_OPTIONS } from '../../constants-interfaces/constants';
 import { Lesson } from '../../constants-interfaces/interfaces';
+import { StateService } from '../../services/state.service';
 
 @Component({
   selector: 'filter',
@@ -39,6 +41,8 @@ export class Filter implements OnInit, OnDestroy, OnChanges {
   public selectedOptions: { [key: string]: boolean } = {};
   public selectedOption: string | null = null;
   public options: string[] = [];
+
+  private readonly stateService = inject(StateService);
 
   public ngOnInit(): void {
     this.clearAllFilters().subscribe(() => this.clearFilter());
@@ -83,7 +87,8 @@ export class Filter implements OnInit, OnDestroy, OnChanges {
     this.isFilterActive = false;
   }
 
-  public openFilterDialog(event: MouseEvent) {
+  public openFilterDialog(event: MouseEvent, newlyOpenedPopover: Popover) {
+    this.stateService.closePreviousPopover(newlyOpenedPopover);
     event.stopPropagation();
   }
 

@@ -1,4 +1,4 @@
-<i (click)="openFilterDialog($event); filterPanel.toggle($event)"
+<i (click)="openFilterDialog($event, filterPanel); filterPanel.toggle($event)"
    [ngClass]="isFilterActive ? 'pi-filter-fill' : 'pi-filter'"
    class="pi"></i>
 <p-popover #filterPanel
