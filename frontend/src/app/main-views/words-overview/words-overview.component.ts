@@ -29,6 +29,7 @@ import {
   WordDTO,
   WordService,
 } from '../../api';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'words-overview',
@@ -71,7 +72,10 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
       });
   }
 
-  public ngOnDestroy(): void {}
+  public ngOnDestroy(): void {
+    if (this.wordsChanged) {
+    }
+  }
 
   public practiceLesson() {
     this.stateService.activeLessonWords = this.words();
@@ -79,7 +83,6 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public saveWordChanges(event: any) {
-    console.log(1);
     const output = event as ActionWordDialogOutput;
 
     if (output.action === 'New') {
@@ -94,17 +97,28 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public saveAllChanges() {
-    const batch = this.getBatchWordUpdateDto();
+    this.confirmDialog()?.visible.set(true);
+    this.confirmDialog()
+      ?.confirmation$.pipe(first())
+      .subscribe((confirmation) => {
+        if (confirmation) {
+          const batch = this.getBatchWordUpdateDto();
 
-    this.wordService.updateWords(this.userId, batch).subscribe();
+          this.wordService
+            .updateWords(this.userId, batch)
+            .subscribe(() => (this.wordsChanged = false));
+        }
+      });
   }
 
   public wordActionSelected(actionSelected: Option, row: Word) {
     if (actionSelected.value === 'Edit') {
       this.editedWord = row;
       this.openDialog('Edit', row);
+      this.wordsChanged = true;
     } else if (actionSelected.value === 'Delete') {
       row.status = 'deleted';
+      this.wordsChanged = true;
     }
   }
 
@@ -124,8 +138,6 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
   }
 
   private addWord(question: string, answer: string) {
-    console.log(2);
-
     const newWord: WordDTO = {
       id: 'new',
       question: question,
@@ -148,10 +160,6 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
       this.editedWord.answer = answer;
       this.editedWord.status = 'edited';
     }
-  }
-
-  private openConfirmDialog() {
-    this.confirmDialog()?.visible.set(true);
   }
 
   private getBatchWordUpdateDto(): BatchWordUpdateDTO {
