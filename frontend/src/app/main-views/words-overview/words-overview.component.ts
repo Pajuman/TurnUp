@@ -1,6 +1,7 @@
 import {
   Component,
   inject,
+  OnDestroy,
   OnInit,
   Signal,
   signal,
@@ -22,6 +23,7 @@ import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 import { StateService } from '../../services/state.service';
 import { Router } from '@angular/router';
+import { LessonService } from '../../api';
 
 @Component({
   selector: 'words-overview',
@@ -38,24 +40,35 @@ import { Router } from '@angular/router';
   styleUrl: './words-overview.component.scss',
   standalone: true,
 })
-export class WordsOverviewComponent implements OnInit {
+export class WordsOverviewComponent implements OnInit, OnDestroy {
   public lesson: WritableSignal<Lesson> = signal({} as Lesson);
   public words: WritableSignal<Word[]> = signal([]);
-  public readonly lessonService = inject(StateService);
+  public wordsChanged = false;
+  public readonly stateService = inject(StateService);
   private editedWord?: Word;
+  private userId = '';
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
     viewChild('actionDialog');
   private readonly confirmDialog: Signal<ConfirmDialogComponent | undefined> =
     viewChild('confirmDialog');
   private router = inject(Router);
+  private readonly lessonService = inject(LessonService);
 
   public ngOnInit(): void {
-    this.lesson.set(this.lessonService.activeLesson);
-    this.words.set(this.lessonService.activeLessonWords);
+    this.lesson.set(this.stateService.activeLesson);
+    this.words.set(this.stateService.activeLessonWords);
+    this.userId = this.stateService.userId();
+    this.lessonService
+      .getWordsByLessonId(this.userId, this.lesson().id)
+      .subscribe((words) => {
+        this.words.set(words.map((word) => ({ ...word, status: null })));
+      });
   }
 
+  public ngOnDestroy(): void {}
+
   public practiceLesson() {
-    this.lessonService.activeLessonWords = this.words();
+    this.stateService.activeLessonWords = this.words();
     this.router.navigate(['practice', this.lesson().lessonName]);
   }
 
