@@ -128,7 +128,12 @@ export class LessonsOverviewComponent implements OnInit {
   }
 
   public copyLesson(lessonId: string) {
-    console.log('kopíruju ' + lessonId);
+    this.lessonService
+      .copySharedLesson(this.userId(), lessonId)
+      .subscribe((lessonDto) => {
+        const lesson = this.lessonDtoToLesson(lessonDto);
+        this.stateService.lessons.set([...this.stateService.lessons(), lesson]);
+      });
   }
 
   public lessonActionSelected(actionSelected: Option, row: Lesson) {
