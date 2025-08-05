@@ -23,7 +23,12 @@ import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 import { StateService } from '../../services/state.service';
 import { Router } from '@angular/router';
-import { LessonService } from '../../api';
+import {
+  BatchWordUpdateDTO,
+  LessonService,
+  WordDTO,
+  WordService,
+} from '../../api';
 
 @Component({
   selector: 'words-overview',
@@ -53,6 +58,7 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
     viewChild('confirmDialog');
   private router = inject(Router);
   private readonly lessonService = inject(LessonService);
+  private readonly wordService = inject(WordService);
 
   public ngOnInit(): void {
     this.lesson.set(this.stateService.activeLesson);
@@ -73,6 +79,7 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public saveWordChanges(event: any) {
+    console.log(1);
     const output = event as ActionWordDialogOutput;
 
     if (output.action === 'New') {
@@ -87,7 +94,9 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public saveAllChanges() {
-    console.log('save all changes');
+    const batch = this.getBatchWordUpdateDto();
+
+    this.wordService.updateWords(this.userId, batch).subscribe();
   }
 
   public wordActionSelected(actionSelected: Option, row: Word) {
@@ -115,14 +124,22 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
   }
 
   private addWord(question: string, answer: string) {
-    const newWord: Word = {
-      id: Math.random().toString(),
+    console.log(2);
+
+    const newWord: WordDTO = {
+      id: 'new',
       question: question,
       answer: answer,
       score: 0,
-      status: 'new',
     };
-    this.words.set([newWord, ...this.words()]);
+
+    this.lessonService
+      .createWords(this.userId, this.stateService.activeLesson.id, [newWord])
+      .subscribe((newWords) => {
+        // ToDo refactor after WordDto instead of WordDto[]
+        const words = newWords.map((word) => ({ ...word, status: null }));
+        this.words.set([...words, ...this.words()]);
+      });
   }
 
   private editWord(question: string, answer: string) {
@@ -135,5 +152,18 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
 
   private openConfirmDialog() {
     this.confirmDialog()?.visible.set(true);
+  }
+
+  private getBatchWordUpdateDto(): BatchWordUpdateDTO {
+    const batch: BatchWordUpdateDTO = {};
+    this.words().forEach((word) => {
+      if (word.status === 'edited') {
+        batch.updatedWords?.push(word);
+      } else if (word.status === 'deleted') {
+        batch.deletedWordIds?.push(word.id);
+      }
+    });
+
+    return batch;
   }
 }
