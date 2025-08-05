@@ -42,10 +42,9 @@ public class LessonsApiController implements LessonsApi {
     }
 
     @Override
-    public ResponseEntity<List<WordDTO>> createWords(UUID xUserId, UUID lessonId, List<NewWordDTO> newWordDTO) {
-        return ResponseEntity.ok(lessonsService.createWords(xUserId, lessonId, newWordDTO));
+    public ResponseEntity<WordDTO> createWord(UUID xUserId, UUID lessonId, NewWordDTO newWordDTO) {
+        return ResponseEntity.ok(lessonsService.createWord(xUserId, lessonId, newWordDTO));
     }
-
 
     @Override
     public ResponseEntity<Void> updateLesson(UUID xUserId, LessonDTO lessonDTO) {

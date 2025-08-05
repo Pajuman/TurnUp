@@ -5,7 +5,6 @@
  */
 package com.learn.turnup.apis;
 
-
 import java.util.UUID;
 
 import com.learn.turnup.dto.LessonDTO;
@@ -38,7 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-05T10:53:27.471917+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Lesson", description = "Lessons own Words")
 public interface LessonsApi {
@@ -75,7 +74,7 @@ public interface LessonsApi {
         value = "/lessons/{lessonId}/copy",
         produces = { "application/json" }
     )
-
+    
     ResponseEntity<LessonDTO> copySharedLesson(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "lessonId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("lessonId") UUID lessonId
@@ -111,7 +110,7 @@ public interface LessonsApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-
+    
     ResponseEntity<LessonDTO> createLesson(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "NewLessonDTO", description = "", required = true) @Valid @RequestBody NewLessonDTO newLessonDTO
@@ -119,24 +118,24 @@ public interface LessonsApi {
 
 
     /**
-     * POST /lessons/{lessonId}/words : Create new words in a lesson
+     * POST /lessons/{lessonId}/words : Create new word in a lesson
      *
      * @param xUserId  (required)
      * @param lessonId  (required)
      * @param newWordDTO  (required)
-     * @return Words created (status code 200)
+     * @return Word created (status code 200)
      *         or Invalid input (status code 400)
      *         or User ID is not recognized (status code 401)
      *         or Unauthorized access to lesson (status code 403)
      *         or Lesson not found (status code 404)
      */
     @Operation(
-        operationId = "createWords",
-        summary = "Create new words in a lesson",
+        operationId = "createWord",
+        summary = "Create new word in a lesson",
         tags = { "Lesson" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Words created", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = WordDTO.class)))
+            @ApiResponse(responseCode = "200", description = "Word created", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = WordDTO.class))
             }),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
@@ -150,11 +149,11 @@ public interface LessonsApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-
-    ResponseEntity<List<WordDTO>> createWords(
+    
+    ResponseEntity<WordDTO> createWord(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "lessonId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("lessonId") UUID lessonId,
-        @Parameter(name = "NewWordDTO", description = "", required = true) @Valid @RequestBody List<@Valid NewWordDTO> newWordDTO
+        @Parameter(name = "NewWordDTO", description = "", required = true) @Valid @RequestBody NewWordDTO newWordDTO
     );
 
 
@@ -183,7 +182,7 @@ public interface LessonsApi {
         method = RequestMethod.DELETE,
         value = "/lessons/{lessonId}"
     )
-
+    
     ResponseEntity<Void> deleteLesson(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "lessonId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("lessonId") UUID lessonId
@@ -220,7 +219,7 @@ public interface LessonsApi {
         value = "/lessons/{lessonId}/words",
         produces = { "application/json" }
     )
-
+    
     ResponseEntity<List<WordDTO>> getWordsByLessonId(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "lessonId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("lessonId") UUID lessonId
@@ -257,7 +256,7 @@ public interface LessonsApi {
         value = "/lessons",
         consumes = { "application/json" }
     )
-
+    
     ResponseEntity<Void> updateLesson(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "LessonDTO", description = "", required = true) @Valid @RequestBody LessonDTO lessonDTO

@@ -50,7 +50,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AppUserDTO'
+              allOf:
+                - $ref: '#/components/schemas/AppUserDTO'
+                - type: object
+                  properties:
+                    currentPassword:
+                      type: string
+                      description: Original password for authorization
+                  required:
+                    - currentPassword
       responses:
         '201':
           description: User updated
@@ -67,13 +75,25 @@ paths:
       tags:
         - User
       operationId: deleteUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentPassword:
+                  type: string
+                  description: Current password for confirmation
+              required:
+                - currentPassword
       responses:
         '204':
           description: User deleted
         '400':
           description: Invalid input
         '401':
-          description: User ID is not recognized
+          description: User ID or password not recognized
 
   /users/login:
     post:
@@ -268,7 +288,7 @@ paths:
           description: Lesson not found
 
     post:
-      summary: Create new words in a lesson
+      summary: Create new word in a lesson
       parameters:
         - $ref: '#/components/parameters/UserIdHeader'
         - name: lessonId
@@ -279,24 +299,20 @@ paths:
             format: uuid
       tags:
         - Lesson
-      operationId: createWords
+      operationId: createWord
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/NewWordDTO'
+              $ref: '#/components/schemas/NewWordDTO'
       responses:
         '200':
-          description: Words created
+          description: Word created
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/WordDTO'
+                $ref: '#/components/schemas/WordDTO'
         '400':
           description: Invalid input
         '401':
@@ -380,10 +396,6 @@ components:
     BatchWordUpdateDTO:
       type: object
       properties:
-        newWords:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewWordDTO'
         updatedWords:
           type: array
           items:
@@ -475,13 +487,13 @@ components:
           maxLength: 20
           pattern: '^[a-zA-Z0-9_]+$'
           example: "john_doe"
-        passwordHash:
+        password:
           type: string
-          pattern: '^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]+$'
-          example: "P@ssw0rd123"
+          pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
+          example: "P@ssword123"
       required:
         - appUserName
-        - passwordHash
+        - password
 
   parameters:
     UserIdHeader:

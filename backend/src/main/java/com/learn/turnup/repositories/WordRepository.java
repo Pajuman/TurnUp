@@ -9,6 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface WordRepository extends JpaRepository<Word, UUID> {
-    Optional<Word> findByQuestionAndAnswer(String question, String answer);
+    Optional<Word> findByQuestionAndAnswerAndLesson(String question, String answer, Lesson lesson);
     Optional<List<Word>> findAllByLesson(Lesson lesson);
 }

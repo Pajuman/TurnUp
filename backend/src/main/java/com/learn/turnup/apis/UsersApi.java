@@ -8,7 +8,9 @@ package com.learn.turnup.apis;
 import java.util.UUID;
 
 import com.learn.turnup.dto.AppUserDTO;
+import com.learn.turnup.dto.DeleteUserRequest;
 import com.learn.turnup.dto.LessonDTO;
+import com.learn.turnup.dto.UpdateUserRequest;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,7 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-05T10:53:27.471917+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "User", description = "Users own Lessons")
 public interface UsersApi {
@@ -66,7 +68,7 @@ public interface UsersApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-
+    
     ResponseEntity<UUID> createUser(
         @Parameter(name = "AppUserDTO", description = "", required = true) @Valid @RequestBody AppUserDTO appUserDTO
     );
@@ -76,9 +78,10 @@ public interface UsersApi {
      * DELETE /users : Delete a user
      *
      * @param xUserId  (required)
+     * @param deleteUserRequest  (required)
      * @return User deleted (status code 204)
      *         or Invalid input (status code 400)
-     *         or User ID is not recognized (status code 401)
+     *         or User ID or password not recognized (status code 401)
      */
     @Operation(
         operationId = "deleteUser",
@@ -87,16 +90,18 @@ public interface UsersApi {
         responses = {
             @ApiResponse(responseCode = "204", description = "User deleted"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "401", description = "User ID is not recognized")
+            @ApiResponse(responseCode = "401", description = "User ID or password not recognized")
         }
     )
     @RequestMapping(
         method = RequestMethod.DELETE,
-        value = "/users"
+        value = "/users",
+        consumes = { "application/json" }
     )
-
+    
     ResponseEntity<Void> deleteUser(
-        @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId
+        @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
+        @Parameter(name = "DeleteUserRequest", description = "", required = true) @Valid @RequestBody DeleteUserRequest deleteUserRequest
     );
 
 
@@ -127,7 +132,7 @@ public interface UsersApi {
         value = "/users/me/lessons",
         produces = { "application/json" }
     )
-
+    
     ResponseEntity<List<LessonDTO>> getLessonsOfLoggedInUser(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId
     );
@@ -159,7 +164,7 @@ public interface UsersApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-
+    
     ResponseEntity<UUID> loginUser(
         @Parameter(name = "AppUserDTO", description = "", required = true) @Valid @RequestBody AppUserDTO appUserDTO
     );
@@ -169,7 +174,7 @@ public interface UsersApi {
      * PUT /users : Update a user
      *
      * @param xUserId  (required)
-     * @param appUserDTO  (required)
+     * @param updateUserRequest  (required)
      * @return User updated (status code 201)
      *         or Invalid input (status code 400)
      *         or User ID is not recognized (status code 401)
@@ -191,10 +196,10 @@ public interface UsersApi {
         value = "/users",
         consumes = { "application/json" }
     )
-
+    
     ResponseEntity<Void> updateUser(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
-        @Parameter(name = "AppUserDTO", description = "", required = true) @Valid @RequestBody AppUserDTO appUserDTO
+        @Parameter(name = "UpdateUserRequest", description = "", required = true) @Valid @RequestBody UpdateUserRequest updateUserRequest
     );
 
 }

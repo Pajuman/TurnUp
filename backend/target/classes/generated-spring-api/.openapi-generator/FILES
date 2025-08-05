@@ -10,9 +10,11 @@ src/main/java/org/openapitools/configuration/HomeController.java
 src/main/java/org/openapitools/configuration/SpringDocConfiguration.java
 src/main/java/org/openapitools/model/AppUserDTO.java
 src/main/java/org/openapitools/model/BatchWordUpdateDTO.java
+src/main/java/org/openapitools/model/DeleteUserRequest.java
 src/main/java/org/openapitools/model/LessonDTO.java
 src/main/java/org/openapitools/model/NewLessonDTO.java
 src/main/java/org/openapitools/model/NewWordDTO.java
+src/main/java/org/openapitools/model/UpdateUserRequest.java
 src/main/java/org/openapitools/model/WordDTO.java
 src/main/resources/application.properties
 src/main/resources/openapi.yaml

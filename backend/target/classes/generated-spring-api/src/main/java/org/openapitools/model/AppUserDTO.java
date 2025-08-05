@@ -18,12 +18,12 @@ import jakarta.annotation.Generated;
  * AppUserDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-05T10:53:27.471917+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class AppUserDTO {
 
   private String appUserName;
 
-  private String passwordHash;
+  private String password;
 
   public AppUserDTO() {
     super();
@@ -32,9 +32,9 @@ public class AppUserDTO {
   /**
    * Constructor with only required parameters
    */
-  public AppUserDTO(String appUserName, String passwordHash) {
+  public AppUserDTO(String appUserName, String password) {
     this.appUserName = appUserName;
-    this.passwordHash = passwordHash;
+    this.password = password;
   }
 
   public AppUserDTO appUserName(String appUserName) {
@@ -57,24 +57,24 @@ public class AppUserDTO {
     this.appUserName = appUserName;
   }
 
-  public AppUserDTO passwordHash(String passwordHash) {
-    this.passwordHash = passwordHash;
+  public AppUserDTO password(String password) {
+    this.password = password;
     return this;
   }
 
   /**
-   * Get passwordHash
-   * @return passwordHash
+   * Get password
+   * @return password
    */
-  @NotNull @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]+$") 
-  @Schema(name = "passwordHash", example = "P@ssw0rd123", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("passwordHash")
-  public String getPasswordHash() {
-    return passwordHash;
+  @NotNull @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$") 
+  @Schema(name = "password", example = "P@ssword123", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("password")
+  public String getPassword() {
+    return password;
   }
 
-  public void setPasswordHash(String passwordHash) {
-    this.passwordHash = passwordHash;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   @Override
@@ -87,12 +87,12 @@ public class AppUserDTO {
     }
     AppUserDTO appUserDTO = (AppUserDTO) o;
     return Objects.equals(this.appUserName, appUserDTO.appUserName) &&
-        Objects.equals(this.passwordHash, appUserDTO.passwordHash);
+        Objects.equals(this.password, appUserDTO.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(appUserName, passwordHash);
+    return Objects.hash(appUserName, password);
   }
 
   @Override
@@ -100,7 +100,7 @@ public class AppUserDTO {
     StringBuilder sb = new StringBuilder();
     sb.append("class AppUserDTO {\n");
     sb.append("    appUserName: ").append(toIndentedString(appUserName)).append("\n");
-    sb.append("    passwordHash: ").append(toIndentedString(passwordHash)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("}");
     return sb.toString();
   }
