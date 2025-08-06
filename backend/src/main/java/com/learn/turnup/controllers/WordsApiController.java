@@ -2,7 +2,9 @@ package com.learn.turnup.controllers;
 
 import com.learn.turnup.apis.WordsApi;
 import com.learn.turnup.dto.BatchWordUpdateDTO;
+import com.learn.turnup.dto.WordScoreDTO;
 import com.learn.turnup.services.WordsService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.annotation.Generated;
 
+import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -24,6 +27,12 @@ public class WordsApiController implements WordsApi {
     @Override
     public ResponseEntity<Void> updateWords(UUID xUserId, BatchWordUpdateDTO batchWordUpdateDTO) {
         wordsService.updateAndDeleteWords(xUserId, batchWordUpdateDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> updateWordsScores(UUID xUserId, List<@Valid WordScoreDTO> wordScoreDTO) {
+        wordsService.updateWordsScores(xUserId, wordScoreDTO);
         return ResponseEntity.noContent().build();
     }
 }

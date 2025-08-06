@@ -1,4 +1,4 @@
-package org.openapitools.model;
+package com.learn.turnup.dto;
 
 import java.net.URI;
 import java.util.Objects;
@@ -16,35 +16,29 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * WordDTO
+ * WordScoreDTO
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-06T10:32:17.569069+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
-public class WordDTO {
+public class WordScoreDTO {
 
   private UUID id;
 
-  private String question;
-
-  private String answer;
-
   private Integer score;
 
-  public WordDTO() {
+  public WordScoreDTO() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public WordDTO(UUID id, String question, String answer, Integer score) {
+  public WordScoreDTO(UUID id, Integer score) {
     this.id = id;
-    this.question = question;
-    this.answer = answer;
     this.score = score;
   }
 
-  public WordDTO id(UUID id) {
+  public WordScoreDTO id(UUID id) {
     this.id = id;
     return this;
   }
@@ -64,47 +58,7 @@ public class WordDTO {
     this.id = id;
   }
 
-  public WordDTO question(String question) {
-    this.question = question;
-    return this;
-  }
-
-  /**
-   * Get question
-   * @return question
-   */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40) 
-  @Schema(name = "question", example = "1 black dog", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("question")
-  public String getQuestion() {
-    return question;
-  }
-
-  public void setQuestion(String question) {
-    this.question = question;
-  }
-
-  public WordDTO answer(String answer) {
-    this.answer = answer;
-    return this;
-  }
-
-  /**
-   * Get answer
-   * @return answer
-   */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40) 
-  @Schema(name = "answer", example = "1 černý pes", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("answer")
-  public String getAnswer() {
-    return answer;
-  }
-
-  public void setAnswer(String answer) {
-    this.answer = answer;
-  }
-
-  public WordDTO score(Integer score) {
+  public WordScoreDTO score(Integer score) {
     this.score = score;
     return this;
   }
@@ -132,25 +86,21 @@ public class WordDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    WordDTO wordDTO = (WordDTO) o;
-    return Objects.equals(this.id, wordDTO.id) &&
-        Objects.equals(this.question, wordDTO.question) &&
-        Objects.equals(this.answer, wordDTO.answer) &&
-        Objects.equals(this.score, wordDTO.score);
+    WordScoreDTO wordScoreDTO = (WordScoreDTO) o;
+    return Objects.equals(this.id, wordScoreDTO.id) &&
+        Objects.equals(this.score, wordScoreDTO.score);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, question, answer, score);
+    return Objects.hash(id, score);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class WordDTO {\n");
+    sb.append("class WordScoreDTO {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    question: ").append(toIndentedString(question)).append("\n");
-    sb.append("    answer: ").append(toIndentedString(answer)).append("\n");
     sb.append("    score: ").append(toIndentedString(score)).append("\n");
     sb.append("}");
     return sb.toString();
