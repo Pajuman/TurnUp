@@ -18,7 +18,7 @@ import jakarta.annotation.Generated;
  * NewLessonDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-05T10:53:27.471917+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class NewLessonDTO {
 
   private String lessonName;
@@ -52,7 +52,7 @@ public class NewLessonDTO {
    * Get lessonName
    * @return lessonName
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 30)
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 30) 
   @Schema(name = "lessonName", example = "Podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("lessonName")
   public String getLessonName() {
@@ -72,7 +72,7 @@ public class NewLessonDTO {
    * Get description
    * @return description
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 60)
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 60) 
   @Schema(name = "description", example = "V lekci jsou běžná podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
@@ -92,7 +92,7 @@ public class NewLessonDTO {
    * Get language
    * @return language
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 30)
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 30) 
   @Schema(name = "language", example = "AJ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("language")
   public String getLanguage() {
@@ -112,7 +112,7 @@ public class NewLessonDTO {
    * Get shared
    * @return shared
    */
-  @NotNull
+  @NotNull 
   @Schema(name = "shared", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("shared")
   public Boolean getShared() {

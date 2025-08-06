@@ -22,45 +22,14 @@ import jakarta.annotation.Generated;
  * BatchWordUpdateDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-05T10:53:27.471917+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class BatchWordUpdateDTO {
-
-  @Valid
-  private List<@Valid NewWordDTO> newWords = new ArrayList<>();
 
   @Valid
   private List<@Valid WordDTO> updatedWords = new ArrayList<>();
 
   @Valid
   private List<UUID> deletedWordIds = new ArrayList<>();
-
-  public BatchWordUpdateDTO newWords(List<@Valid NewWordDTO> newWords) {
-    this.newWords = newWords;
-    return this;
-  }
-
-  public BatchWordUpdateDTO addNewWordsItem(NewWordDTO newWordsItem) {
-    if (this.newWords == null) {
-      this.newWords = new ArrayList<>();
-    }
-    this.newWords.add(newWordsItem);
-    return this;
-  }
-
-  /**
-   * Get newWords
-   * @return newWords
-   */
-  @Valid
-  @Schema(name = "newWords", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("newWords")
-  public List<@Valid NewWordDTO> getNewWords() {
-    return newWords;
-  }
-
-  public void setNewWords(List<@Valid NewWordDTO> newWords) {
-    this.newWords = newWords;
-  }
 
   public BatchWordUpdateDTO updatedWords(List<@Valid WordDTO> updatedWords) {
     this.updatedWords = updatedWords;
@@ -79,7 +48,7 @@ public class BatchWordUpdateDTO {
    * Get updatedWords
    * @return updatedWords
    */
-  @Valid
+  @Valid 
   @Schema(name = "updatedWords", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("updatedWords")
   public List<@Valid WordDTO> getUpdatedWords() {
@@ -107,7 +76,7 @@ public class BatchWordUpdateDTO {
    * Get deletedWordIds
    * @return deletedWordIds
    */
-  @Valid
+  @Valid 
   @Schema(name = "deletedWordIds", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("deletedWordIds")
   public List<UUID> getDeletedWordIds() {
@@ -127,21 +96,19 @@ public class BatchWordUpdateDTO {
       return false;
     }
     BatchWordUpdateDTO batchWordUpdateDTO = (BatchWordUpdateDTO) o;
-    return Objects.equals(this.newWords, batchWordUpdateDTO.newWords) &&
-        Objects.equals(this.updatedWords, batchWordUpdateDTO.updatedWords) &&
+    return Objects.equals(this.updatedWords, batchWordUpdateDTO.updatedWords) &&
         Objects.equals(this.deletedWordIds, batchWordUpdateDTO.deletedWordIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(newWords, updatedWords, deletedWordIds);
+    return Objects.hash(updatedWords, deletedWordIds);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class BatchWordUpdateDTO {\n");
-    sb.append("    newWords: ").append(toIndentedString(newWords)).append("\n");
     sb.append("    updatedWords: ").append(toIndentedString(updatedWords)).append("\n");
     sb.append("    deletedWordIds: ").append(toIndentedString(deletedWordIds)).append("\n");
     sb.append("}");

@@ -25,7 +25,6 @@ public class Word {
     @Column(
             name = "question",
             nullable = false,
-            unique = false,
             columnDefinition = "TEXT"
     )
     @Size(min = 1, max = 40)
@@ -35,20 +34,18 @@ public class Word {
     @Column(
             name = "answer",
             nullable = false,
-            unique = false,
             columnDefinition = "TEXT"
     )
     @Size(min = 1, max = 40)
     @Pattern(regexp = "^[\\p{L}0-9 ]+$")
-
     private String answer;
+
     @Column(
             name = "score",
-            nullable = true,
-            unique = false,
+            nullable = false,
            columnDefinition = "integer default 0"
     )
-    private Byte score;
+    private Byte score = 0;
 
     @ManyToOne
     @JoinColumn(name = "lesson_id")

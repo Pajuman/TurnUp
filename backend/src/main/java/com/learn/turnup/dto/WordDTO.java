@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * WordDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-05T10:53:27.471917+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class WordDTO {
 
   private UUID id;
@@ -53,7 +53,7 @@ public class WordDTO {
    * Get id
    * @return id
    */
-  @NotNull @Valid
+  @NotNull @Valid 
   @Schema(name = "id", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public UUID getId() {
@@ -73,7 +73,7 @@ public class WordDTO {
    * Get question
    * @return question
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40)
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40) 
   @Schema(name = "question", example = "1 black dog", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("question")
   public String getQuestion() {
@@ -93,7 +93,7 @@ public class WordDTO {
    * Get answer
    * @return answer
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40)
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40) 
   @Schema(name = "answer", example = "1 černý pes", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("answer")
   public String getAnswer() {
@@ -113,7 +113,7 @@ public class WordDTO {
    * Get score
    * @return score
    */
-  @NotNull
+  @NotNull 
   @Schema(name = "score", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("score")
   public Integer getScore() {

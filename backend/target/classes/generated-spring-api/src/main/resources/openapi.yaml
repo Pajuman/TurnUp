@@ -24,16 +24,23 @@ paths:
           format: uuid
           type: string
         style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deleteUser_request'
+        required: true
       responses:
         "204":
           description: User deleted
         "400":
           description: Invalid input
         "401":
-          description: User ID is not recognized
+          description: User ID or password not recognized
       summary: Delete a user
       tags:
       - User
+      x-content-type: application/json
       x-accepts:
       - application/json
       x-tags:
@@ -81,7 +88,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AppUserDTO'
+              $ref: '#/components/schemas/updateUser_request'
         required: true
       responses:
         "201":
@@ -365,7 +372,7 @@ paths:
       x-tags:
       - tag: Lesson
     post:
-      operationId: createWords
+      operationId: createWord
       parameters:
       - explode: false
         in: header
@@ -387,19 +394,15 @@ paths:
         content:
           application/json:
             schema:
-              items:
-                $ref: '#/components/schemas/NewWordDTO'
-              type: array
+              $ref: '#/components/schemas/NewWordDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/WordDTO'
-                type: array
-          description: Words created
+                $ref: '#/components/schemas/WordDTO'
+          description: Word created
         "400":
           description: Invalid input
         "401":
@@ -408,7 +411,7 @@ paths:
           description: Unauthorized access to lesson
         "404":
           description: Lesson not found
-      summary: Create new words in a lesson
+      summary: Create new word in a lesson
       tags:
       - Lesson
       x-content-type: application/json
@@ -525,19 +528,10 @@ components:
           question: 1 black dog
           answer: 1 černý pes
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        newWords:
-        - question: 1 black dog
-          answer: 1 černý pes
-        - question: 1 black dog
-          answer: 1 černý pes
         deletedWordIds:
         - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
       properties:
-        newWords:
-          items:
-            $ref: '#/components/schemas/NewWordDTO'
-          type: array
         updatedWords:
           items:
             $ref: '#/components/schemas/WordDTO'
@@ -601,7 +595,7 @@ components:
       example:
         shared: true
         description: V lekci jsou běžná podstatná jména
-        category: AJ
+        language: AJ
         lessonName: Podstatná jména
       properties:
         lessonName:
@@ -616,7 +610,7 @@ components:
           minLength: 2
           pattern: "^[\\p{L}0-9 ]+$"
           type: string
-        category:
+        language:
           example: AJ
           maxLength: 30
           minLength: 2
@@ -625,15 +619,15 @@ components:
         shared:
           type: boolean
       required:
-      - category
       - description
+      - language
       - lessonName
       - shared
       type: object
     AppUserDTO:
       example:
+        password: P@ssword123
         appUserName: john_doe
-        passwordHash: P@ssw0rd123
       properties:
         appUserName:
           example: john_doe
@@ -641,11 +635,29 @@ components:
           minLength: 3
           pattern: "^[a-zA-Z0-9_]+$"
           type: string
-        passwordHash:
-          example: P@ssw0rd123
-          pattern: "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]+$"
+        password:
+          example: P@ssword123
+          pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"
           type: string
       required:
       - appUserName
-      - passwordHash
+      - password
+      type: object
+    updateUser_request:
+      allOf:
+      - $ref: '#/components/schemas/AppUserDTO'
+      - properties:
+          currentPassword:
+            description: Original password for authorization
+            type: string
+        required:
+        - currentPassword
+        type: object
+    deleteUser_request:
+      properties:
+        currentPassword:
+          description: Current password for confirmation
+          type: string
+      required:
+      - currentPassword
       type: object

@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * LessonDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-07-02T23:32:11.252341600+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-05T10:53:27.471917+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 public class LessonDTO {
 
   private UUID id;
@@ -62,7 +62,7 @@ public class LessonDTO {
    * Get id
    * @return id
    */
-  @NotNull @Valid
+  @NotNull @Valid 
   @Schema(name = "id", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public UUID getId() {
@@ -82,7 +82,7 @@ public class LessonDTO {
    * Get lessonName
    * @return lessonName
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 30)
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 30) 
   @Schema(name = "lessonName", example = "Podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("lessonName")
   public String getLessonName() {
@@ -102,7 +102,7 @@ public class LessonDTO {
    * Get description
    * @return description
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 60)
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 60) 
   @Schema(name = "description", example = "V lekci jsou běžná podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
@@ -122,7 +122,7 @@ public class LessonDTO {
    * Get language
    * @return language
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 30)
+  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 30) 
   @Schema(name = "language", example = "AJ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("language")
   public String getLanguage() {
@@ -142,7 +142,7 @@ public class LessonDTO {
    * Get score
    * @return score
    */
-  @NotNull
+  @NotNull 
   @Schema(name = "score", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("score")
   public Integer getScore() {
@@ -162,7 +162,7 @@ public class LessonDTO {
    * Get wordCount
    * @return wordCount
    */
-  @NotNull
+  @NotNull 
   @Schema(name = "wordCount", example = "15", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("wordCount")
   public Integer getWordCount() {
@@ -182,7 +182,7 @@ public class LessonDTO {
    * Get shared
    * @return shared
    */
-  @NotNull
+  @NotNull 
   @Schema(name = "shared", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("shared")
   public Boolean getShared() {

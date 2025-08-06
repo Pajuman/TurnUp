@@ -2,7 +2,9 @@ package com.learn.turnup.controllers;
 
 import com.learn.turnup.apis.UsersApi;
 import com.learn.turnup.dto.AppUserDTO;
+import com.learn.turnup.dto.DeleteUserRequest;
 import com.learn.turnup.dto.LessonDTO;
+import com.learn.turnup.dto.UpdateUserRequest;
 import com.learn.turnup.services.AppUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,14 +42,14 @@ public class UsersApiController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<Void> updateUser(UUID xUserId, AppUserDTO appUserDTO) {
-        appUserService.updateUser(xUserId, appUserDTO);
+    public ResponseEntity<Void> updateUser(UUID xUserId, UpdateUserRequest updateUserRequest) {
+        appUserService.updateUser(xUserId, updateUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Override
-    public ResponseEntity<Void> deleteUser(UUID xUserId) {
-        appUserService.deleteUser(xUserId);
+    public ResponseEntity<Void> deleteUser(UUID xUserId, DeleteUserRequest deleteUserRequest) {
+        appUserService.deleteUser(xUserId, deleteUserRequest);
         return ResponseEntity.noContent().build();
     }
 }

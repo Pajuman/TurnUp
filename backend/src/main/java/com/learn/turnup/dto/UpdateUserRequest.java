@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -15,29 +16,33 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * AppUserDTO
+ * UpdateUserRequest
  */
 
+@JsonTypeName("updateUser_request")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-05T10:53:27.471917+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
-public class AppUserDTO {
+public class UpdateUserRequest {
 
   private String appUserName;
 
   private String password;
 
-  public AppUserDTO() {
+  private String currentPassword;
+
+  public UpdateUserRequest() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public AppUserDTO(String appUserName, String password) {
+  public UpdateUserRequest(String appUserName, String password, String currentPassword) {
     this.appUserName = appUserName;
     this.password = password;
+    this.currentPassword = currentPassword;
   }
 
-  public AppUserDTO appUserName(String appUserName) {
+  public UpdateUserRequest appUserName(String appUserName) {
     this.appUserName = appUserName;
     return this;
   }
@@ -57,7 +62,7 @@ public class AppUserDTO {
     this.appUserName = appUserName;
   }
 
-  public AppUserDTO password(String password) {
+  public UpdateUserRequest password(String password) {
     this.password = password;
     return this;
   }
@@ -77,6 +82,26 @@ public class AppUserDTO {
     this.password = password;
   }
 
+  public UpdateUserRequest currentPassword(String currentPassword) {
+    this.currentPassword = currentPassword;
+    return this;
+  }
+
+  /**
+   * Original password for authorization
+   * @return currentPassword
+   */
+  @NotNull 
+  @Schema(name = "currentPassword", description = "Original password for authorization", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("currentPassword")
+  public String getCurrentPassword() {
+    return currentPassword;
+  }
+
+  public void setCurrentPassword(String currentPassword) {
+    this.currentPassword = currentPassword;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -85,22 +110,24 @@ public class AppUserDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AppUserDTO appUserDTO = (AppUserDTO) o;
-    return Objects.equals(this.appUserName, appUserDTO.appUserName) &&
-        Objects.equals(this.password, appUserDTO.password);
+    UpdateUserRequest updateUserRequest = (UpdateUserRequest) o;
+    return Objects.equals(this.appUserName, updateUserRequest.appUserName) &&
+        Objects.equals(this.password, updateUserRequest.password) &&
+        Objects.equals(this.currentPassword, updateUserRequest.currentPassword);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(appUserName, password);
+    return Objects.hash(appUserName, password, currentPassword);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AppUserDTO {\n");
+    sb.append("class UpdateUserRequest {\n");
     sb.append("    appUserName: ").append(toIndentedString(appUserName)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    currentPassword: ").append(toIndentedString(currentPassword)).append("\n");
     sb.append("}");
     return sb.toString();
   }

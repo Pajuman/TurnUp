@@ -122,11 +122,12 @@ public class LessonsService {
         return lessonMapper.toDto(newLesson);
     }
 
-    public List<WordDTO> createWords(UUID xUserId, UUID lessonId, List<NewWordDTO> newWordDTOs) {
+    public WordDTO createWord(UUID xUserId, UUID lessonId, NewWordDTO newWordDTO) {
       denyForDefaultUser(xUserId);
 
-      //401
+        //401
         validationService.checkAppUserId(xUserId);
+
         //404
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() ->
                 new EntityNotFoundException("Lesson not found"));
@@ -135,14 +136,12 @@ public class LessonsService {
             throw new ForbiddenException("You are not allowed to access this lesson");
         }
 
-        //filters out Words which already exist
-        newWordDTOs = newWordDTOs.stream().filter(newWordDTO -> wordRepository.findByQuestionAndAnswer(newWordDTO.getQuestion(), newWordDTO.getAnswer()).isEmpty()).toList();
+        Word newWord = wordRepository.findByQuestionAndAnswerAndLesson(newWordDTO.getQuestion(), newWordDTO.getAnswer(), lesson).orElse(wordMapper.toEntity(newWordDTO));
+        newWord.setLesson(lesson);
 
-        List<Word> newWords = newWordDTOs.stream().map(wordMapper::toEntity).peek(word -> word.setLesson(lesson)).toList();
+        newWord = wordRepository.save(newWord);
 
-        newWords = wordRepository.saveAll(newWords);
-
-        return newWords.stream().map(wordMapper::toDto).toList();
+        return wordMapper.toDto(newWord);
     }
 
     public void updateLesson(UUID xUserId, LessonDTO lessonDTO) {
