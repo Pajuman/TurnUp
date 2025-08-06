@@ -6,3 +6,4 @@ export * from './newLessonDTO';
 export * from './newWordDTO';
 export * from './updateUserRequest';
 export * from './wordDTO';
+export * from './wordScoreDTO';

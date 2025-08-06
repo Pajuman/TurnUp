@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.base.service.ts
 api.module.ts
@@ -20,6 +19,7 @@ model/newLessonDTO.ts
 model/newWordDTO.ts
 model/updateUserRequest.ts
 model/wordDTO.ts
+model/wordScoreDTO.ts
 param.ts
 provide-api.ts
 variables.ts
