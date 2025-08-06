@@ -17,7 +17,7 @@ export interface Lesson extends Omit<LessonDTO, 'score'> {
 }
 
 export interface Word extends WordDTO {
-  status: 'new' | 'edited' | 'deleted' | null;
+  status: 'edited' | 'deleted' | null;
 }
 
 export interface ActionWordDialogOutput {

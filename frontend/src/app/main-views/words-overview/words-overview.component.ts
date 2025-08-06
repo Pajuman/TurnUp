@@ -103,10 +103,17 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
       .subscribe((confirmation) => {
         if (confirmation) {
           const batch = this.getBatchWordUpdateDto();
+          this.wordService.updateWords(this.userId, batch).subscribe(() => {
+            this.wordsChanged = false;
+            const words = this.words()
+              .filter((word) => word.status !== 'deleted')
+              .map((word) => {
+                word.status = null;
+                return word;
+              });
 
-          this.wordService
-            .updateWords(this.userId, batch)
-            .subscribe(() => (this.wordsChanged = false));
+            this.words.set(words);
+          });
         }
       });
   }
@@ -162,7 +169,10 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
   }
 
   private getBatchWordUpdateDto(): BatchWordUpdateDTO {
-    const batch: BatchWordUpdateDTO = {};
+    const batch: BatchWordUpdateDTO = {
+      updatedWords: [],
+      deletedWordIds: [],
+    };
     this.words().forEach((word) => {
       if (word.status === 'edited') {
         batch.updatedWords?.push(word);
