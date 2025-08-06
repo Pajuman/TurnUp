@@ -31,13 +31,13 @@ export class PracticeSessionComponent implements OnInit {
   private currentWordArrayIndex = 0;
   private currentWordIndex = 0;
   private previousWords: string[] = [];
-  private readonly lessonService = inject(StateService);
+  private readonly stateService = inject(StateService);
   private readonly router = inject(Router);
 
   ngOnInit(): void {
-    this.words.set(this.lessonService.activeLessonWords);
-    this.practiceCount.set(this.lessonService.practiceCount.value);
-    if (this.lessonService.languageSwitched) {
+    this.words.set(this.stateService.activeLessonWords);
+    this.practiceCount.set(this.stateService.practiceCount.value);
+    if (this.stateService.languageSwitched) {
       this.switchLanguages();
     }
     this.separateWords();
@@ -74,10 +74,7 @@ export class PracticeSessionComponent implements OnInit {
   }
 
   public back() {
-    this.router.navigate([
-      'lesson',
-      this.lessonService.activeLesson.lessonName,
-    ]);
+    this.router.navigate(['lesson', this.stateService.activeLesson.lessonName]);
   }
 
   private nextWord() {
