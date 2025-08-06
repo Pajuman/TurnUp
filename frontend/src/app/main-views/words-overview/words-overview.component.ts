@@ -146,11 +146,10 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
     };
 
     this.lessonService
-      .createWords(this.userId, this.stateService.activeLesson.id, [newWord])
-      .subscribe((newWords) => {
-        // ToDo refactor after WordDto instead of WordDto[]
-        const words = newWords.map((word) => ({ ...word, status: null }));
-        this.words.set([...words, ...this.words()]);
+      .createWord(this.userId, this.stateService.activeLesson.id, newWord)
+      .subscribe((newWordDto) => {
+        const newWord: Word = { ...newWordDto, status: null };
+        this.words.set([newWord, ...this.words()]);
       });
   }
 
