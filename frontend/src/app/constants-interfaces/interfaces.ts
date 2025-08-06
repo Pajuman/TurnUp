@@ -37,5 +37,6 @@ export interface ActionLessonDialogOutput {
 export interface UserDialogOutput {
   action: LogDialogMode;
   userName: string;
-  password: string;
+  currentPassword: string;
+  newPassword: string;
 }

@@ -32,9 +32,11 @@ import { Router } from '@angular/router';
 import { StateService } from '../../services/state.service';
 import {
   AppUserDTO,
+  DeleteUserRequest,
   LessonDTO,
   LessonService,
   NewLessonDTO,
+  UpdateUserRequest,
   UserService,
   WordDTO,
 } from '../../api';
@@ -201,13 +203,13 @@ export class LessonsOverviewComponent implements OnInit {
   }
 
   public logDialogOutput(event: UserDialogOutput) {
-    if (!event.userName && !event.password) {
+    if (!event.userName && !event.currentPassword) {
       return;
     }
 
     const user = {
       appUserName: event.userName ?? this.userName(),
-      passwordHash: event.password,
+      password: event.currentPassword,
     } as AppUserDTO;
 
     if (event.action === LogDialogMode.Delete) {
@@ -216,11 +218,11 @@ export class LessonsOverviewComponent implements OnInit {
         ?.confirmation$.pipe(first())
         .subscribe((confirmation) => {
           if (confirmation) {
-            this.appUserAction(event.action, user);
+            this.appUserAction(event.action, user, event.newPassword);
           }
         });
     } else {
-      this.appUserAction(event.action, user);
+      this.appUserAction(event.action, user, event.newPassword);
     }
   }
 
@@ -228,7 +230,11 @@ export class LessonsOverviewComponent implements OnInit {
     this.stateService.reset();
   }
 
-  private appUserAction(mode: LogDialogMode, user: AppUserDTO) {
+  private appUserAction(
+    mode: LogDialogMode,
+    user: AppUserDTO,
+    newPassword: string,
+  ) {
     switch (mode) {
       case LogDialogMode.New:
         this.userService.createUser(user).subscribe((userId) => {
@@ -240,14 +246,26 @@ export class LessonsOverviewComponent implements OnInit {
         this.loginAndSetLessons(user);
         break;
       case LogDialogMode.Edit:
-        this.userService.updateUser(this.userId(), user).subscribe(() => {
-          this.userName.set(user.appUserName ?? '');
-        });
+        const updateUserRequest: UpdateUserRequest = {
+          appUserName: user.appUserName,
+          password: newPassword,
+          currentPassword: user.password,
+        };
+        this.userService
+          .updateUser(this.userId(), updateUserRequest)
+          .subscribe(() => {
+            this.userName.set(user.appUserName ?? '');
+          });
         break;
       case LogDialogMode.Delete:
-        this.userService.deleteUser(this.userId()).subscribe(() => {
-          this.logOut();
-        });
+        const deleteUserRequest: DeleteUserRequest = {
+          currentPassword: user.password,
+        };
+        this.userService
+          .deleteUser(this.userId(), deleteUserRequest)
+          .subscribe(() => {
+            this.logOut();
+          });
         break;
     }
   }
