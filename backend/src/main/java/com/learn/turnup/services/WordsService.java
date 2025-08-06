@@ -68,7 +68,7 @@ public class WordsService {
             Word word = wordRepository.findById(wordScoreDTO.getId()).orElse(null);
             //403
             Lesson wordsLesson = word.getLesson();
-            if(wordsLesson != null && wordsLesson.getAppUser().getId() != xUserId){
+            if(wordsLesson != null && !wordsLesson.getAppUser().getId().equals(xUserId) ){
                 throw new ForbiddenException("You do not have access to all specified words");
             }
 

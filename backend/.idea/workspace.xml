@@ -4,29 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5740859e-d1f0-4a76-ae97-2ee5250948af" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/WordScoreDTO.java" afterDir="false" />
+    <list default="true" id="5740859e-d1f0-4a76-ae97-2ee5250948af" name="Changes" comment="update api and implement updateWordsScores">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/apis/WordsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/apis/WordsApi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/WordsApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/WordsApiController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/WordsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/WordsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/generated-spring-api/.openapi-generator/FILES" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generated-spring-api/.openapi-generator/FILES" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/api/LessonsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/api/LessonsApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/api/UsersApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/api/UsersApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/api/WordsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/api/WordsApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/AppUserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/AppUserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/BatchWordUpdateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/BatchWordUpdateDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/LessonDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/LessonDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/NewLessonDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/NewLessonDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/NewWordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/NewWordDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/WordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/java/org/openapitools/model/WordDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/resources/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generated-spring-api/src/main/resources/openapi.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/openapi.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/DebugController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/Debugger.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/entities/AppUser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/LessonMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/LessonMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/WordMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/WordMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/apis/WordsApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/apis/WordsApi.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/config/CorsConfig$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/WordsApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/WordsApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/entities/Word.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/entities/Word.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/exceptions/DefaultUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/exceptions/DefaultUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/WordsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/WordsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/.openapi-generator/FILES" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/.openapi-generator/FILES" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/LessonsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/LessonsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/UsersApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/UsersApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/WordsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/WordsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/AppUserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/AppUserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/BatchWordUpdateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/BatchWordUpdateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/LessonDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/LessonDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewLessonDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewLessonDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewWordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewWordDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/WordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/WordDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/resources/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/resources/openapi.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/openapi.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,6 +103,19 @@
       <option name="presentableId" value="Default" />
       <updated>1754466946762</updated>
     </task>
+    <task id="LOCAL-00001" summary="update api and implement updateWordsScores">
+      <option name="closed" value="true" />
+      <created>1754482685697</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1754482685698</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update api and implement updateWordsScores" />
+    <option name="LAST_COMMIT_MESSAGE" value="update api and implement updateWordsScores" />
   </component>
 </project>

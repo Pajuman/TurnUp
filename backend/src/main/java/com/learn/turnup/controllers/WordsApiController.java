@@ -31,7 +31,7 @@ public class WordsApiController implements WordsApi {
     }
 
     @Override
-    public ResponseEntity<Void> updateWordsScores(UUID xUserId, List<@Valid WordScoreDTO> wordScoreDTO) {
+    public ResponseEntity<Void> updateWordsScores(UUID xUserId, List<WordScoreDTO> wordScoreDTO) {
         wordsService.updateWordsScores(xUserId, wordScoreDTO);
         return ResponseEntity.noContent().build();
     }
