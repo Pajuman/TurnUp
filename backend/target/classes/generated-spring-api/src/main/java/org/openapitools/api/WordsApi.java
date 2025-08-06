@@ -7,6 +7,7 @@ package org.openapitools.api;
 
 import org.openapitools.model.BatchWordUpdateDTO;
 import java.util.UUID;
+import org.openapitools.model.WordScoreDTO;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,7 +34,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-05T10:53:27.471917+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-06T10:32:17.569069+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Word", description = "Words are lowest entities")
 public interface WordsApi {
@@ -68,6 +69,39 @@ public interface WordsApi {
     ResponseEntity<Void> updateWords(
         @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
         @Parameter(name = "BatchWordUpdateDTO", description = "", required = true) @Valid @RequestBody BatchWordUpdateDTO batchWordUpdateDTO
+    );
+
+
+    /**
+     * PUT /words/scores : Update words&#39; scores
+     *
+     * @param xUserId  (required)
+     * @param wordScoreDTO  (required)
+     * @return All words&#39; scores successfully updated (status code 204)
+     *         or Invalid input (status code 400)
+     *         or User ID is not recognized (status code 401)
+     *         or Unauthorized access to words (status code 403)
+     */
+    @Operation(
+        operationId = "updateWordsScores",
+        summary = "Update words' scores",
+        tags = { "Word" },
+        responses = {
+            @ApiResponse(responseCode = "204", description = "All words' scores successfully updated"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "401", description = "User ID is not recognized"),
+            @ApiResponse(responseCode = "403", description = "Unauthorized access to words")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = "/words/scores",
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<Void> updateWordsScores(
+        @NotNull @Parameter(name = "X-User-Id", description = "", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "X-User-Id", required = true) UUID xUserId,
+        @Parameter(name = "WordScoreDTO", description = "", required = true) @Valid @RequestBody List<@Valid WordScoreDTO> wordScoreDTO
     );
 
 }

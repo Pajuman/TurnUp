@@ -454,6 +454,43 @@ paths:
       - application/json
       x-tags:
       - tag: Word
+  /words/scores:
+    put:
+      operationId: updateWordsScores
+      parameters:
+      - explode: false
+        in: header
+        name: X-User-Id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/WordScoreDTO'
+              type: array
+        required: true
+      responses:
+        "204":
+          description: All words' scores successfully updated
+        "400":
+          description: Invalid input
+        "401":
+          description: User ID is not recognized
+        "403":
+          description: Unauthorized access to words
+      summary: Update words' scores
+      tags:
+      - Word
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Word
 components:
   parameters:
     UserIdHeader:
@@ -466,6 +503,20 @@ components:
         type: string
       style: simple
   schemas:
+    WordScoreDTO:
+      example:
+        score: 0
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          format: uuid
+          type: string
+        score:
+          type: integer
+      required:
+      - id
+      - score
+      type: object
     WordDTO:
       example:
         score: 0

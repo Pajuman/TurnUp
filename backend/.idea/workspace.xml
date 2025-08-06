@@ -4,27 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b32b2486-3b40-40ab-8887-2adb85d0a477" name="Changes" comment="DB for production settings">
+    <list default="true" id="5740859e-d1f0-4a76-ae97-2ee5250948af" name="Changes" comment="update api and implement updateWordsScores">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/WordsApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/WordsApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/WordsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/WordsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/apis/WordsApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/apis/WordsApi.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/config/CorsConfig$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/WordsApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/WordsApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/entities/Word.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/entities/Word.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/exceptions/DefaultUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/exceptions/DefaultUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/WordsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/WordsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/.openapi-generator/FILES" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/.openapi-generator/FILES" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/LessonsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/LessonsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/UsersApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/UsersApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/WordsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/WordsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/AppUserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/AppUserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/BatchWordUpdateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/BatchWordUpdateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/LessonDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/LessonDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewLessonDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewLessonDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewWordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewWordDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/WordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/WordDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/resources/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/resources/openapi.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/openapi.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$/.." value="main" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -39,36 +47,31 @@
     &quot;accountId&quot;: &quot;d07d1cda-3dfe-4b18-b6bb-2b0f757c0d89&quot;
   }
 }</component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
+  &quot;associatedIndex&quot;: 1
 }</component>
-  <component name="ProjectId" id="2zdLq0syKkcZag5dlDxUKpvrZts" />
+  <component name="ProjectId" id="30uAAwyQ0A44FiOleA9TuVHqh3K" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.TurnupApplication.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Já/IdeaProjects/turnup/backend&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.TurnupApplication.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Já/IdeaProjects/turnup/backend/src/main/java/com/learn/turnup/apis"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Já\IdeaProjects\turnup\backend\src\main\java\com\learn\turnup\apis" />
+      <recent name="C:\Users\Já\IdeaProjects\turnup\backend\src\main\java\com\learn\turnup\dto" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="TurnupApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
@@ -86,17 +89,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="backend" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="backend" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.TurnupApplication" />
@@ -105,95 +97,25 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b32b2486-3b40-40ab-8887-2adb85d0a477" name="Changes" comment="" />
-      <created>1752056190716</created>
+      <changelist id="5740859e-d1f0-4a76-ae97-2ee5250948af" name="Changes" comment="" />
+      <created>1754466946762</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1752056190716</updated>
+      <updated>1754466946762</updated>
     </task>
-    <task id="LOCAL-00001" summary="change java 21 to 17">
+    <task id="LOCAL-00001" summary="update api and implement updateWordsScores">
       <option name="closed" value="true" />
-      <created>1752060388528</created>
+      <created>1754482685697</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1752060388528</updated>
+      <updated>1754482685698</updated>
     </task>
-    <task id="LOCAL-00002" summary="change java 21 to 17">
-      <option name="closed" value="true" />
-      <created>1752061260781</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1752061260781</updated>
-    </task>
-    <task id="LOCAL-00003" summary="application-production.properties added">
-      <option name="closed" value="true" />
-      <created>1752061945970</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1752061945970</updated>
-    </task>
-    <task id="LOCAL-00004" summary="debug">
-      <option name="closed" value="true" />
-      <created>1752062539972</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1752062539972</updated>
-    </task>
-    <task id="LOCAL-00005" summary="set temporary H2 so that deploy without DB can be made">
-      <option name="closed" value="true" />
-      <created>1752063972939</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1752063972939</updated>
-    </task>
-    <task id="LOCAL-00006" summary="set CORS config">
-      <option name="closed" value="true" />
-      <created>1752136710806</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1752136710806</updated>
-    </task>
-    <task id="LOCAL-00007" summary="removed spring security and used crypto instead">
-      <option name="closed" value="true" />
-      <created>1753713776782</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1753713776782</updated>
-    </task>
-    <task id="LOCAL-00008" summary="DB for production settings">
-      <option name="closed" value="true" />
-      <created>1753714180231</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1753714180231</updated>
-    </task>
-    <task id="LOCAL-00009" summary="DB for production settings">
-      <option name="closed" value="true" />
-      <created>1753715380178</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1753715380178</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="change java 21 to 17" />
-    <MESSAGE value="application-production.properties added" />
-    <MESSAGE value="debug" />
-    <MESSAGE value="set temporary H2 so that deploy without DB can be made" />
-    <MESSAGE value="set CORS config" />
-    <MESSAGE value="removed spring security and used crypto instead" />
-    <MESSAGE value="DB for production settings" />
-    <option name="LAST_COMMIT_MESSAGE" value="DB for production settings" />
+    <MESSAGE value="update api and implement updateWordsScores" />
+    <option name="LAST_COMMIT_MESSAGE" value="update api and implement updateWordsScores" />
   </component>
 </project>

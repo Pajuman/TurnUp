@@ -2,6 +2,7 @@ package com.learn.turnup.services;
 
 import com.learn.turnup.dto.BatchWordUpdateDTO;
 import com.learn.turnup.dto.WordDTO;
+import com.learn.turnup.dto.WordScoreDTO;
 import com.learn.turnup.entities.Lesson;
 import com.learn.turnup.entities.Word;
 import com.learn.turnup.exceptions.GlobalExceptions.ForbiddenException;
@@ -12,6 +13,7 @@ import com.learn.turnup.repositories.LessonRepository;
 import com.learn.turnup.repositories.WordRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +59,22 @@ public class WordsService {
 
         wordRepository.deleteAll(wordsToDelete);
         updateWords(wordDTOsToUpdate, wordsToUpdate);
+    }
+
+    public void updateWordsScores(UUID xUserId, List<WordScoreDTO> wordScoreDTOs){
+        denyForDefaultUser(xUserId);
+
+        wordScoreDTOs.forEach(wordScoreDTO -> {
+            Word word = wordRepository.findById(wordScoreDTO.getId()).orElse(null);
+            //403
+            Lesson wordsLesson = word.getLesson();
+            if(wordsLesson != null && !wordsLesson.getAppUser().getId().equals(xUserId) ){
+                throw new ForbiddenException("You do not have access to all specified words");
+            }
+
+            word.setScore(Byte.parseByte(wordScoreDTO.getScore().toString()));
+            wordRepository.save(word);
+        });
     }
 
     private void updateWords(List<WordDTO> wordDTOsToUpdate, List<Word> wordsToUpdate) {

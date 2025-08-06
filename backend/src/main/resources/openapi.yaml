@@ -346,8 +346,47 @@ paths:
         '403':
           description: Unauthorized access to words
 
+  /words/scores:
+    put:
+      summary: Update words' scores
+      parameters:
+        - $ref: '#/components/parameters/UserIdHeader'
+      tags:
+        - Word
+      operationId: updateWordsScores
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/WordScoreDTO'
+      responses:
+        '204':
+          description: All words' scores successfully updated
+        '400':
+          description: Invalid input
+        '401':
+          description: User ID is not recognized
+        '403':
+          description: Unauthorized access to words
+
 components:
   schemas:
+    WordScoreDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+
+        score:
+          type: integer
+      required:
+        - id
+        - score
+
     WordDTO:
       type: object
       properties:

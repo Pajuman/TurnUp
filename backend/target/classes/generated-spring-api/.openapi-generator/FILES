@@ -16,6 +16,7 @@ src/main/java/org/openapitools/model/NewLessonDTO.java
 src/main/java/org/openapitools/model/NewWordDTO.java
 src/main/java/org/openapitools/model/UpdateUserRequest.java
 src/main/java/org/openapitools/model/WordDTO.java
+src/main/java/org/openapitools/model/WordScoreDTO.java
 src/main/resources/application.properties
 src/main/resources/openapi.yaml
 src/test/java/org/openapitools/OpenApiGeneratorApplicationTests.java
