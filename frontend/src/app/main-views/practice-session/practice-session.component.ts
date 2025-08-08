@@ -82,12 +82,22 @@ export class PracticeSessionComponent implements OnInit {
 
     this.wordService
       .updateWordsScores(this.stateService.userId(), wordScoreDTO)
-      .subscribe(() =>
-        this.router.navigate([
-          'lesson',
-          this.stateService.activeLesson.lessonName,
-        ]),
-      );
+      .subscribe({
+        next: () => {
+          this.stateService.scoreUpdated = true;
+          this.router.navigate([
+            'lesson',
+            this.stateService.activeLesson.lessonName,
+          ]);
+        },
+        error: () => {
+          this.stateService.scoreUpdated = false;
+          this.router.navigate([
+            'lesson',
+            this.stateService.activeLesson.lessonName,
+          ]);
+        },
+      });
   }
 
   private nextWord() {

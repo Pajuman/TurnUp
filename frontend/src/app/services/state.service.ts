@@ -17,6 +17,8 @@ export class StateService {
     value: 20,
   };
   public languageSwitched = false;
+  public scoreUpdated?: boolean;
+
   public userId = signal('');
   public lessons: WritableSignal<Lesson[]> = signal([]);
   public userName = signal('Demo');

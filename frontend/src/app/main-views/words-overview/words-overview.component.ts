@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   inject,
   OnDestroy,
@@ -49,7 +50,9 @@ import { MessageService } from 'primeng/api';
   styleUrl: './words-overview.component.scss',
   standalone: true,
 })
-export class WordsOverviewComponent implements OnInit, OnDestroy {
+export class WordsOverviewComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   public lesson: WritableSignal<Lesson> = signal({} as Lesson);
   public words: WritableSignal<Word[]> = signal([]);
   public wordsChanged = false;
@@ -79,6 +82,16 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
           this.showToast('error');
         },
       });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.stateService.scoreUpdated !== undefined) {
+      if (this.stateService.scoreUpdated) {
+        this.showToast('success', 'Score uloženo');
+      } else {
+        this.showToast('error', 'Score se neuložilo');
+      }
+    }
   }
 
   public ngOnDestroy(): void {
@@ -122,6 +135,7 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
                   return word;
                 });
               this.words.set(words);
+              this.showToast('success', 'Slovíčka změněna');
             },
             error: () => {
               this.showToast('error');
@@ -171,6 +185,7 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
         next: (newWordDto) => {
           const newWord: Word = { ...newWordDto, status: null };
           this.words.set([newWord, ...this.words()]);
+          this.showToast('success', 'Slovíčko přidáno');
         },
         error: () => {
           this.showToast('error');
@@ -202,11 +217,11 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
     return batch;
   }
 
-  private showToast(severity: 'success' | 'error', detail = '') {
+  private showToast(severity: 'success' | 'error', detail?: string) {
     this.messageService.add({
       severity: severity,
       summary: severity === 'success' ? 'Success' : 'Error',
-      detail: severity === 'success' ? detail : 'Nepovedlo se',
+      detail: detail ?? 'Nepovedlo se',
       life: 3000,
     });
   }
