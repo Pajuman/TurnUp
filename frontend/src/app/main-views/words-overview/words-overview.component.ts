@@ -30,6 +30,8 @@ import {
   WordService,
 } from '../../api';
 import { first } from 'rxjs';
+import { Toast } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'words-overview',
@@ -41,6 +43,7 @@ import { first } from 'rxjs';
     ActionsPopoverComponent,
     ConfirmDialogComponent,
     ActionDialogComponent,
+    Toast,
   ],
   templateUrl: './words-overview.component.html',
   styleUrl: './words-overview.component.scss',
@@ -60,6 +63,7 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private readonly lessonService = inject(LessonService);
   private readonly wordService = inject(WordService);
+  private readonly messageService = inject(MessageService);
 
   public ngOnInit(): void {
     this.lesson.set(this.stateService.activeLesson);
@@ -67,8 +71,13 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
     this.userId = this.stateService.userId();
     this.lessonService
       .getWordsByLessonId(this.userId, this.lesson().id)
-      .subscribe((words) => {
-        this.words.set(words.map((word) => ({ ...word, status: null })));
+      .subscribe({
+        next: (words) => {
+          this.words.set(words.map((word) => ({ ...word, status: null })));
+        },
+        error: () => {
+          this.showToast('error');
+        },
       });
   }
 
@@ -103,16 +112,20 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
       .subscribe((confirmation) => {
         if (confirmation) {
           const batch = this.getBatchWordUpdateDto();
-          this.wordService.updateWords(this.userId, batch).subscribe(() => {
-            this.wordsChanged = false;
-            const words = this.words()
-              .filter((word) => word.status !== 'deleted')
-              .map((word) => {
-                word.status = null;
-                return word;
-              });
-
-            this.words.set(words);
+          this.wordService.updateWords(this.userId, batch).subscribe({
+            next: () => {
+              this.wordsChanged = false;
+              const words = this.words()
+                .filter((word) => word.status !== 'deleted')
+                .map((word) => {
+                  word.status = null;
+                  return word;
+                });
+              this.words.set(words);
+            },
+            error: () => {
+              this.showToast('error');
+            },
           });
         }
       });
@@ -154,9 +167,14 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
 
     this.lessonService
       .createWord(this.userId, this.stateService.activeLesson.id, newWord)
-      .subscribe((newWordDto) => {
-        const newWord: Word = { ...newWordDto, status: null };
-        this.words.set([newWord, ...this.words()]);
+      .subscribe({
+        next: (newWordDto) => {
+          const newWord: Word = { ...newWordDto, status: null };
+          this.words.set([newWord, ...this.words()]);
+        },
+        error: () => {
+          this.showToast('error');
+        },
       });
   }
 
@@ -182,5 +200,14 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
     });
 
     return batch;
+  }
+
+  private showToast(severity: 'success' | 'error', detail = '') {
+    this.messageService.add({
+      severity: severity,
+      summary: severity === 'success' ? 'Success' : 'Error',
+      detail: severity === 'success' ? detail : 'Nepovedlo se',
+      life: 3000,
+    });
   }
 }
