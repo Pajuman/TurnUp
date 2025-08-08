@@ -9,13 +9,12 @@
  */
 
 
-export interface LessonDTO { 
-    id: string;
-    lessonName: string;
-    description: string;
-    language: string;
-    score: number;
-    wordCount: number;
-    shared: boolean;
+export interface UpdateUserRequest { 
+    appUserName: string;
+    password: string;
+    /**
+     * Original password for authorization
+     */
+    currentPassword: string;
 }
 

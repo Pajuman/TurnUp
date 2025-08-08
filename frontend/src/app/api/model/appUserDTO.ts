@@ -11,6 +11,6 @@
 
 export interface AppUserDTO { 
     appUserName: string;
-    passwordHash: string;
+    password: string;
 }
 

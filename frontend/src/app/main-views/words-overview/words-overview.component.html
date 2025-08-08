@@ -13,7 +13,7 @@
   <ng-template #caption>
     <toggler></toggler>
     <div class="button-group">
-      <p-button (click)="saveAllChanges()">Uložit změny</p-button>
+      <p-button (click)="saveAllChanges()" [disabled]="!wordsChanged">Uložit změny</p-button>
       <p-button (click)="openDialog('New')">Nový výraz</p-button>
     </div>
   </ng-template>

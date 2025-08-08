@@ -48,19 +48,20 @@ export class LogDialogComponent implements OnInit {
     const output: UserDialogOutput = {
       action: this.mode(),
       userName: this.userName,
-      password: password,
+      currentPassword: password,
+      newPassword: this.newPassword,
     };
     this.dialogOutput.emit(output);
     this.reset();
   }
 
   public cancel() {
-    const output: UserDialogOutput = {
+    /*const output: UserDialogOutput = {
       action: this.mode(),
       userName: '',
-      password: '',
+      currentPassword: '',
     };
-    this.dialogOutput.emit(output);
+    this.dialogOutput.emit(output);*/
     this.reset();
   }
 
@@ -87,6 +88,7 @@ export class LogDialogComponent implements OnInit {
   }
 
   private reset() {
+    //ToDo why setTimeout?
     setTimeout(() => {
       this.userName = '';
       this.password = '';

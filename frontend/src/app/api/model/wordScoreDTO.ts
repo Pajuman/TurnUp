@@ -9,13 +9,8 @@
  */
 
 
-export interface LessonDTO { 
+export interface WordScoreDTO { 
     id: string;
-    lessonName: string;
-    description: string;
-    language: string;
     score: number;
-    wordCount: number;
-    shared: boolean;
 }
 

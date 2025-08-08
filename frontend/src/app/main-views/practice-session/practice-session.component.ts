@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { CardComponent } from '../../features/card/card.component';
 import { Button } from 'primeng/button';
-import { WordDTO } from '../../api';
+import { WordDTO, WordScoreDTO, WordService } from '../../api';
 import { StateService } from '../../services/state.service';
 import { Word } from '../../constants-interfaces/interfaces';
 import { Router } from '@angular/router';
@@ -31,13 +31,14 @@ export class PracticeSessionComponent implements OnInit {
   private currentWordArrayIndex = 0;
   private currentWordIndex = 0;
   private previousWords: string[] = [];
-  private readonly lessonService = inject(StateService);
+  private readonly stateService = inject(StateService);
+  private readonly wordService = inject(WordService);
   private readonly router = inject(Router);
 
   ngOnInit(): void {
-    this.words.set(this.lessonService.activeLessonWords);
-    this.practiceCount.set(this.lessonService.practiceCount.value);
-    if (this.lessonService.languageSwitched) {
+    this.words.set(this.stateService.activeLessonWords);
+    this.practiceCount.set(this.stateService.practiceCount.value);
+    if (this.stateService.languageSwitched) {
       this.switchLanguages();
     }
     this.separateWords();
@@ -74,10 +75,19 @@ export class PracticeSessionComponent implements OnInit {
   }
 
   public back() {
-    this.router.navigate([
-      'lesson',
-      this.lessonService.activeLesson.lessonName,
-    ]);
+    const wordScoreDTO: WordScoreDTO[] = this.words().map((word) => ({
+      id: word.id,
+      score: word.score,
+    }));
+
+    this.wordService
+      .updateWordsScores(this.stateService.userId(), wordScoreDTO)
+      .subscribe(() =>
+        this.router.navigate([
+          'lesson',
+          this.stateService.activeLesson.lessonName,
+        ]),
+      );
   }
 
   private nextWord() {

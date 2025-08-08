@@ -1,6 +1,7 @@
 import {
   Component,
   inject,
+  OnDestroy,
   OnInit,
   Signal,
   signal,
@@ -22,6 +23,13 @@ import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 import { StateService } from '../../services/state.service';
 import { Router } from '@angular/router';
+import {
+  BatchWordUpdateDTO,
+  LessonService,
+  WordDTO,
+  WordService,
+} from '../../api';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'words-overview',
@@ -38,24 +46,39 @@ import { Router } from '@angular/router';
   styleUrl: './words-overview.component.scss',
   standalone: true,
 })
-export class WordsOverviewComponent implements OnInit {
+export class WordsOverviewComponent implements OnInit, OnDestroy {
   public lesson: WritableSignal<Lesson> = signal({} as Lesson);
   public words: WritableSignal<Word[]> = signal([]);
-  public readonly lessonService = inject(StateService);
+  public wordsChanged = false;
+  public readonly stateService = inject(StateService);
   private editedWord?: Word;
+  private userId = '';
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
     viewChild('actionDialog');
   private readonly confirmDialog: Signal<ConfirmDialogComponent | undefined> =
     viewChild('confirmDialog');
   private router = inject(Router);
+  private readonly lessonService = inject(LessonService);
+  private readonly wordService = inject(WordService);
 
   public ngOnInit(): void {
-    this.lesson.set(this.lessonService.activeLesson);
-    this.words.set(this.lessonService.activeLessonWords);
+    this.lesson.set(this.stateService.activeLesson);
+    this.words.set(this.stateService.activeLessonWords);
+    this.userId = this.stateService.userId();
+    this.lessonService
+      .getWordsByLessonId(this.userId, this.lesson().id)
+      .subscribe((words) => {
+        this.words.set(words.map((word) => ({ ...word, status: null })));
+      });
+  }
+
+  public ngOnDestroy(): void {
+    if (this.wordsChanged) {
+    }
   }
 
   public practiceLesson() {
-    this.lessonService.activeLessonWords = this.words();
+    this.stateService.activeLessonWords = this.words();
     this.router.navigate(['practice', this.lesson().lessonName]);
   }
 
@@ -74,15 +97,35 @@ export class WordsOverviewComponent implements OnInit {
   }
 
   public saveAllChanges() {
-    console.log('save all changes');
+    this.confirmDialog()?.visible.set(true);
+    this.confirmDialog()
+      ?.confirmation$.pipe(first())
+      .subscribe((confirmation) => {
+        if (confirmation) {
+          const batch = this.getBatchWordUpdateDto();
+          this.wordService.updateWords(this.userId, batch).subscribe(() => {
+            this.wordsChanged = false;
+            const words = this.words()
+              .filter((word) => word.status !== 'deleted')
+              .map((word) => {
+                word.status = null;
+                return word;
+              });
+
+            this.words.set(words);
+          });
+        }
+      });
   }
 
   public wordActionSelected(actionSelected: Option, row: Word) {
     if (actionSelected.value === 'Edit') {
       this.editedWord = row;
       this.openDialog('Edit', row);
+      this.wordsChanged = true;
     } else if (actionSelected.value === 'Delete') {
       row.status = 'deleted';
+      this.wordsChanged = true;
     }
   }
 
@@ -102,14 +145,19 @@ export class WordsOverviewComponent implements OnInit {
   }
 
   private addWord(question: string, answer: string) {
-    const newWord: Word = {
-      id: Math.random().toString(),
+    const newWord: WordDTO = {
+      id: 'new',
       question: question,
       answer: answer,
       score: 0,
-      status: 'new',
     };
-    this.words.set([newWord, ...this.words()]);
+
+    this.lessonService
+      .createWord(this.userId, this.stateService.activeLesson.id, newWord)
+      .subscribe((newWordDto) => {
+        const newWord: Word = { ...newWordDto, status: null };
+        this.words.set([newWord, ...this.words()]);
+      });
   }
 
   private editWord(question: string, answer: string) {
@@ -120,7 +168,19 @@ export class WordsOverviewComponent implements OnInit {
     }
   }
 
-  private openConfirmDialog() {
-    this.confirmDialog()?.visible.set(true);
+  private getBatchWordUpdateDto(): BatchWordUpdateDTO {
+    const batch: BatchWordUpdateDTO = {
+      updatedWords: [],
+      deletedWordIds: [],
+    };
+    this.words().forEach((word) => {
+      if (word.status === 'edited') {
+        batch.updatedWords?.push(word);
+      } else if (word.status === 'deleted') {
+        batch.deletedWordIds?.push(word.id);
+      }
+    });
+
+    return batch;
   }
 }
