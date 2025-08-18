@@ -98,7 +98,10 @@ export class PracticeSessionComponent implements OnInit {
   }
 
   private redirectBack() {
-    this.router.navigate(['lesson', this.stateService.activeLesson.lessonName]);
+    this.router.navigate([
+      'lesson',
+      this.stateService.activeLesson?.lessonName,
+    ]);
   }
 
   private nextWord() {

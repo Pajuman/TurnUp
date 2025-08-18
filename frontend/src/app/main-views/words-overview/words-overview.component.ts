@@ -58,20 +58,23 @@ export class WordsOverviewComponent
   public lesson: WritableSignal<Lesson> = signal({} as Lesson);
   public words: WritableSignal<Word[]> = signal([]);
   public wordsChanged = false;
-  public readonly stateService = inject(StateService);
   private editedWord?: Word;
   private userId = '';
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
     viewChild('actionDialog');
   private readonly confirmDialog: Signal<ConfirmDialogComponent | undefined> =
     viewChild('confirmDialog');
-  private router = inject(Router);
+  private readonly stateService = inject(StateService);
+  private readonly router = inject(Router);
   private readonly lessonService = inject(LessonService);
   private readonly wordService = inject(WordService);
   private readonly messageService = inject(MessageService);
 
   public ngOnInit(): void {
-    this.lesson.set(this.stateService.activeLesson);
+    if (this.stateService.activeLesson === undefined) {
+      this.redirectBack();
+    }
+    this.lesson.set(this.stateService.activeLesson!);
     this.words.set(this.stateService.activeLessonWords);
     this.userId = this.stateService.userId();
   }
@@ -131,7 +134,7 @@ export class WordsOverviewComponent
                   return word;
                 });
               this.words.set(words);
-              this.stateService.activeLesson.wordCount = this.words().length;
+              this.stateService.activeLesson!.wordCount = this.words().length;
               this.showToast('success', 'Slovíčka změněna');
             },
             error: () => {
@@ -164,7 +167,7 @@ export class WordsOverviewComponent
     this.actionDialog()!.visible.set(true);
   }
 
-  public back() {
+  public redirectBack() {
     this.router.navigate(['']);
   }
 
@@ -177,12 +180,12 @@ export class WordsOverviewComponent
     };
 
     this.lessonService
-      .createWord(this.userId, this.stateService.activeLesson.id, newWord)
+      .createWord(this.userId, this.stateService.activeLesson!.id, newWord)
       .subscribe({
         next: (newWordDto) => {
           const newWord: Word = { ...newWordDto, status: null };
           this.words.set([newWord, ...this.words()]);
-          this.stateService.activeLesson.wordCount++;
+          this.stateService.activeLesson!.wordCount++;
           this.showToast('success', 'Slovíčko přidáno');
         },
         error: (err: HttpErrorResponse) => {
@@ -241,6 +244,6 @@ export class WordsOverviewComponent
     const avg =
       this.words().reduce((sum, item) => sum + item.score, 0) /
       this.words().length;
-    this.stateService.activeLesson.score = Math.round(avg);
+    this.stateService.activeLesson!.score = Math.round(avg);
   }
 }

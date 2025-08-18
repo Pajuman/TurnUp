@@ -10,7 +10,7 @@ import { Popover } from 'primeng/popover';
   providedIn: 'root',
 })
 export class StateService {
-  public activeLesson: Lesson = {} as Lesson;
+  public activeLesson?: Lesson;
   public activeLessonWords: Word[] = [];
   public practiceCount: PracticeCountOption = {
     label: '20',
