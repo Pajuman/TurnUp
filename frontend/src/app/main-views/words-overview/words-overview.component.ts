@@ -106,6 +106,7 @@ export class WordsOverviewComponent
       } else {
         this.showToast('error', 'Score se neuložilo - slovíčka nevlastníte');
       }
+      this.stateService.scoreUpdated = undefined;
     }
   }
 
