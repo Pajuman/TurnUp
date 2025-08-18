@@ -75,6 +75,9 @@ export class PracticeSessionComponent implements OnInit {
   }
 
   public back() {
+    if (this.currentCount() === 1) {
+      this.redirectBack();
+    }
     const wordScoreDTO: WordScoreDTO[] = this.words().map((word) => ({
       id: word.id,
       score: word.score,
@@ -84,20 +87,18 @@ export class PracticeSessionComponent implements OnInit {
       .updateWordsScores(this.stateService.userId(), wordScoreDTO)
       .subscribe({
         next: () => {
-          this.stateService.scoreUpdated = true;
-          this.router.navigate([
-            'lesson',
-            this.stateService.activeLesson.lessonName,
-          ]);
+          this.stateService.scoreUpdated = 'yes';
+          this.redirectBack();
         },
         error: () => {
-          this.stateService.scoreUpdated = false;
-          this.router.navigate([
-            'lesson',
-            this.stateService.activeLesson.lessonName,
-          ]);
+          this.stateService.scoreUpdated = 'no';
+          this.redirectBack();
         },
       });
+  }
+
+  private redirectBack() {
+    this.router.navigate(['lesson', this.stateService.activeLesson.lessonName]);
   }
 
   private nextWord() {

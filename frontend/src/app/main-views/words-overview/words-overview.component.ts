@@ -77,13 +77,15 @@ export class WordsOverviewComponent
   }
 
   ngAfterViewInit(): void {
+    if (this.stateService.scoreUpdated === 'yes') {
+      this.showToast('success', 'Score uloženo');
+      this.actualizeLessonScore();
+    } else if (this.stateService.scoreUpdated === 'no') {
+      this.showToast('error', 'Score se neuložilo');
+    } else if (this.stateService.scoreUpdated === 'notOwened') {
+      this.showToast('error', 'Score se neuložilo - slovíčka nevlastníte');
+    }
     if (this.stateService.scoreUpdated !== undefined) {
-      if (this.stateService.scoreUpdated) {
-        this.showToast('success', 'Score uloženo');
-        this.actualizeLessonScore();
-      } else {
-        this.showToast('error', 'Score se neuložilo - slovíčka nevlastníte');
-      }
       this.stateService.scoreUpdated = undefined;
     }
   }
