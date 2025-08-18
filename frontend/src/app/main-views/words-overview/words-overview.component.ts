@@ -103,6 +103,7 @@ export class WordsOverviewComponent
     if (this.stateService.scoreUpdated !== undefined) {
       if (this.stateService.scoreUpdated) {
         this.showToast('success', 'Score uloženo');
+        this.actualizeLessonScore();
       } else {
         this.showToast('error', 'Score se neuložilo - slovíčka nevlastníte');
       }
@@ -255,5 +256,12 @@ export class WordsOverviewComponent
       detail: detail,
       life: 3000,
     });
+  }
+
+  private actualizeLessonScore() {
+    const avg =
+      this.words().reduce((sum, item) => sum + item.score, 0) /
+      this.words().length;
+    this.stateService.activeLesson.score = Math.round(avg);
   }
 }
