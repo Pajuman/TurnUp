@@ -33,6 +33,8 @@ import {
 import { first } from 'rxjs';
 import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MESSAGES } from '../../constants-interfaces/constants';
 
 @Component({
   selector: 'words-overview',
@@ -78,8 +80,21 @@ export class WordsOverviewComponent
         next: (words) => {
           this.words.set(words.map((word) => ({ ...word, status: null })));
         },
-        error: () => {
-          this.showToast('error');
+        error: (err: HttpErrorResponse) => {
+          let errMessage = '';
+          switch (err.status) {
+            case 400:
+            case 401:
+              errMessage = MESSAGES.invalidInput;
+              break;
+            case 403:
+              errMessage = MESSAGES.unAuthorizedAccessToLesson;
+              break;
+            case 404:
+              errMessage = MESSAGES.lessonNotFound;
+              break;
+          }
+          this.showToast('error', errMessage);
         },
       });
   }
@@ -89,7 +104,7 @@ export class WordsOverviewComponent
       if (this.stateService.scoreUpdated) {
         this.showToast('success', 'Score uloženo');
       } else {
-        this.showToast('error', 'Score se neuložilo');
+        this.showToast('error', 'Score se neuložilo - slovíčka nevlastníte');
       }
     }
   }
@@ -187,8 +202,21 @@ export class WordsOverviewComponent
           this.words.set([newWord, ...this.words()]);
           this.showToast('success', 'Slovíčko přidáno');
         },
-        error: () => {
-          this.showToast('error');
+        error: (err: HttpErrorResponse) => {
+          let errMessage = '';
+          switch (err.status) {
+            case 400:
+            case 401:
+              errMessage = MESSAGES.invalidInput;
+              break;
+            case 403:
+              errMessage = MESSAGES.unAuthorizedAccessToLesson;
+              break;
+            case 404:
+              errMessage = MESSAGES.lessonNotFound;
+              break;
+          }
+          this.showToast('error', errMessage);
         },
       });
   }
@@ -217,11 +245,11 @@ export class WordsOverviewComponent
     return batch;
   }
 
-  private showToast(severity: 'success' | 'error', detail?: string) {
+  private showToast(severity: 'success' | 'error', detail = '') {
     this.messageService.add({
       severity: severity,
       summary: severity === 'success' ? 'Success' : 'Error',
-      detail: detail ?? 'Nepovedlo se',
+      detail: detail,
       life: 3000,
     });
   }

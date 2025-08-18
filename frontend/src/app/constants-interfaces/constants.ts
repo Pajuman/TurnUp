@@ -131,3 +131,12 @@ export const WORDS = [
   { id: '19', question: 'chléb', answer: 'bread', score: 1 },
   { id: '20', question: 'mléko', answer: 'milk', score: 3 },
 ];
+
+export const MESSAGES = {
+  invalidInput: 'Chybný vstup',
+  unAuthorizedAccessToLesson: 'K lekci nemáte přístup',
+  lessonNotFound: 'Lekce nenalezena',
+  userNotFound: 'Uživatel nenalezen',
+  lessonConflict: 'Lekce se stejným názvem už existuje',
+  userConflict: 'Uživatel se stejným názvem už existuje',
+};

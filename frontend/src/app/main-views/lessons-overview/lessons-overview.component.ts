@@ -11,6 +11,7 @@ import { Table, TableModule } from 'primeng/table';
 import {
   DEMO_USER,
   LogDialogMode,
+  MESSAGES,
   SHARED_OPTIONS,
   WORDS,
 } from '../../constants-interfaces/constants';
@@ -46,6 +47,7 @@ import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dia
 import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-popover.component';
 import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'lessons-overview',
@@ -140,8 +142,24 @@ export class LessonsOverviewComponent implements OnInit {
         this.stateService.lessons.set([...this.stateService.lessons(), lesson]);
         this.showToast('success', 'Lekce zkopírována');
       },
-      error: () => {
-        this.showToast('error');
+      error: (err: HttpErrorResponse) => {
+        let errMessage = '';
+        switch (err.status) {
+          case 400:
+          case 401:
+            errMessage = MESSAGES.invalidInput;
+            break;
+          case 403:
+            errMessage = MESSAGES.unAuthorizedAccessToLesson;
+            break;
+          case 404:
+            errMessage = MESSAGES.lessonNotFound;
+            break;
+          case 409:
+            errMessage = MESSAGES.lessonConflict;
+            break;
+        }
+        this.showToast('error', errMessage);
       },
     });
   }
@@ -168,8 +186,18 @@ export class LessonsOverviewComponent implements OnInit {
             this.editedLesson = undefined;
             this.showToast('success', 'Lekce editována');
           },
-          error: () => {
-            this.showToast('error');
+          error: (err: HttpErrorResponse) => {
+            let errMessage = '';
+            switch (err.status) {
+              case 400:
+              case 401:
+                errMessage = MESSAGES.invalidInput;
+                break;
+              case 409:
+                errMessage = MESSAGES.lessonConflict;
+                break;
+            }
+            this.showToast('error', errMessage);
           },
         });
     }
@@ -257,8 +285,17 @@ export class LessonsOverviewComponent implements OnInit {
             this.userName.set(user.appUserName ?? '');
             this.showToast('success', 'Uživatel vytvořen');
           },
-          error: () => {
-            this.showToast('error');
+          error: (err: HttpErrorResponse) => {
+            let errMessage = '';
+            switch (err.status) {
+              case 400:
+                errMessage = MESSAGES.invalidInput;
+                break;
+              case 409:
+                errMessage = MESSAGES.userConflict;
+                break;
+            }
+            this.showToast('error', errMessage);
           },
         });
         break;
@@ -278,8 +315,18 @@ export class LessonsOverviewComponent implements OnInit {
               this.userName.set(user.appUserName ?? '');
               this.showToast('success', 'Uživatel změněn');
             },
-            error: () => {
-              this.showToast('error');
+            error: (err: HttpErrorResponse) => {
+              let errMessage = '';
+              switch (err.status) {
+                case 400:
+                case 401:
+                  errMessage = MESSAGES.invalidInput;
+                  break;
+                case 409:
+                  errMessage = MESSAGES.userConflict;
+                  break;
+              }
+              this.showToast('error', errMessage);
             },
           });
         break;
@@ -294,8 +341,18 @@ export class LessonsOverviewComponent implements OnInit {
               this.logOut();
               this.showToast('success', 'Uživatel smazán');
             },
-            error: () => {
-              this.showToast('error');
+            error: (err: HttpErrorResponse) => {
+              let errMessage = '';
+              switch (err.status) {
+                case 400:
+                case 401:
+                  errMessage = MESSAGES.invalidInput;
+                  break;
+                case 409:
+                  errMessage = MESSAGES.userConflict;
+                  break;
+              }
+              this.showToast('error', errMessage);
             },
           });
         break;
@@ -316,8 +373,18 @@ export class LessonsOverviewComponent implements OnInit {
         this.stateService.lessons.set([...this.stateService.lessons(), lesson]);
         this.showToast('success', 'Lekce přidána');
       },
-      error: () => {
-        this.showToast('error');
+      error: (err: HttpErrorResponse) => {
+        let errMessage = '';
+        switch (err.status) {
+          case 400:
+          case 401:
+            errMessage = MESSAGES.invalidInput;
+            break;
+          case 409:
+            errMessage = MESSAGES.lessonConflict;
+            break;
+        }
+        this.showToast('error', errMessage);
       },
     });
   }
@@ -344,8 +411,24 @@ export class LessonsOverviewComponent implements OnInit {
         this.editedLesson!.description = lessonData.description;
         this.showToast('success', 'Lekce změněna');
       },
-      error: () => {
-        this.showToast('error');
+      error: (err: HttpErrorResponse) => {
+        let errMessage = '';
+        switch (err.status) {
+          case 400:
+          case 401:
+            errMessage = MESSAGES.invalidInput;
+            break;
+          case 403:
+            errMessage = MESSAGES.unAuthorizedAccessToLesson;
+            break;
+          case 404:
+            errMessage = MESSAGES.lessonNotFound;
+            break;
+          case 409:
+            errMessage = MESSAGES.lessonConflict;
+            break;
+        }
+        this.showToast('error', errMessage);
       },
     });
   }
@@ -381,8 +464,21 @@ export class LessonsOverviewComponent implements OnInit {
           this.stateService.userName.set(user.appUserName);
           this.showToast('success', 'Vítej ' + user.appUserName);
         },
-        error: () => {
-          this.showToast('error');
+        error: (err: HttpErrorResponse) => {
+          console.log('olééé');
+          console.log(err.status);
+
+          let errMessage = '';
+          switch (err.status) {
+            case 400:
+            case 401:
+              errMessage = MESSAGES.invalidInput;
+              break;
+            case 404:
+              errMessage = MESSAGES.userNotFound;
+              break;
+          }
+          this.showToast('error', errMessage);
         },
       });
   }
@@ -391,7 +487,7 @@ export class LessonsOverviewComponent implements OnInit {
     this.messageService.add({
       severity: severity,
       summary: severity === 'success' ? 'Success' : 'Error',
-      detail: severity === 'success' ? detail : 'Nepovedlo se',
+      detail: detail,
       life: 3000,
     });
   }
