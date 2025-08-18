@@ -81,6 +81,7 @@ public class LessonsService {
         newLesson.setDescription(copiedLesson.getDescription());
         newLesson.setShared(false);
         newLesson.setAppUser(targetUser);
+        newLesson.setLanguage((copiedLesson.getLanguage()));
 
         newLesson = lessonRepository.save(newLesson);
 
