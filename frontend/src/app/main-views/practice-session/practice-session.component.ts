@@ -37,6 +37,9 @@ export class PracticeSessionComponent implements OnInit {
 
   ngOnInit(): void {
     this.words.set(this.stateService.activeLessonWords);
+    if (this.words().length === 0) {
+      this.back();
+    }
     this.practiceCount.set(this.stateService.practiceCount.value);
     if (this.stateService.languageSwitched) {
       this.switchLanguages();
@@ -75,7 +78,7 @@ export class PracticeSessionComponent implements OnInit {
   }
 
   public back() {
-    if (this.currentCount() === 1) {
+    if (this.currentCount() <= 1) {
       this.redirectBack();
     }
     const wordScoreDTO: WordScoreDTO[] = this.words().map((word) => ({
@@ -100,7 +103,7 @@ export class PracticeSessionComponent implements OnInit {
   private redirectBack() {
     this.router.navigate([
       'lesson',
-      this.stateService.activeLesson?.lessonName,
+      this.stateService.activeLesson?.lessonName ?? '',
     ]);
   }
 
