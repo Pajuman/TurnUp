@@ -1,11 +1,11 @@
 <div class="caption">
   @if (userName() && userName() != 'Demo') {
-    <span>{{ userName() }}</span>
+    <span class="user-name">{{ userName() }}</span>
     <span class="link" (click)="logOut()">Odhlásit</span>
     <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.Edit)">Editovat</span>
     <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.Delete)">Smazat</span>
   } @else {
-    <span>{{ userName() }}</span>
+    <span class="user-name">{{ userName() }}</span>
     <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.LogIn)">Přihlásit</span>
     <span class="link" (click)="openUserDialog($event, LOG_DIALOG_MODE.New)">Registrovat</span>
   }
@@ -73,7 +73,7 @@
                 [table]="lessonTable"/>
       </th>
       <th>
-        <i (click)="clearAllFilters(lessonTable)" class="pi pi-filter-slash clear-filters"></i>
+        <i (click)="clearAllFilters(lessonTable)" class="pi pi-filter-slash clear-filters icon-hover"></i>
       </th>
     </tr>
   </ng-template>
@@ -81,13 +81,13 @@
   <ng-template let-row pTemplate="body">
     <tr [pTooltip]="row.description" tooltipPosition="top">
       @if (row.status == 'own') {
-        <td (click)="practiceLesson(row)"><i class="pi pi-play small-icon"></i></td>
+        <td (click)="redirect(row, 'practice')"><i class="pi pi-play small-icon icon-hover"></i></td>
       } @else {
-        <td (click)="copyLesson(row.id)" class="not-own"><i class="pi pi-copy  small-icon"></i></td>
+        <td (click)="copyLesson(row.id)" class="not-own"><i class="pi pi-copy  small-icon icon-hover"></i></td>
       }
-      <td (click)="toDetail(row)">{{ row.lessonName }}</td>
-      <td (click)="toDetail(row)" class="hide-sm hide-md">{{ row.language }}</td>
-      <td (click)="toDetail(row)" class="hide-sm hide-md">{{ row.wordCount }}</td>
+      <td (click)="redirect(row, 'lesson')">{{ row.lessonName }}</td>
+      <td (click)="redirect(row, 'lesson')" class="hide-sm hide-md">{{ row.language }}</td>
+      <td (click)="redirect(row, 'lesson')" class="hide-sm hide-md">{{ row.wordCount }}</td>
       <td class="hide-sm">{{ row.status === 'own' ? row.score : null }}</td>
       <td>
         @if (row.status === 'own') {
