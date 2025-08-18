@@ -74,29 +74,6 @@ export class WordsOverviewComponent
     this.lesson.set(this.stateService.activeLesson);
     this.words.set(this.stateService.activeLessonWords);
     this.userId = this.stateService.userId();
-    this.lessonService
-      .getWordsByLessonId(this.userId, this.lesson().id)
-      .subscribe({
-        next: (words) => {
-          this.words.set(words.map((word) => ({ ...word, status: null })));
-        },
-        error: (err: HttpErrorResponse) => {
-          let errMessage = '';
-          switch (err.status) {
-            case 400:
-            case 401:
-              errMessage = MESSAGES.invalidInput;
-              break;
-            case 403:
-              errMessage = MESSAGES.unAuthorizedAccessToLesson;
-              break;
-            case 404:
-              errMessage = MESSAGES.lessonNotFound;
-              break;
-          }
-          this.showToast('error', errMessage);
-        },
-      });
   }
 
   ngAfterViewInit(): void {

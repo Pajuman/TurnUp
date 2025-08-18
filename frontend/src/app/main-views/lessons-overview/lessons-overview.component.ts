@@ -13,7 +13,6 @@ import {
   LogDialogMode,
   MESSAGES,
   SHARED_OPTIONS,
-  WORDS,
 } from '../../constants-interfaces/constants';
 import { Popover } from 'primeng/popover';
 import { LogDialogComponent } from '../../dialogs/log-dialog/log-dialog.component';
@@ -123,11 +122,29 @@ export class LessonsOverviewComponent implements OnInit {
 
   public toDetail(lesson: Lesson) {
     this.stateService.activeLesson = lesson;
-    //ToDo BE call to get words
-    const wordsDto = WORDS;
-    this.stateService.activeLessonWords = this.getWordsFromWordsDto(wordsDto);
-
-    this.router.navigate(['lesson', lesson.lessonName]);
+    this.lessonService.getWordsByLessonId(this.userId(), lesson.id).subscribe({
+      next: (wordsDto) => {
+        this.stateService.activeLessonWords =
+          this.getWordsFromWordsDto(wordsDto);
+        this.router.navigate(['lesson', lesson.lessonName]);
+      },
+      error: (err: HttpErrorResponse) => {
+        let errMessage = '';
+        switch (err.status) {
+          case 400:
+          case 401:
+            errMessage = MESSAGES.invalidInput;
+            break;
+          case 403:
+            errMessage = MESSAGES.unAuthorizedAccessToLesson;
+            break;
+          case 404:
+            errMessage = MESSAGES.lessonNotFound;
+            break;
+        }
+        this.showToast('error', errMessage);
+      },
+    });
   }
 
   public practiceLesson(lesson: Lesson) {
