@@ -120,13 +120,13 @@ export class LessonsOverviewComponent implements OnInit {
     }
   }
 
-  public toDetail(lesson: Lesson) {
+  public redirect(lesson: Lesson, toWhere: 'practice' | 'lesson') {
     this.stateService.activeLesson = lesson;
     this.lessonService.getWordsByLessonId(this.userId(), lesson.id).subscribe({
       next: (wordsDto) => {
         this.stateService.activeLessonWords =
           this.getWordsFromWordsDto(wordsDto);
-        this.router.navigate(['lesson', lesson.lessonName]);
+        this.router.navigate([toWhere, lesson.lessonName]);
       },
       error: (err: HttpErrorResponse) => {
         let errMessage = '';
@@ -145,11 +145,6 @@ export class LessonsOverviewComponent implements OnInit {
         this.showToast('error', errMessage);
       },
     });
-  }
-
-  public practiceLesson(lesson: Lesson) {
-    this.stateService.activeLesson = lesson;
-    this.router.navigate(['practice', lesson.lessonName]);
   }
 
   public copyLesson(lessonId: string) {
