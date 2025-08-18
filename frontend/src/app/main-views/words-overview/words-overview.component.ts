@@ -151,6 +151,7 @@ export class WordsOverviewComponent
                   return word;
                 });
               this.words.set(words);
+              this.stateService.activeLesson.wordCount = this.words().length;
               this.showToast('success', 'Slovíčka změněna');
             },
             error: () => {
@@ -201,6 +202,7 @@ export class WordsOverviewComponent
         next: (newWordDto) => {
           const newWord: Word = { ...newWordDto, status: null };
           this.words.set([newWord, ...this.words()]);
+          this.stateService.activeLesson.wordCount++;
           this.showToast('success', 'Slovíčko přidáno');
         },
         error: (err: HttpErrorResponse) => {
