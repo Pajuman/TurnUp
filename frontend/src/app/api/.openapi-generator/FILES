@@ -1,10 +1,9 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.base.service.ts
 api.module.ts
 api/api.ts
-api/state.service.ts
+api/lesson.service.ts
 api/user.service.ts
 api/word.service.ts
 configuration.ts
@@ -13,10 +12,14 @@ git_push.sh
 index.ts
 model/appUserDTO.ts
 model/batchWordUpdateDTO.ts
+model/deleteUserRequest.ts
 model/lessonDTO.ts
 model/models.ts
 model/newLessonDTO.ts
 model/newWordDTO.ts
+model/updateUserRequest.ts
 model/wordDTO.ts
+model/wordScoreDTO.ts
 param.ts
+provide-api.ts
 variables.ts

@@ -12,6 +12,7 @@
 export interface NewLessonDTO { 
     lessonName: string;
     description: string;
+    language: string;
     shared: boolean;
 }
 

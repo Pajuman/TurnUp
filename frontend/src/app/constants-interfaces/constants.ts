@@ -18,7 +18,7 @@ export const PRACTICE_COUNT_OPTIONS: Option[] = [
 
 export const DEMO_USER = {
   appUserName: 'Demo',
-  passwordHash: 'P@ssword123',
+  password: 'P@ssword123',
 };
 
 export const ACTION_OPTIONS = [

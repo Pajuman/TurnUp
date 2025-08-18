@@ -174,25 +174,25 @@ export class LessonService extends BaseService {
     }
 
     /**
-     * Create new words in a lesson
+     * Create new word in a lesson
      * @param xUserId 
      * @param lessonId 
      * @param newWordDTO 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createWords(xUserId: string, lessonId: string, newWordDTO: Array<NewWordDTO>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<WordDTO>>;
-    public createWords(xUserId: string, lessonId: string, newWordDTO: Array<NewWordDTO>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<WordDTO>>>;
-    public createWords(xUserId: string, lessonId: string, newWordDTO: Array<NewWordDTO>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<WordDTO>>>;
-    public createWords(xUserId: string, lessonId: string, newWordDTO: Array<NewWordDTO>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public createWord(xUserId: string, lessonId: string, newWordDTO: NewWordDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<WordDTO>;
+    public createWord(xUserId: string, lessonId: string, newWordDTO: NewWordDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<WordDTO>>;
+    public createWord(xUserId: string, lessonId: string, newWordDTO: NewWordDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<WordDTO>>;
+    public createWord(xUserId: string, lessonId: string, newWordDTO: NewWordDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (xUserId === null || xUserId === undefined) {
-            throw new Error('Required parameter xUserId was null or undefined when calling createWords.');
+            throw new Error('Required parameter xUserId was null or undefined when calling createWord.');
         }
         if (lessonId === null || lessonId === undefined) {
-            throw new Error('Required parameter lessonId was null or undefined when calling createWords.');
+            throw new Error('Required parameter lessonId was null or undefined when calling createWord.');
         }
         if (newWordDTO === null || newWordDTO === undefined) {
-            throw new Error('Required parameter newWordDTO was null or undefined when calling createWords.');
+            throw new Error('Required parameter newWordDTO was null or undefined when calling createWord.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -234,7 +234,7 @@ export class LessonService extends BaseService {
 
         let localVarPath = `/lessons/${this.configuration.encodeParam({name: "lessonId", value: lessonId, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}/words`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Array<WordDTO>>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<WordDTO>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: newWordDTO,

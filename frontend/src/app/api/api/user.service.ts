@@ -19,7 +19,11 @@ import { Observable }                                        from 'rxjs';
 // @ts-ignore
 import { AppUserDTO } from '../model/appUserDTO';
 // @ts-ignore
+import { DeleteUserRequest } from '../model/deleteUserRequest';
+// @ts-ignore
 import { LessonDTO } from '../model/lessonDTO';
+// @ts-ignore
+import { UpdateUserRequest } from '../model/updateUserRequest';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -104,15 +108,19 @@ export class UserService extends BaseService {
     /**
      * Delete a user
      * @param xUserId 
+     * @param deleteUserRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteUser(xUserId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public deleteUser(xUserId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public deleteUser(xUserId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public deleteUser(xUserId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public deleteUser(xUserId: string, deleteUserRequest: DeleteUserRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public deleteUser(xUserId: string, deleteUserRequest: DeleteUserRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public deleteUser(xUserId: string, deleteUserRequest: DeleteUserRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public deleteUser(xUserId: string, deleteUserRequest: DeleteUserRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (xUserId === null || xUserId === undefined) {
             throw new Error('Required parameter xUserId was null or undefined when calling deleteUser.');
+        }
+        if (deleteUserRequest === null || deleteUserRequest === undefined) {
+            throw new Error('Required parameter deleteUserRequest was null or undefined when calling deleteUser.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -131,6 +139,15 @@ export class UserService extends BaseService {
         const localVarTransferCache: boolean = options?.transferCache ?? true;
 
 
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -147,6 +164,7 @@ export class UserService extends BaseService {
         return this.httpClient.request<any>('delete', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                body: deleteUserRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -281,19 +299,19 @@ export class UserService extends BaseService {
     /**
      * Update a user
      * @param xUserId 
-     * @param appUserDTO 
+     * @param updateUserRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUser(xUserId: string, appUserDTO: AppUserDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public updateUser(xUserId: string, appUserDTO: AppUserDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public updateUser(xUserId: string, appUserDTO: AppUserDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public updateUser(xUserId: string, appUserDTO: AppUserDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public updateUser(xUserId: string, updateUserRequest: UpdateUserRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public updateUser(xUserId: string, updateUserRequest: UpdateUserRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public updateUser(xUserId: string, updateUserRequest: UpdateUserRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public updateUser(xUserId: string, updateUserRequest: UpdateUserRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (xUserId === null || xUserId === undefined) {
             throw new Error('Required parameter xUserId was null or undefined when calling updateUser.');
         }
-        if (appUserDTO === null || appUserDTO === undefined) {
-            throw new Error('Required parameter appUserDTO was null or undefined when calling updateUser.');
+        if (updateUserRequest === null || updateUserRequest === undefined) {
+            throw new Error('Required parameter updateUserRequest was null or undefined when calling updateUser.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -337,7 +355,7 @@ export class UserService extends BaseService {
         return this.httpClient.request<any>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: appUserDTO,
+                body: updateUserRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
