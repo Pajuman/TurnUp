@@ -201,7 +201,7 @@ export class LessonsOverviewComponent implements OnInit {
               this.lessons().filter((lesson) => lesson.id !== row.id),
             );
             this.editedLesson = undefined;
-            this.showToast('success', 'Lekce editována');
+            this.showToast('success', 'Lekce smazána');
           },
           error: (err: HttpErrorResponse) => {
             let errMessage = '';
