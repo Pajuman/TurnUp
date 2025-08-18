@@ -48,7 +48,7 @@ public class LessonsService {
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() ->
                 new EntityNotFoundException("Lesson not found"));
         //403
-        if(!lesson.getAppUser().getId().equals(xUserId)){
+        if(!lesson.getAppUser().getId().equals(xUserId) && lesson.getShared() == false){
             throw new ForbiddenException("You are not allowed to access this lesson");
         }
         List<Word> words = wordRepository.findAllByLesson(lesson).orElse(Collections.emptyList());
