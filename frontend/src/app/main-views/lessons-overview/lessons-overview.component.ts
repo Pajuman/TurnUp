@@ -11,8 +11,8 @@ import { Table, TableModule } from 'primeng/table';
 import {
   DEMO_USER,
   LogDialogMode,
+  MESSAGES,
   SHARED_OPTIONS,
-  WORDS,
 } from '../../constants-interfaces/constants';
 import { Popover } from 'primeng/popover';
 import { LogDialogComponent } from '../../dialogs/log-dialog/log-dialog.component';
@@ -44,6 +44,9 @@ import { Button } from 'primeng/button';
 import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog.component';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-popover.component';
+import { MessageService } from 'primeng/api';
+import { Toast } from 'primeng/toast';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'lessons-overview',
@@ -59,6 +62,7 @@ import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-p
     ConfirmDialogComponent,
     ActionsPopoverComponent,
     LogDialogComponent,
+    Toast,
   ],
   templateUrl: './lessons-overview.component.html',
   styleUrl: './lessons-overview.component.scss',
@@ -84,6 +88,7 @@ export class LessonsOverviewComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly userService = inject(UserService);
   private readonly lessonService = inject(LessonService);
+  private readonly messageService = inject(MessageService);
 
   ngOnInit(): void {
     this.userId = this.stateService.userId;
@@ -115,27 +120,60 @@ export class LessonsOverviewComponent implements OnInit {
     }
   }
 
-  public toDetail(lesson: Lesson) {
+  public redirect(lesson: Lesson, toWhere: 'practice' | 'lesson') {
     this.stateService.activeLesson = lesson;
-    //ToDo BE call to get words
-    const wordsDto = WORDS;
-    this.stateService.activeLessonWords = this.getWordsFromWordsDto(wordsDto);
-
-    this.router.navigate(['lesson', lesson.lessonName]);
-  }
-
-  public practiceLesson(lesson: Lesson) {
-    this.stateService.activeLesson = lesson;
-    this.router.navigate(['practice', lesson.lessonName]);
+    this.lessonService.getWordsByLessonId(this.userId(), lesson.id).subscribe({
+      next: (wordsDto) => {
+        this.stateService.activeLessonWords =
+          this.getWordsFromWordsDto(wordsDto);
+        this.router.navigate([toWhere, lesson.lessonName]);
+      },
+      error: (err: HttpErrorResponse) => {
+        let errMessage = '';
+        switch (err.status) {
+          case 400:
+          case 401:
+            errMessage = MESSAGES.invalidInput;
+            break;
+          case 403:
+            errMessage = MESSAGES.unAuthorizedAccessToLesson;
+            break;
+          case 404:
+            errMessage = MESSAGES.lessonNotFound;
+            break;
+        }
+        this.showToast('error', errMessage);
+      },
+    });
   }
 
   public copyLesson(lessonId: string) {
-    this.lessonService
-      .copySharedLesson(this.userId(), lessonId)
-      .subscribe((lessonDto) => {
+    this.lessonService.copySharedLesson(this.userId(), lessonId).subscribe({
+      next: (lessonDto) => {
         const lesson = this.lessonDtoToLesson(lessonDto);
         this.stateService.lessons.set([...this.stateService.lessons(), lesson]);
-      });
+        this.showToast('success', 'Lekce zkopírována');
+      },
+      error: (err: HttpErrorResponse) => {
+        let errMessage = '';
+        switch (err.status) {
+          case 400:
+          case 401:
+            errMessage = MESSAGES.invalidInput;
+            break;
+          case 403:
+            errMessage = MESSAGES.unAuthorizedAccessToLesson;
+            break;
+          case 404:
+            errMessage = MESSAGES.lessonNotFound;
+            break;
+          case 409:
+            errMessage = MESSAGES.lessonConflict;
+            break;
+        }
+        this.showToast('error', errMessage);
+      },
+    });
   }
 
   public lessonActionSelected(actionSelected: Option, row: Lesson) {
@@ -152,11 +190,27 @@ export class LessonsOverviewComponent implements OnInit {
             this.lessonService.deleteLesson(this.userId(), row.id),
           ),
         )
-        .subscribe(() => {
-          this.lessons.set(
-            this.lessons().filter((lesson) => lesson.id !== row.id),
-          );
-          this.editedLesson = undefined;
+        .subscribe({
+          next: () => {
+            this.lessons.set(
+              this.lessons().filter((lesson) => lesson.id !== row.id),
+            );
+            this.editedLesson = undefined;
+            this.showToast('success', 'Lekce smazána');
+          },
+          error: (err: HttpErrorResponse) => {
+            let errMessage = '';
+            switch (err.status) {
+              case 400:
+              case 401:
+                errMessage = MESSAGES.invalidInput;
+                break;
+              case 409:
+                errMessage = MESSAGES.lessonConflict;
+                break;
+            }
+            this.showToast('error', errMessage);
+          },
         });
     }
   }
@@ -237,9 +291,24 @@ export class LessonsOverviewComponent implements OnInit {
   ) {
     switch (mode) {
       case LogDialogMode.New:
-        this.userService.createUser(user).subscribe((userId) => {
-          this.stateService.userId.set(userId);
-          this.userName.set(user.appUserName ?? '');
+        this.userService.createUser(user).subscribe({
+          next: (userId) => {
+            this.stateService.userId.set(userId);
+            this.userName.set(user.appUserName ?? '');
+            this.showToast('success', 'Uživatel vytvořen');
+          },
+          error: (err: HttpErrorResponse) => {
+            let errMessage = '';
+            switch (err.status) {
+              case 400:
+                errMessage = MESSAGES.invalidInput;
+                break;
+              case 409:
+                errMessage = MESSAGES.userConflict;
+                break;
+            }
+            this.showToast('error', errMessage);
+          },
         });
         break;
       case LogDialogMode.LogIn:
@@ -253,8 +322,24 @@ export class LessonsOverviewComponent implements OnInit {
         };
         this.userService
           .updateUser(this.userId(), updateUserRequest)
-          .subscribe(() => {
-            this.userName.set(user.appUserName ?? '');
+          .subscribe({
+            next: () => {
+              this.userName.set(user.appUserName ?? '');
+              this.showToast('success', 'Uživatel změněn');
+            },
+            error: (err: HttpErrorResponse) => {
+              let errMessage = '';
+              switch (err.status) {
+                case 400:
+                case 401:
+                  errMessage = MESSAGES.invalidInput;
+                  break;
+                case 409:
+                  errMessage = MESSAGES.userConflict;
+                  break;
+              }
+              this.showToast('error', errMessage);
+            },
           });
         break;
       case LogDialogMode.Delete:
@@ -263,8 +348,24 @@ export class LessonsOverviewComponent implements OnInit {
         };
         this.userService
           .deleteUser(this.userId(), deleteUserRequest)
-          .subscribe(() => {
-            this.logOut();
+          .subscribe({
+            next: () => {
+              this.logOut();
+              this.showToast('success', 'Uživatel smazán');
+            },
+            error: (err: HttpErrorResponse) => {
+              let errMessage = '';
+              switch (err.status) {
+                case 400:
+                case 401:
+                  errMessage = MESSAGES.invalidInput;
+                  break;
+                case 409:
+                  errMessage = MESSAGES.userConflict;
+                  break;
+              }
+              this.showToast('error', errMessage);
+            },
           });
         break;
     }
@@ -278,12 +379,26 @@ export class LessonsOverviewComponent implements OnInit {
 
   private addLesson(lessonData: Lesson) {
     const newLessonDto: NewLessonDTO = { ...lessonData };
-    this.lessonService
-      .createLesson(this.userId(), newLessonDto)
-      .subscribe((lessonDto) => {
+    this.lessonService.createLesson(this.userId(), newLessonDto).subscribe({
+      next: (lessonDto) => {
         const lesson = this.lessonDtoToLesson(lessonDto);
         this.stateService.lessons.set([...this.stateService.lessons(), lesson]);
-      });
+        this.showToast('success', 'Lekce přidána');
+      },
+      error: (err: HttpErrorResponse) => {
+        let errMessage = '';
+        switch (err.status) {
+          case 400:
+          case 401:
+            errMessage = MESSAGES.invalidInput;
+            break;
+          case 409:
+            errMessage = MESSAGES.lessonConflict;
+            break;
+        }
+        this.showToast('error', errMessage);
+      },
+    });
   }
 
   private editLesson(lessonData: Lesson) {
@@ -300,14 +415,34 @@ export class LessonsOverviewComponent implements OnInit {
       score: lessonData.score ?? 0,
     };
 
-    this.lessonService
-      .updateLesson(this.userId(), editedLessonDto)
-      .subscribe(() => {
+    this.lessonService.updateLesson(this.userId(), editedLessonDto).subscribe({
+      next: () => {
         this.editedLesson!.lessonName = lessonData.lessonName;
         this.editedLesson!.shared = lessonData.shared;
         this.editedLesson!.language = lessonData.language;
         this.editedLesson!.description = lessonData.description;
-      });
+        this.showToast('success', 'Lekce změněna');
+      },
+      error: (err: HttpErrorResponse) => {
+        let errMessage = '';
+        switch (err.status) {
+          case 400:
+          case 401:
+            errMessage = MESSAGES.invalidInput;
+            break;
+          case 403:
+            errMessage = MESSAGES.unAuthorizedAccessToLesson;
+            break;
+          case 404:
+            errMessage = MESSAGES.lessonNotFound;
+            break;
+          case 409:
+            errMessage = MESSAGES.lessonConflict;
+            break;
+        }
+        this.showToast('error', errMessage);
+      },
+    });
   }
 
   private setUserLessons(lessonDtos: LessonDTO[]) {
@@ -335,9 +470,37 @@ export class LessonsOverviewComponent implements OnInit {
           this.userService.getLessonsOfLoggedInUser(userId),
         ),
       )
-      .subscribe((lessons) => {
-        this.setUserLessons(lessons);
-        this.stateService.userName.set(user.appUserName);
+      .subscribe({
+        next: (lessons) => {
+          this.setUserLessons(lessons);
+          this.stateService.userName.set(user.appUserName);
+          this.showToast('success', 'Vítej ' + user.appUserName);
+        },
+        error: (err: HttpErrorResponse) => {
+          console.log('olééé');
+          console.log(err.status);
+
+          let errMessage = '';
+          switch (err.status) {
+            case 400:
+            case 401:
+              errMessage = MESSAGES.invalidInput;
+              break;
+            case 404:
+              errMessage = MESSAGES.userNotFound;
+              break;
+          }
+          this.showToast('error', errMessage);
+        },
       });
+  }
+
+  private showToast(severity: 'success' | 'error', detail = '') {
+    this.messageService.add({
+      severity: severity,
+      summary: severity === 'success' ? 'Success' : 'Error',
+      detail: detail,
+      life: 3000,
+    });
   }
 }

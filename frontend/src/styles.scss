@@ -123,6 +123,7 @@ td, th {
   border-radius: 1.5rem;
   height: 3rem;
   width: 3rem;
+  cursor: pointer;
 }
 
 small {
@@ -144,4 +145,12 @@ input[type="checkbox"] {
   width: 20px;
   height: 20px;
   accent-color: #007ad9;
+}
+
+.icon-hover {
+  transition: transform 0.3s ease;
+}
+
+.icon-hover:hover {
+  transform: scale(1.1);
 }

@@ -20,17 +20,17 @@
 
 tr:hover {
   td:first-child {
-    background-color: aquamarine !important;
+    background-color: #c7fcff !important;
     cursor: pointer;
   }
 
   td:first-child.not-own {
-    background-color: #fff47f !important;
+    background-color: #fff6cf !important;
     cursor: copy;
   }
 
   td:not(:first-child) {
-    background-color: #7f81ff !important;
+    background-color: #f1f5f9 !important;
     cursor: help;
   }
 }
@@ -46,13 +46,18 @@ tr:hover {
     line-height: 1.25rem;
   }
 
+  .user-name {
+    font-weight: bold;
+  }
+
   .link {
-    color: #007bff;
-    text-decoration: underline;
+    text-decoration: none;
     cursor: pointer;
 
     &:hover {
       color: #0056b3;
+      text-decoration: underline;
+
     }
   }
 }

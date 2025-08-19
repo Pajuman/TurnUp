@@ -10,13 +10,15 @@ import { Popover } from 'primeng/popover';
   providedIn: 'root',
 })
 export class StateService {
-  public activeLesson: Lesson = {} as Lesson;
+  public activeLesson?: Lesson;
   public activeLessonWords: Word[] = [];
   public practiceCount: PracticeCountOption = {
     label: '20',
     value: 20,
   };
   public languageSwitched = false;
+  public scoreUpdated?: 'yes' | 'no' | 'notOwened';
+
   public userId = signal('');
   public lessons: WritableSignal<Lesson[]> = signal([]);
   public userName = signal('Demo');

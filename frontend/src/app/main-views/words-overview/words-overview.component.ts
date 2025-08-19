@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   inject,
   OnDestroy,
@@ -30,6 +31,10 @@ import {
   WordService,
 } from '../../api';
 import { first } from 'rxjs';
+import { Toast } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MESSAGES } from '../../constants-interfaces/constants';
 
 @Component({
   selector: 'words-overview',
@@ -41,35 +46,51 @@ import { first } from 'rxjs';
     ActionsPopoverComponent,
     ConfirmDialogComponent,
     ActionDialogComponent,
+    Toast,
   ],
   templateUrl: './words-overview.component.html',
   styleUrl: './words-overview.component.scss',
   standalone: true,
 })
-export class WordsOverviewComponent implements OnInit, OnDestroy {
+export class WordsOverviewComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   public lesson: WritableSignal<Lesson> = signal({} as Lesson);
   public words: WritableSignal<Word[]> = signal([]);
   public wordsChanged = false;
-  public readonly stateService = inject(StateService);
   private editedWord?: Word;
   private userId = '';
   private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
     viewChild('actionDialog');
   private readonly confirmDialog: Signal<ConfirmDialogComponent | undefined> =
     viewChild('confirmDialog');
-  private router = inject(Router);
+  private readonly stateService = inject(StateService);
+  private readonly router = inject(Router);
   private readonly lessonService = inject(LessonService);
   private readonly wordService = inject(WordService);
+  private readonly messageService = inject(MessageService);
 
   public ngOnInit(): void {
-    this.lesson.set(this.stateService.activeLesson);
+    if (this.stateService.activeLesson === undefined) {
+      this.redirectBack();
+    }
+    this.lesson.set(this.stateService.activeLesson!);
     this.words.set(this.stateService.activeLessonWords);
     this.userId = this.stateService.userId();
-    this.lessonService
-      .getWordsByLessonId(this.userId, this.lesson().id)
-      .subscribe((words) => {
-        this.words.set(words.map((word) => ({ ...word, status: null })));
-      });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.stateService.scoreUpdated === 'yes') {
+      this.showToast('success', 'Score uloženo');
+      this.actualizeLessonScore();
+    } else if (this.stateService.scoreUpdated === 'no') {
+      this.showToast('error', 'Score se neuložilo');
+    } else if (this.stateService.scoreUpdated === 'notOwened') {
+      this.showToast('error', 'Score se neuložilo - slovíčka nevlastníte');
+    }
+    if (this.stateService.scoreUpdated !== undefined) {
+      this.stateService.scoreUpdated = undefined;
+    }
   }
 
   public ngOnDestroy(): void {
@@ -103,16 +124,22 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
       .subscribe((confirmation) => {
         if (confirmation) {
           const batch = this.getBatchWordUpdateDto();
-          this.wordService.updateWords(this.userId, batch).subscribe(() => {
-            this.wordsChanged = false;
-            const words = this.words()
-              .filter((word) => word.status !== 'deleted')
-              .map((word) => {
-                word.status = null;
-                return word;
-              });
-
-            this.words.set(words);
+          this.wordService.updateWords(this.userId, batch).subscribe({
+            next: () => {
+              this.wordsChanged = false;
+              const words = this.words()
+                .filter((word) => word.status !== 'deleted')
+                .map((word) => {
+                  word.status = null;
+                  return word;
+                });
+              this.words.set(words);
+              this.stateService.activeLesson!.wordCount = this.words().length;
+              this.showToast('success', 'Slovíčka změněna');
+            },
+            error: () => {
+              this.showToast('error');
+            },
           });
         }
       });
@@ -140,7 +167,7 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
     this.actionDialog()!.visible.set(true);
   }
 
-  public back() {
+  public redirectBack() {
     this.router.navigate(['']);
   }
 
@@ -153,10 +180,30 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
     };
 
     this.lessonService
-      .createWord(this.userId, this.stateService.activeLesson.id, newWord)
-      .subscribe((newWordDto) => {
-        const newWord: Word = { ...newWordDto, status: null };
-        this.words.set([newWord, ...this.words()]);
+      .createWord(this.userId, this.stateService.activeLesson!.id, newWord)
+      .subscribe({
+        next: (newWordDto) => {
+          const newWord: Word = { ...newWordDto, status: null };
+          this.words.set([newWord, ...this.words()]);
+          this.stateService.activeLesson!.wordCount++;
+          this.showToast('success', 'Slovíčko přidáno');
+        },
+        error: (err: HttpErrorResponse) => {
+          let errMessage = '';
+          switch (err.status) {
+            case 400:
+            case 401:
+              errMessage = MESSAGES.invalidInput;
+              break;
+            case 403:
+              errMessage = MESSAGES.unAuthorizedAccessToLesson;
+              break;
+            case 404:
+              errMessage = MESSAGES.lessonNotFound;
+              break;
+          }
+          this.showToast('error', errMessage);
+        },
       });
   }
 
@@ -182,5 +229,21 @@ export class WordsOverviewComponent implements OnInit, OnDestroy {
     });
 
     return batch;
+  }
+
+  private showToast(severity: 'success' | 'error', detail = '') {
+    this.messageService.add({
+      severity: severity,
+      summary: severity === 'success' ? 'Success' : 'Error',
+      detail: detail,
+      life: 3000,
+    });
+  }
+
+  private actualizeLessonScore() {
+    const avg =
+      this.words().reduce((sum, item) => sum + item.score, 0) /
+      this.words().length;
+    this.stateService.activeLesson!.score = Math.round(avg);
   }
 }

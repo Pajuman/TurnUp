@@ -48,7 +48,7 @@ export class ActionDialogComponent {
   public language = signal('');
   protected readonly SHARED_OPTIONS = SHARED_OPTIONS;
 
-  close() {
+  public close() {
     if (this.save()) {
       if (this.item() === 'Word') {
         this.dataToSave.emit({
@@ -67,6 +67,11 @@ export class ActionDialogComponent {
       }
     }
     this.resetInputs();
+  }
+
+  public confirm() {
+    this.save.set(true);
+    this.visible.set(false);
   }
 
   private resetInputs() {

@@ -1,12 +1,12 @@
 <div class="caption">
   <div class="back-button">
-    <p-button (click)="back()">Zpět</p-button>
+    <p-button (click)="redirectBack()">Zpět</p-button>
   </div>
 
   <h2>
     {{ lesson().lessonName }}
   </h2>
-  <i (click)="practiceLesson()" class="pi pi-play  big-icon"></i>
+  <i (click)="practiceLesson()" class="pi pi-play  big-icon icon-hover"></i>
 </div>
 <p-table
   [value]="words()">
@@ -59,4 +59,4 @@
 </p-table>
 <action-dialog #actionDialog (dataToSave)="saveWordChanges($event)"></action-dialog>
 <confirm-action-dialog #confirmDialog></confirm-action-dialog>
-
+<p-toast/>

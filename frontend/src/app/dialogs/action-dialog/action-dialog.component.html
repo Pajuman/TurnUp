@@ -1,5 +1,8 @@
-<p-dialog (onHide)="close()" [(visible)]="visible" [header]="action() === 'New' ? 'Nový výraz' : 'Uprav'"
-          [modal]="true" [style]="{ width: '25rem' }">
+<p-dialog (keydown.enter)="form.valid ? confirm() : null" (onHide)="close()" [(visible)]="visible"
+          [header]="action() === 'New' ? 'Nový výraz' : 'Uprav'" [modal]="true"
+          [style]="{ width: '25rem' }">
+
+
   <form #form="ngForm">
 
     @if (item() === 'Word') {
@@ -97,7 +100,7 @@
 
     <div class="buttons">
       <p-button (click)="visible.set(false)" label="Storno" severity="secondary"/>
-      <p-button (click)="save.set(true); visible.set(false)" [disabled]="form.invalid" label="Uložit"/>
+      <p-button (click)="confirm()" [disabled]="form.invalid" label="Uložit"/>
     </div>
   </form>
 </p-dialog>
