@@ -22,10 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static com.learn.turnup.exceptions.DefaultUser.denyForDefaultUser;
 
@@ -99,9 +96,9 @@ public class LessonsService {
                 .toList();
 
         wordRepository.saveAll(newWords);
-        finalNewLesson.setWordCount(newWords.size());
 
-        return lessonMapper.toDto(finalNewLesson);
+        Lesson newLessonWithWordCount = lessonRepository.findById(newLesson.getId()).orElse(finalNewLesson);
+        return lessonMapper.toDto(newLessonWithWordCount);
     }
 
     public LessonDTO createLesson(UUID xUserId, NewLessonDTO newLessonDTO) {
