@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import jakarta.annotation.Generated;
 
-@CrossOrigin(origins = "https://independent-manifestation-production.up.railway.app")
+@CrossOrigin(origins = {"https://independent-manifestation-production.up.railway.app", "http://localhost:4200"})
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-03T14:15:17.222973100+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Controller
 @RequestMapping("${openapi.word.base-path:/api}")
