@@ -15,7 +15,7 @@ import jakarta.annotation.Generated;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://independent-manifestation-production.up.railway.app")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-03T14:15:17.222973100+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Controller
 @RequestMapping("${openapi.word.base-path:/api}")
