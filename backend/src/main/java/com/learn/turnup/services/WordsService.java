@@ -62,8 +62,6 @@ public class WordsService {
     }
 
     public void updateWordsScores(UUID xUserId, List<WordScoreDTO> wordScoreDTOs){
-        denyForDefaultUser(xUserId);
-
         wordScoreDTOs.forEach(wordScoreDTO -> {
             Word word = wordRepository.findById(wordScoreDTO.getId()).orElse(null);
             //403
