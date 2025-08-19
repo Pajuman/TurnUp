@@ -162,7 +162,7 @@ export class LessonsOverviewComponent implements OnInit {
             errMessage = MESSAGES.invalidInput;
             break;
           case 403:
-            errMessage = MESSAGES.unAuthorizedAccessToLesson;
+            errMessage = MESSAGES.unAuthorizedAccess;
             break;
           case 404:
             errMessage = MESSAGES.lessonNotFound;
@@ -206,7 +206,7 @@ export class LessonsOverviewComponent implements OnInit {
                 errMessage = MESSAGES.invalidInput;
                 break;
               case 403:
-                errMessage = MESSAGES.unAuthorizedAccessToLesson;
+                errMessage = MESSAGES.unAuthorizedAccess;
                 break;
               case 409:
                 errMessage = MESSAGES.lessonConflict;
@@ -410,7 +410,7 @@ export class LessonsOverviewComponent implements OnInit {
             errMessage = MESSAGES.invalidInput;
             break;
           case 403:
-            errMessage = MESSAGES.unAuthorizedAccessToLesson;
+            errMessage = MESSAGES.unAuthorizedAccess;
             break;
           case 409:
             errMessage = MESSAGES.lessonConflict;
@@ -451,7 +451,7 @@ export class LessonsOverviewComponent implements OnInit {
             errMessage = MESSAGES.invalidInput;
             break;
           case 403:
-            errMessage = MESSAGES.unAuthorizedAccessToLesson;
+            errMessage = MESSAGES.unAuthorizedAccess;
             break;
           case 404:
             errMessage = MESSAGES.lessonNotFound;

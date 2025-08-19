@@ -112,6 +112,7 @@ export const LESSON_EXAMPLE = {
 export const MESSAGES = {
   invalidInput: 'Chybný vstup',
   unAuthorizedAccessToLesson: 'K lekci nemáte přístup',
+  unAuthorizedAccess: 'Nemáte potřebná oprávnění',
   lessonNotFound: 'Lekce nenalezena',
   userNotFound: 'Uživatel nenalezen',
   lessonConflict: 'Lekce se stejným názvem už existuje',
