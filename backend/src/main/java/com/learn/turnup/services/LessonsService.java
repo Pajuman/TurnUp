@@ -99,6 +99,7 @@ public class LessonsService {
                 .toList();
 
         wordRepository.saveAll(newWords);
+        finalNewLesson.setWordCount(newWords.size());
 
         return lessonMapper.toDto(finalNewLesson);
     }
