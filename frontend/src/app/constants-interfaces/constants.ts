@@ -1,4 +1,4 @@
-import { Lesson, Option } from './interfaces';
+import { Option } from './interfaces';
 
 export enum LogDialogMode {
   LogIn = 'Přihlášení:',
@@ -32,82 +32,6 @@ export const SHARED_OPTIONS = [
 ];
 
 export const WORD_OPTIONS = ['0 - 10', '11 - 20', '> 20'];
-
-export const SCORE_OPTIONS = ['< 0', '0', '> 0'];
-
-export const LESSONS: Lesson[] = [
-  {
-    id: '84d4a0a7-9b8d-4a50-a7ef-669757e13d05',
-    lessonName: 'Verbs',
-    description: 'Common verbs',
-    shared: false,
-    language: 'Grammar',
-    score: 2,
-    wordCount: 11,
-    status: 'own',
-  },
-  {
-    id: '28a19f3b-c720-4ba5-8a5f-4497e8ba933a',
-    lessonName: 'Verbs',
-    description: 'Common verbs',
-    shared: false,
-    language: 'Basics',
-    score: 0,
-    wordCount: 5,
-    status: 'own',
-  },
-  {
-    id: 'f297d7b0-b50f-4e77-93f3-44ccd143b94e',
-    lessonName: 'Verbs',
-    description: 'Common verbs',
-    shared: false,
-    language: 'Grammar',
-    score: null,
-    wordCount: 18,
-    status: 'foreign',
-  },
-  {
-    id: 'a8a10734-c34f-495e-b923-961e1387e982',
-    lessonName: 'Verbs',
-    description: 'Common verbs',
-    shared: false,
-    language: 'Speaking',
-    score: -3,
-    wordCount: 23,
-    status: 'own',
-  },
-  {
-    id: 'ee2ad74c-8194-40fe-ac9a-7cc8c535acaf',
-    lessonName: 'Verbs',
-    description: 'Common verbs',
-    shared: false,
-    language: 'Vocabulary',
-    score: null,
-    wordCount: 47,
-    status: 'foreign',
-  },
-  {
-    id: '68852ef0-1ac1-4306-a558-52e2b44be342',
-    lessonName: 'Travel',
-    description: 'V lekci jsou běžná podstatná jména',
-    shared: true,
-    language: 'Travel',
-    score: -1,
-    wordCount: 60,
-    status: 'own',
-  },
-];
-
-export const LESSON_EXAMPLE = {
-  id: '68852ef0-1ac1-4306-a558-52e2b44be342',
-  lessonName: 'Travel',
-  description: 'V lekci jsou běžná podstatná jména',
-  shared: true,
-  language: 'Travel',
-  score: -1,
-  wordCount: 60,
-  status: 'own',
-};
 
 export const MESSAGES = {
   invalidInput: 'Chybný vstup',

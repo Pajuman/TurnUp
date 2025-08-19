@@ -15,7 +15,7 @@ import {
   SHARED_OPTIONS,
 } from '../../constants-interfaces/constants';
 import { Popover } from 'primeng/popover';
-import { LogDialogComponent } from '../../dialogs/log-dialog/log-dialog.component';
+import { UserDialogComponent } from '../../dialogs/log-dialog/user-dialog.component';
 import { FormsModule } from '@angular/forms';
 import {
   ActionLessonDialogOutput,
@@ -41,9 +41,9 @@ import {
   WordDTO,
 } from '../../api';
 import { Button } from 'primeng/button';
-import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog.component';
-import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
-import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-popover.component';
+import { ActionsDialogComponent } from '../../dialogs/action-dialog/actions-dialog.component';
+import { ConfirmationDialogComponent } from '../../dialogs/confirm-dialog/confirmation-dialog.component';
+import { ActionSelectionPopoverComponent } from '../../dialogs/actions-popover/action-selection-popover.component';
 import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -58,10 +58,10 @@ import { HttpErrorResponse } from '@angular/common/http';
     Tooltip,
     Filter,
     Button,
-    ActionDialogComponent,
-    ConfirmDialogComponent,
-    ActionsPopoverComponent,
-    LogDialogComponent,
+    ActionsDialogComponent,
+    ConfirmationDialogComponent,
+    ActionSelectionPopoverComponent,
+    UserDialogComponent,
     Toast,
   ],
   templateUrl: './lessons-overview.component.html',
@@ -79,10 +79,11 @@ export class LessonsOverviewComponent implements OnInit {
   public readonly stateService = inject(StateService);
   protected readonly LOG_DIALOG_MODE = LogDialogMode;
   private editedLesson?: Lesson;
-  private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
+  private readonly actionDialog: Signal<ActionsDialogComponent | undefined> =
     viewChild('actionDialog');
-  private readonly confirmDialog: Signal<ConfirmDialogComponent | undefined> =
-    viewChild('confirmDialog');
+  private readonly confirmDialog: Signal<
+    ConfirmationDialogComponent | undefined
+  > = viewChild('confirmDialog');
   private readonly logDialogPopOver: Signal<Popover | undefined> =
     viewChild('logDialogPopOver');
   private readonly router = inject(Router);
@@ -244,7 +245,7 @@ export class LessonsOverviewComponent implements OnInit {
       shared: output.shared,
       language: output.language,
       score: 0,
-      status: 'own',
+      status: 'vlastní',
     } as Lesson;
     if (output.action === 'New') {
       this.addLesson(newOrEditedLesson);
@@ -476,7 +477,7 @@ export class LessonsOverviewComponent implements OnInit {
 
   private lessonDtoToLesson(lessonDto: LessonDTO): Lesson {
     const lesson: Lesson = lessonDto as Lesson;
-    lesson.status = lessonDto.score < 0 ? 'foreign' : 'own';
+    lesson.status = lessonDto.score < 0 ? 'sdílená' : 'vlastní';
 
     return lesson;
   }

@@ -1,11 +1,11 @@
 <p-selectButton
-  [(ngModel)]="lessonService.practiceCount"
+  [(ngModel)]="stateService.practiceCount"
   [options]="PRACTICE_COUNT_OPTIONS"
   optionLabel="label"
 ></p-selectButton>
 <div class="language-toggler">
   <img alt="Toggle language" height="24" ngSrc="../../../assets/toggleLanguageDefault.png" width="24"/>
-  <p-toggle-switch #switcher [(ngModel)]="lessonService.languageSwitched"
+  <p-toggle-switch #switcher [(ngModel)]="stateService.languageSwitched"
                    [ngClass]="{
     'toggle-default': switcher.checked(),
     'toggle-reverted': !switcher.checked()

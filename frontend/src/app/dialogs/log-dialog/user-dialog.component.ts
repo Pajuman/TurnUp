@@ -25,11 +25,11 @@ import { RepeatPasswordValidDirective } from '../../validators/repeat-password-v
     PasswordCharValidDirective,
     RepeatPasswordValidDirective,
   ],
-  templateUrl: './log-dialog.component.html',
-  styleUrl: './log-dialog.component.scss',
+  templateUrl: './user-dialog.component.html',
+  styleUrl: './user-dialog.component.scss',
   standalone: true,
 })
-export class LogDialogComponent implements OnInit {
+export class UserDialogComponent implements OnInit {
   public readonly mode: InputSignal<LogDialogMode> = input.required();
   public readonly userId: InputSignal<string> = input.required();
   public userName = '';

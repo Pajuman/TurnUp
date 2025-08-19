@@ -7,11 +7,11 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'confirm-action-dialog',
   imports: [Button, Dialog, FormsModule],
-  templateUrl: './confirm-dialog.component.html',
-  styleUrl: './confirm-dialog.component.scss',
+  templateUrl: './confirmation-dialog.component.html',
+  styleUrl: './confirmation-dialog.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class ConfirmDialogComponent {
+export class ConfirmationDialogComponent {
   public visible = signal(false);
   public confirmation$ = new Subject<boolean>();
 

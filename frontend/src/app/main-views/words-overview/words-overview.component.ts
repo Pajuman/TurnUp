@@ -19,9 +19,9 @@ import {
   Word,
 } from '../../constants-interfaces/interfaces';
 import { Button } from 'primeng/button';
-import { ActionsPopoverComponent } from '../../dialogs/actions-popover/actions-popover.component';
-import { ActionDialogComponent } from '../../dialogs/action-dialog/action-dialog.component';
-import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
+import { ActionSelectionPopoverComponent } from '../../dialogs/actions-popover/action-selection-popover.component';
+import { ActionsDialogComponent } from '../../dialogs/action-dialog/actions-dialog.component';
+import { ConfirmationDialogComponent } from '../../dialogs/confirm-dialog/confirmation-dialog.component';
 import { StateService } from '../../services/state.service';
 import { Router } from '@angular/router';
 import {
@@ -43,9 +43,9 @@ import { MESSAGES } from '../../constants-interfaces/constants';
     TogglerComponent,
     FormsModule,
     Button,
-    ActionsPopoverComponent,
-    ConfirmDialogComponent,
-    ActionDialogComponent,
+    ActionSelectionPopoverComponent,
+    ConfirmationDialogComponent,
+    ActionsDialogComponent,
     Toast,
   ],
   templateUrl: './words-overview.component.html',
@@ -60,10 +60,11 @@ export class WordsOverviewComponent
   public wordsChanged = false;
   private editedWord?: Word;
   private userId = '';
-  private readonly actionDialog: Signal<ActionDialogComponent | undefined> =
+  private readonly actionDialog: Signal<ActionsDialogComponent | undefined> =
     viewChild('actionDialog');
-  private readonly confirmDialog: Signal<ConfirmDialogComponent | undefined> =
-    viewChild('confirmDialog');
+  private readonly confirmDialog: Signal<
+    ConfirmationDialogComponent | undefined
+  > = viewChild('confirmDialog');
   private readonly stateService = inject(StateService);
   private readonly router = inject(Router);
   private readonly lessonService = inject(LessonService);
@@ -85,7 +86,7 @@ export class WordsOverviewComponent
       this.actualizeLessonScore();
     } else if (this.stateService.scoreUpdated === 'no') {
       this.showToast('error', 'Score se neuložilo');
-    } else if (this.stateService.scoreUpdated === 'notOwened') {
+    } else if (this.stateService.scoreUpdated === 'notOwned') {
       this.showToast('error', 'Score se neuložilo - slovíčka nevlastníte');
     }
     if (this.stateService.scoreUpdated !== undefined) {
@@ -137,8 +138,18 @@ export class WordsOverviewComponent
               this.stateService.activeLesson!.wordCount = this.words().length;
               this.showToast('success', 'Slovíčka změněna');
             },
-            error: () => {
-              this.showToast('error');
+            error: (err: HttpErrorResponse) => {
+              let errMessage = '';
+              switch (err.status) {
+                case 400:
+                case 401:
+                  errMessage = MESSAGES.invalidInput;
+                  break;
+                case 403:
+                  errMessage = MESSAGES.unAuthorizedAccess;
+                  break;
+              }
+              this.showToast('error', errMessage);
             },
           });
         }

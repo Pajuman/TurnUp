@@ -23,11 +23,11 @@ import { NgStyle } from '@angular/common';
 @Component({
   selector: 'action-dialog',
   imports: [Button, Dialog, InputText, FormsModule, DropdownModule, NgStyle],
-  templateUrl: './action-dialog.component.html',
-  styleUrl: './action-dialog.component.scss',
+  templateUrl: './actions-dialog.component.html',
+  styleUrl: './actions-dialog.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class ActionDialogComponent {
+export class ActionsDialogComponent {
   public readonly dataToSave: OutputEmitterRef<
     ActionWordDialogOutput | ActionLessonDialogOutput
   > = output();

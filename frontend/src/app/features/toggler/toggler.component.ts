@@ -13,6 +13,6 @@ import { PRACTICE_COUNT_OPTIONS } from '../../constants-interfaces/constants';
   styleUrl: './toggler.component.scss',
 })
 export class TogglerComponent {
-  public readonly lessonService = inject(StateService);
+  public readonly stateService = inject(StateService);
   protected readonly PRACTICE_COUNT_OPTIONS = PRACTICE_COUNT_OPTIONS;
 }

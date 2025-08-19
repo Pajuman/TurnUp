@@ -22,13 +22,7 @@ export class RepeatPasswordValidDirective implements Validator {
   validate(control: AbstractControl): ValidationErrors | null {
     const repeat = control.value ?? '';
     if (!this.passwordInput) return null;
-    console.log(this.passwordInput);
-    console.log(repeat);
-
     if (repeat.length < 8 || this.passwordInput.length < 8) return null;
-    console.log(
-      repeat === this.passwordInput ? null : { repeatPasswordValid: true },
-    );
     return repeat === this.passwordInput ? null : { repeatPasswordValid: true };
   }
 }

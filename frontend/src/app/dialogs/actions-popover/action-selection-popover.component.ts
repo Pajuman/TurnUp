@@ -7,11 +7,11 @@ import { Option } from '../../constants-interfaces/interfaces';
 @Component({
   selector: 'actions-popover',
   imports: [Popover, Listbox],
-  templateUrl: './actions-popover.component.html',
-  styleUrl: './actions-popover.component.scss',
+  templateUrl: './action-selection-popover.component.html',
+  styleUrl: './action-selection-popover.component.scss',
   standalone: true,
 })
-export class ActionsPopoverComponent {
+export class ActionSelectionPopoverComponent {
   public readonly actionSelected: OutputEmitterRef<Option> = output();
   protected readonly ACTION_OPTIONS = ACTION_OPTIONS;
 

@@ -12,7 +12,7 @@ export interface Option {
 }
 
 export interface Lesson extends Omit<LessonDTO, 'score'> {
-  status: 'own' | 'foreign';
+  status: 'vlastní' | 'sdílená';
   score: number | null;
 }
 
