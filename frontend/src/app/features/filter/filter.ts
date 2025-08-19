@@ -56,6 +56,10 @@ export class Filter implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  public ngOnDestroy(): void {
+    this.clearAllFilters().unsubscribe();
+  }
+
   public applyFilter() {
     if (this.fieldName() === 'wordCount') {
       switch (this.selectedOption) {
@@ -68,6 +72,9 @@ export class Filter implements OnInit, OnDestroy, OnChanges {
         case '> 20':
           this.table()?.filter([21, 1000], this.fieldName(), 'between');
           break;
+      }
+      if (this.selectedOption) {
+        this.isFilterActive = true;
       }
     } else {
       const selectedOptions = Object.entries(this.selectedOptions)
@@ -89,13 +96,9 @@ export class Filter implements OnInit, OnDestroy, OnChanges {
     this.isFilterActive = false;
   }
 
-  public openFilterDialog(event: MouseEvent, newlyOpenedPopover: Popover) {
-    this.stateService.closePreviousPopover(newlyOpenedPopover);
+  public toggleFilterDialog(event: MouseEvent, newlyOpenedPopover: Popover) {
+    this.stateService.closePreviousPopover(event, newlyOpenedPopover);
     event.stopPropagation();
-  }
-
-  public ngOnDestroy(): void {
-    this.clearAllFilters().unsubscribe();
   }
 
   private setOptions() {

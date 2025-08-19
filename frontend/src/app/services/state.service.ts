@@ -17,7 +17,7 @@ export class StateService {
     value: 20,
   };
   public languageSwitched = false;
-  public scoreUpdated?: 'yes' | 'no' | 'notOwened';
+  public scoreUpdated?: 'yes' | 'no' | 'notOwned';
 
   public userId = signal('');
   public lessons: WritableSignal<Lesson[]> = signal([]);
@@ -25,11 +25,18 @@ export class StateService {
 
   private openedPopOver?: Popover;
 
-  public closePreviousPopover(newlyOpenedPopover: Popover) {
-    if (this.openedPopOver) {
+  public closePreviousPopover(event: any, newlyOpenedPopover: Popover) {
+    if (this.openedPopOver && this.openedPopOver === newlyOpenedPopover) {
       this.openedPopOver.hide();
+      this.openedPopOver = undefined;
+    } else if (this.openedPopOver) {
+      this.openedPopOver.hide();
+      newlyOpenedPopover.show(event);
+      this.openedPopOver = newlyOpenedPopover;
+    } else {
+      newlyOpenedPopover.show(event);
+      this.openedPopOver = newlyOpenedPopover;
     }
-    this.openedPopOver = newlyOpenedPopover;
   }
 
   public reset() {
