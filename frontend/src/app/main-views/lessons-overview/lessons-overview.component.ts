@@ -205,6 +205,9 @@ export class LessonsOverviewComponent implements OnInit {
               case 401:
                 errMessage = MESSAGES.invalidInput;
                 break;
+              case 403:
+                errMessage = MESSAGES.unAuthorizedAccessToLesson;
+                break;
               case 409:
                 errMessage = MESSAGES.lessonConflict;
                 break;
@@ -405,6 +408,9 @@ export class LessonsOverviewComponent implements OnInit {
           case 400:
           case 401:
             errMessage = MESSAGES.invalidInput;
+            break;
+          case 403:
+            errMessage = MESSAGES.unAuthorizedAccessToLesson;
             break;
           case 409:
             errMessage = MESSAGES.lessonConflict;
