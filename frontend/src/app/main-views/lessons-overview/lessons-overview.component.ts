@@ -491,9 +491,6 @@ export class LessonsOverviewComponent implements OnInit {
           this.showToast('success', 'Vítej ' + user.appUserName);
         },
         error: (err: HttpErrorResponse) => {
-          console.log('olééé');
-          console.log(err.status);
-
           let errMessage = '';
           switch (err.status) {
             case 400:
