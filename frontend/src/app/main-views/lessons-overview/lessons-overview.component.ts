@@ -291,25 +291,39 @@ export class LessonsOverviewComponent implements OnInit {
   ) {
     switch (mode) {
       case LogDialogMode.New:
-        this.userService.createUser(user).subscribe({
-          next: (userId) => {
-            this.stateService.userId.set(userId);
-            this.userName.set(user.appUserName ?? '');
-            this.showToast('success', 'Uživatel vytvořen');
-          },
-          error: (err: HttpErrorResponse) => {
-            let errMessage = '';
-            switch (err.status) {
-              case 400:
-                errMessage = MESSAGES.invalidInput;
-                break;
-              case 409:
-                errMessage = MESSAGES.userConflict;
-                break;
-            }
-            this.showToast('error', errMessage);
-          },
-        });
+        this.userService
+          .createUser(user)
+          .pipe(
+            switchMap((userId) => {
+              this.stateService.userId.set(userId);
+              this.userName.set(user.appUserName ?? '');
+              this.showToast('success', 'Uživatel vytvořen');
+              return this.userService.getLessonsOfLoggedInUser(userId);
+            }),
+          )
+          .subscribe({
+            next: (lessons) => {
+              this.setUserLessons(lessons);
+            },
+            error: (err: HttpErrorResponse) => {
+              let errMessage = '';
+              switch (err.status) {
+                case 400:
+                  errMessage = MESSAGES.invalidInput;
+                  break;
+                case 401:
+                  errMessage = MESSAGES.userNotFound;
+                  break;
+                case 404:
+                  errMessage = MESSAGES.lessonNotFound;
+                  break;
+                case 409:
+                  errMessage = MESSAGES.userConflict;
+                  break;
+              }
+              this.showToast('error', errMessage);
+            },
+          });
         break;
       case LogDialogMode.LogIn:
         this.loginAndSetLessons(user);
@@ -477,9 +491,6 @@ export class LessonsOverviewComponent implements OnInit {
           this.showToast('success', 'Vítej ' + user.appUserName);
         },
         error: (err: HttpErrorResponse) => {
-          console.log('olééé');
-          console.log(err.status);
-
           let errMessage = '';
           switch (err.status) {
             case 400:

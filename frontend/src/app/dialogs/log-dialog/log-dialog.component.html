@@ -1,5 +1,5 @@
 <h2>{{ mode() }}</h2>
-<div class="content">
+<div (keydown.enter)="form.valid ? confirm() : null" class="content">
 
   <form #form="ngForm">
     @if (mode() != LogDialogMode.Delete) {

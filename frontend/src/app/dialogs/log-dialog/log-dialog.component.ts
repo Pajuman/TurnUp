@@ -56,12 +56,13 @@ export class LogDialogComponent implements OnInit {
   }
 
   public cancel() {
-    /*const output: UserDialogOutput = {
+    const output: UserDialogOutput = {
       action: this.mode(),
       userName: '',
       currentPassword: '',
+      newPassword: '',
     };
-    this.dialogOutput.emit(output);*/
+    this.dialogOutput.emit(output);
     this.reset();
   }
 
