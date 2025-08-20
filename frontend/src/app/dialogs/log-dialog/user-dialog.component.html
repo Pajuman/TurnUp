@@ -56,7 +56,7 @@
                name="newPassword"
                id="newPassword" passwordCharValid pInputText type="password"/>
       </div>
-      <small [class.in-visible]="!(newPasswordInput.invalid && newPasswordInput.touched)">
+      <small [class.in-visible]="!(newPasswordInput.invalid && newPasswordInput.valid)">
         @if (newPasswordInput.errors?.['required']) {
           <span>Heslo je nutné.</span>
         } @else if (newPasswordInput.errors?.['minlength']) {
@@ -70,11 +70,12 @@
         }
       </small>
     }
-    @if (mode() !== LogDialogMode.LogIn && mode() !== LogDialogMode.Delete) {
+    @if (mode() === LogDialogMode.New || mode() === LogDialogMode.Edit) {
       <div class="dialog-row">
         <label for="passwordRepeat">Znovu nové heslo:</label>
         <input #passwordRepeatInput="ngModel" [(ngModel)]="passwordRepeat" [maxLength]="12" [minlength]="8"
-               [required]="newPassword" [repeatPasswordValid]="mode() == LogDialogMode.Edit ? newPassword : password"
+               [required]="mode() === LogDialogMode.New || newPassword"
+               [repeatPasswordValid]="mode() === LogDialogMode.Edit ? newPassword : password"
                name="passwordRepeat"
                passwordCharValid
                id="passwordRepeat"

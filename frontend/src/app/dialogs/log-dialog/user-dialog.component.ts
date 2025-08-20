@@ -2,7 +2,6 @@ import {
   Component,
   input,
   InputSignal,
-  OnInit,
   output,
   OutputEmitterRef,
   Signal,
@@ -29,9 +28,11 @@ import { RepeatPasswordValidDirective } from '../../validators/repeat-password-v
   styleUrl: './user-dialog.component.scss',
   standalone: true,
 })
-export class UserDialogComponent implements OnInit {
+export class UserDialogComponent {
   public readonly mode: InputSignal<LogDialogMode> = input.required();
   public readonly userId: InputSignal<string> = input.required();
+  public readonly currentUserName: InputSignal<string> = input('');
+
   public userName = '';
   public password = '';
   public newPassword = '';
@@ -40,19 +41,14 @@ export class UserDialogComponent implements OnInit {
   protected readonly LogDialogMode = LogDialogMode;
   private readonly form: Signal<NgForm | undefined> = viewChild('form');
 
-  ngOnInit(): void {}
-
   public confirm() {
-    const password = this.getPassword();
-
     const output: UserDialogOutput = {
       action: this.mode(),
-      userName: this.userName,
-      currentPassword: password,
-      newPassword: this.newPassword,
+      userName: this.userName || this.currentUserName(),
+      currentPassword: this.password,
+      newPassword: this.newPassword ?? this.password,
     };
     this.dialogOutput.emit(output);
-    this.reset();
   }
 
   public cancel() {
@@ -63,38 +59,9 @@ export class UserDialogComponent implements OnInit {
       newPassword: '',
     };
     this.dialogOutput.emit(output);
-    this.reset();
   }
 
   public resetForm() {
-    this.form()?.reset();
-  }
-
-  private getPassword() {
-    if (
-      this.mode() === LogDialogMode.LogIn ||
-      this.mode() === LogDialogMode.Delete
-    ) {
-      return this.password;
-    } else if (this.mode() === LogDialogMode.New) {
-      if (this.password === this.passwordRepeat) {
-        return this.password;
-      } else {
-        console.log('špatně heslo');
-      }
-    } else {
-      return this.newPassword ?? this.password;
-    }
-    return '';
-  }
-
-  private reset() {
-    //ToDo why setTimeout?
-    setTimeout(() => {
-      this.userName = '';
-      this.password = '';
-      this.newPassword = '';
-      this.passwordRepeat = '';
-    }, 100);
+    setTimeout(() => this.form()?.resetForm(), 0);
   }
 }

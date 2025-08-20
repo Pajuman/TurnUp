@@ -11,6 +11,7 @@
   }
   <p-popover #logDialogPopOver (onHide)="logDialog.resetForm()">
     <log-dialog #logDialog (dialogOutput)="logDialogOutput($event); logDialogPopOver.toggle($event) "
+                [currentUserName]="userName()"
                 [mode]="logDialogMode"
                 [userId]="userId()"
     ></log-dialog>
