@@ -27,7 +27,7 @@ import {
 import { TogglerComponent } from '../../features/toggler/toggler.component';
 import { Tooltip } from 'primeng/tooltip';
 import { Filter } from '../../features/filter/filter';
-import { first, Subject, switchMap, tap } from 'rxjs';
+import { filter, first, Subject, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { StateService } from '../../services/state.service';
 import {
@@ -187,6 +187,7 @@ export class LessonsOverviewComponent implements OnInit {
       this.confirmDialog()
         ?.confirmation$.pipe(
           first(),
+          filter((confirmation) => confirmation === true),
           switchMap(() =>
             this.lessonService.deleteLesson(this.userId(), row.id),
           ),
