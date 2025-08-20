@@ -3,7 +3,6 @@ package com.learn.turnup.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Set;
 import java.util.UUID;
 
 public class DefaultUser {

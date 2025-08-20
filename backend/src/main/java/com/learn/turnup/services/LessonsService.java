@@ -1,11 +1,13 @@
 package com.learn.turnup.services;
 
-import com.learn.turnup.dto.*;
+import com.learn.turnup.dto.LessonDTO;
+import com.learn.turnup.dto.NewLessonDTO;
+import com.learn.turnup.dto.NewWordDTO;
+import com.learn.turnup.dto.WordDTO;
 import com.learn.turnup.entities.AppUser;
 import com.learn.turnup.entities.Lesson;
 import com.learn.turnup.entities.Word;
 import com.learn.turnup.exceptions.GlobalExceptions.ForbiddenException;
-import com.learn.turnup.exceptions.GlobalExceptions.UnauthorizedException;
 import com.learn.turnup.exceptions.ValidationService;
 import com.learn.turnup.mappers.LessonMapper;
 import com.learn.turnup.mappers.WordMapper;
@@ -14,15 +16,13 @@ import com.learn.turnup.repositories.LessonRepository;
 import com.learn.turnup.repositories.WordRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static com.learn.turnup.exceptions.DefaultUser.denyForDefaultUser;
 

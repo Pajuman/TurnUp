@@ -4,28 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5740859e-d1f0-4a76-ae97-2ee5250948af" name="Changes" comment="update api and implement updateWordsScores">
+    <list default="true" id="5740859e-d1f0-4a76-ae97-2ee5250948af" name="Changes" comment="allow Demo to update score">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/apis/LessonsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/apis/LessonsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/apis/UsersApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/apis/UsersApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/apis/WordsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/apis/WordsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/LessonsApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/LessonsApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/UsersApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/UsersApiController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/WordsApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/WordsApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/WordsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/WordsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/apis/WordsApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/apis/WordsApi.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/config/CorsConfig$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/WordsApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/WordsApiController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/entities/Word.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/entities/Word.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/exceptions/DefaultUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/exceptions/DefaultUser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/WordsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/WordsService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/.openapi-generator/FILES" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/.openapi-generator/FILES" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/LessonsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/LessonsApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/UsersApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/UsersApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/WordsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/api/WordsApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/AppUserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/AppUserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/BatchWordUpdateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/BatchWordUpdateDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/LessonDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/LessonDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewLessonDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewLessonDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewWordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/NewWordDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/WordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/java/org/openapitools/model/WordDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/resources/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/generated-spring-api/src/main/resources/openapi.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/openapi.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/AppUserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/AppUserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/BatchWordUpdateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/BatchWordUpdateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/DeleteUserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/DeleteUserRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/LessonDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/LessonDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/NewLessonDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/NewLessonDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/NewWordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/NewWordDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/UpdateUserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/UpdateUserRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/WordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/WordDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/WordScoreDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/WordScoreDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/exceptions/DefaultUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/exceptions/DefaultUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/exceptions/ValidationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/exceptions/ValidationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/AppUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/AppUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/LessonsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/LessonsService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +46,9 @@
     &quot;accountId&quot;: &quot;d07d1cda-3dfe-4b18-b6bb-2b0f757c0d89&quot;
   }
 }</component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -63,7 +65,8 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Já/IdeaProjects/turnup/backend/src/main/java/com/learn/turnup/apis"
+    "last_opened_file_path": "C:/Users/Já/IdeaProjects/turnup/backend/src/main/java/com/learn/turnup/apis",
+    "settings.editor.selected.configurable": "actions.on.save"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -111,11 +114,55 @@
       <option name="project" value="LOCAL" />
       <updated>1754482685698</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="change cross origin settings to allow also deployed FE">
+      <option name="closed" value="true" />
+      <created>1755588399659</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1755588399659</updated>
+    </task>
+    <task id="LOCAL-00003" summary="set wordCount to copied lesson">
+      <option name="closed" value="true" />
+      <created>1755590415170</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1755590415170</updated>
+    </task>
+    <task id="LOCAL-00004" summary="set wordCount to copied lesson">
+      <option name="closed" value="true" />
+      <created>1755590877866</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1755590877866</updated>
+    </task>
+    <task id="LOCAL-00005" summary="change status response when action for Demo user">
+      <option name="closed" value="true" />
+      <created>1755594590179</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1755594590179</updated>
+    </task>
+    <task id="LOCAL-00006" summary="allow Demo to update score">
+      <option name="closed" value="true" />
+      <created>1755595875477</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1755595875477</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update api and implement updateWordsScores" />
-    <option name="LAST_COMMIT_MESSAGE" value="update api and implement updateWordsScores" />
+    <MESSAGE value="change cross origin settings to allow also deployed FE" />
+    <MESSAGE value="set wordCount to copied lesson" />
+    <MESSAGE value="change status response when action for Demo user" />
+    <MESSAGE value="allow Demo to update score" />
+    <option name="LAST_COMMIT_MESSAGE" value="allow Demo to update score" />
   </component>
 </project>

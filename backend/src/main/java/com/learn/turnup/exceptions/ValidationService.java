@@ -27,7 +27,6 @@ public class ValidationService  {
     private void validateAppUserId(UUID xUserId){
         Set<ConstraintViolation<UUID>> violations = validator.validate(xUserId);
         if (!violations.isEmpty()) {
-
             throw new ConstraintViolationException("Invalid appUserId", violations);
         }
     }
