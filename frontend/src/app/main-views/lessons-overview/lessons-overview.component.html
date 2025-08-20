@@ -73,7 +73,9 @@
                 [table]="lessonTable"/>
       </th>
       <th>
-        <i (click)="clearAllFilters(lessonTable)" class="pi pi-filter-slash clear-filters icon-hover"></i>
+        <i (click)="clearAllFilters(lessonTable)" [pTooltip]="'Vypne filtry'"
+           class="pi pi-filter-slash clear-filters icon-hover"
+           tooltipPosition="top"></i>
       </th>
     </tr>
   </ng-template>
