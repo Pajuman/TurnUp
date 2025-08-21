@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.learn.turnup.exceptions.DefaultUser.denyForDefaultUser;
@@ -156,7 +157,10 @@ public class LessonsService {
             throw new ForbiddenException("You are not allowed to access this lesson");
         }
         //409
-        if(lessonRepository.existsByLessonNameAndAppUser_Id(lessonDTO.getLessonName(), xUserId)){
+        Optional<UUID> lessonWithSameNameId = lessonRepository
+                .findByLessonNameAndAppUser_Id(lessonDTO.getLessonName(), xUserId)
+                .map(Lesson::getId);
+        if (lessonWithSameNameId.isPresent() && !lessonWithSameNameId.get().equals(lessonDTO.getId())) {
             throw new EntityExistsException("Lesson name already exists");
         }
 
