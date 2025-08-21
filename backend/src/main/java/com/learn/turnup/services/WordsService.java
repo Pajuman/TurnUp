@@ -6,21 +6,17 @@ import com.learn.turnup.dto.WordScoreDTO;
 import com.learn.turnup.entities.Lesson;
 import com.learn.turnup.entities.Word;
 import com.learn.turnup.exceptions.GlobalExceptions.ForbiddenException;
-import com.learn.turnup.exceptions.GlobalExceptions.UnauthorizedException;
 import com.learn.turnup.exceptions.ValidationService;
-import com.learn.turnup.repositories.AppUserRepository;
 import com.learn.turnup.repositories.LessonRepository;
 import com.learn.turnup.repositories.WordRepository;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Valid;
-import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

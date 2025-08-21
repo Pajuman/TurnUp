@@ -1,18 +1,13 @@
 package com.learn.turnup.dto;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+import java.util.Objects;
 
 /**
  * NewLessonDTO
@@ -52,7 +47,7 @@ public class NewLessonDTO {
    * Get lessonName
    * @return lessonName
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 30) 
+  @NotNull @Size(min = 3, max = 30)
   @Schema(name = "lessonName", example = "Podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("lessonName")
   public String getLessonName() {
@@ -72,7 +67,7 @@ public class NewLessonDTO {
    * Get description
    * @return description
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 60) 
+  @NotNull @Size(min = 2, max = 60)
   @Schema(name = "description", example = "V lekci jsou běžná podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {

@@ -4,18 +4,17 @@ import com.learn.turnup.apis.WordsApi;
 import com.learn.turnup.dto.BatchWordUpdateDTO;
 import com.learn.turnup.dto.WordScoreDTO;
 import com.learn.turnup.services.WordsService;
-import jakarta.validation.Valid;
+import jakarta.annotation.Generated;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import jakarta.annotation.Generated;
 
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = {"https://independent-manifestation-production.up.railway.app", "http://localhost:4200"})
+@CrossOrigin(origins = "https://independent-manifestation-production.up.railway.app")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-06-03T14:15:17.222973100+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Controller
 @RequestMapping("${openapi.word.base-path:/api}")

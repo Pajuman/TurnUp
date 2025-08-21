@@ -1,19 +1,14 @@
 package com.learn.turnup.dto;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.util.UUID;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * WordDTO
@@ -73,7 +68,7 @@ public class WordDTO {
    * Get question
    * @return question
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40) 
+  @NotNull @Size(min = 1, max = 40)
   @Schema(name = "question", example = "1 black dog", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("question")
   public String getQuestion() {
@@ -93,7 +88,7 @@ public class WordDTO {
    * Get answer
    * @return answer
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40) 
+  @NotNull @Size(min = 1, max = 40)
   @Schema(name = "answer", example = "1 černý pes", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("answer")
   public String getAnswer() {

@@ -1,12 +1,12 @@
 package com.learn.turnup.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 import java.util.UUID;
 
 @Entity(
@@ -28,7 +28,6 @@ public class Word {
             columnDefinition = "TEXT"
     )
     @Size(min = 1, max = 40)
-    @Pattern(regexp = "^[\\p{L}0-9 ]+$")
     private String question;
 
     @Column(
@@ -37,7 +36,6 @@ public class Word {
             columnDefinition = "TEXT"
     )
     @Size(min = 1, max = 40)
-    @Pattern(regexp = "^[\\p{L}0-9 ]+$")
     private String answer;
 
     @Column(
