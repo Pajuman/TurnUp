@@ -397,13 +397,11 @@ components:
           type: string
           minLength: 1
           maxLength: 40
-          pattern: '^[\p{L}0-9 ]+$'
           example: "1 black dog"
         answer:
           type: string
           minLength: 1
           maxLength: 40
-          pattern: '^[\p{L}0-9 ]+$'
           example: "1 černý pes"
         score:
           type: integer
@@ -420,13 +418,11 @@ components:
           type: string
           minLength: 1
           maxLength: 40
-          pattern: '^[\p{L}0-9 ]+$'
           example: "1 black dog"
         answer:
           type: string
           minLength: 1
           maxLength: 40
-          pattern: '^[\p{L}0-9 ]+$'
           example: "1 černý pes"
       required:
         - question
@@ -455,19 +451,16 @@ components:
           type: string
           minLength: 2
           maxLength: 30
-          pattern: '^[\p{L}0-9 ]+$'
           example: "Podstatná jména"
         description:
           type: string
           minLength: 3
           maxLength: 60
-          pattern: '^[\p{L}0-9 ]+$'
           example: "V lekci jsou běžná podstatná jména"
         language:
           type: string
           minLength: 2
           maxLength: 30
-          pattern: '^[\p{L}0-9 ]+$'
           example: "AJ"
         score:
           type: integer
@@ -495,13 +488,11 @@ components:
           type: string
           minLength: 3
           maxLength: 30
-          pattern: '^[\p{L}0-9 ]+$'
           example: "Podstatná jména"
         description:
           type: string
           minLength: 2
           maxLength: 60
-          pattern: '^[\p{L}0-9 ]+$'
           example: "V lekci jsou běžná podstatná jména"
         language:
           type: string

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +30,6 @@ public class Lesson {
             unique = false
     )
     @Size(min = 3, max = 30)
-    @Pattern(regexp = "^[\\p{L} ]+$")
     private String lessonName;
 
     @Column(
@@ -38,7 +38,6 @@ public class Lesson {
             unique = false
     )
     @Size(min = 3, max = 60)
-    @Pattern(regexp = "^[\\p{L} ]+$")
     private String description;
 
     @Column(

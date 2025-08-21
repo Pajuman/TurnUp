@@ -78,7 +78,7 @@ public class LessonDTO {
    * Get lessonName
    * @return lessonName
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 2, max = 30) 
+  @NotNull @Size(min = 2, max = 30)
   @Schema(name = "lessonName", example = "Podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("lessonName")
   public String getLessonName() {
@@ -98,7 +98,7 @@ public class LessonDTO {
    * Get description
    * @return description
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 3, max = 60) 
+  @NotNull @Size(min = 3, max = 60)
   @Schema(name = "description", example = "V lekci jsou běžná podstatná jména", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {

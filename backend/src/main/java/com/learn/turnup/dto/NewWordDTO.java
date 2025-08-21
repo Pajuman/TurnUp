@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Generated;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
@@ -41,7 +40,7 @@ public class NewWordDTO {
    * Get question
    * @return question
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40) 
+  @NotNull @Size(min = 1, max = 40)
   @Schema(name = "question", example = "1 black dog", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("question")
   public String getQuestion() {
@@ -61,7 +60,7 @@ public class NewWordDTO {
    * Get answer
    * @return answer
    */
-  @NotNull @Pattern(regexp = "^[\\p{L}0-9 ]+$") @Size(min = 1, max = 40) 
+  @NotNull @Size(min = 1, max = 40)
   @Schema(name = "answer", example = "1 černý pes", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("answer")
   public String getAnswer() {
