@@ -103,6 +103,9 @@ export class Filter implements OnInit, OnDestroy, OnChanges {
 
   private setOptions() {
     this.lessons().forEach((lesson) => {
+      if (lesson[this.fieldName() as keyof Lesson] === -1000) {
+        return;
+      }
       if (
         !this.options.includes(<string>lesson[this.fieldName() as keyof Lesson])
       ) {
