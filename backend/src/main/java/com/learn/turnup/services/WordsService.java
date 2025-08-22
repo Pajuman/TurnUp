@@ -1,6 +1,10 @@
 package com.learn.turnup.services;
 
+import com.deepl.api.DeepLClient;
+import com.deepl.api.DeepLException;
+import com.deepl.api.TextResult;
 import com.learn.turnup.dto.BatchWordUpdateDTO;
+import com.learn.turnup.dto.TranslationDTO;
 import com.learn.turnup.dto.WordDTO;
 import com.learn.turnup.dto.WordScoreDTO;
 import com.learn.turnup.entities.Lesson;
@@ -26,9 +30,11 @@ import static com.learn.turnup.exceptions.DefaultUser.denyForDefaultUser;
 @RequiredArgsConstructor
 @Slf4j
 public class WordsService {
+
     private final WordRepository wordRepository;
     private final LessonRepository lessonRepository;
     private final ValidationService validationService;
+    private final DeepLClient deeplClient;
 
     public void updateAndDeleteWords(UUID xUserId, BatchWordUpdateDTO batchWordUpdateDTO) {
       denyForDefaultUser(xUserId);
@@ -69,6 +75,20 @@ public class WordsService {
             word.setScore(Byte.parseByte(wordScoreDTO.getScore().toString()));
             wordRepository.save(word);
         });
+    }
+
+    public String translateWord(TranslationDTO translationDTO) {
+        try{TextResult result =
+                deeplClient.translateText(translationDTO.getText(), translationDTO.getSourceLang(), translationDTO.getTargetLang());
+        return  result.getText();}
+        catch (DeepLException e){
+            System.err.println("DeepL API error: " + e.getMessage());
+            throw new RuntimeException("Translation failed: " + e.getMessage(), e);
+        }
+        catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Translation request was interrupted", e);
+        }
     }
 
     private void updateWords(List<WordDTO> wordDTOsToUpdate, List<Word> wordsToUpdate) {

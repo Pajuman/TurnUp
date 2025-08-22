@@ -6,10 +6,13 @@
 package com.learn.turnup.apis;
 
 import com.learn.turnup.dto.BatchWordUpdateDTO;
+import com.learn.turnup.dto.TranslationDTO;
 import com.learn.turnup.dto.WordScoreDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Generated;
@@ -25,10 +28,40 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 import java.util.UUID;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-06T10:32:17.569069+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-22T18:07:50.748697700+02:00[Europe/Prague]", comments = "Generator version: 7.9.0")
 @Validated
 @Tag(name = "Word", description = "Words are lowest entities")
 public interface WordsApi {
+
+    /**
+     * POST /words : Translate word
+     *
+     * @param translationDTO  (required)
+     * @return Word tranlsated (status code 200)
+     *         or Invalid input (status code 400)
+     */
+    @Operation(
+        operationId = "translateWord",
+        summary = "Translate word",
+        tags = { "Word" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Word tranlsated", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Invalid input")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/words",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<String> translateWord(
+        @Parameter(name = "TranslationDTO", description = "", required = true) @Valid @RequestBody TranslationDTO translationDTO
+    );
+
 
     /**
      * PUT /words : Update and/or delete words

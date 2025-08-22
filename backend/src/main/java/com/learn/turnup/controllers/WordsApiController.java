@@ -2,6 +2,7 @@ package com.learn.turnup.controllers;
 
 import com.learn.turnup.apis.WordsApi;
 import com.learn.turnup.dto.BatchWordUpdateDTO;
+import com.learn.turnup.dto.TranslationDTO;
 import com.learn.turnup.dto.WordScoreDTO;
 import com.learn.turnup.services.WordsService;
 import jakarta.annotation.Generated;
@@ -33,5 +34,11 @@ public class WordsApiController implements WordsApi {
     public ResponseEntity<Void> updateWordsScores(UUID xUserId, List<WordScoreDTO> wordScoreDTO) {
         wordsService.updateWordsScores(xUserId, wordScoreDTO);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<String> translateWord(TranslationDTO translationDTO) {
+
+        return ResponseEntity.ok(wordsService.translateWord(translationDTO));
     }
 }
