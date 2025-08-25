@@ -80,7 +80,7 @@ public class WordsService {
     public String translateWord(TranslationDTO translationDTO) {
         try{TextResult result =
                 deeplClient.translateText(translationDTO.getText(), translationDTO.getSourceLang(), translationDTO.getTargetLang());
-        return  result.getText();}
+        return  "\"" + result.getText() + "\"";}
         catch (DeepLException e){
             System.err.println("DeepL API error: " + e.getMessage());
             throw new RuntimeException("Translation failed: " + e.getMessage(), e);
