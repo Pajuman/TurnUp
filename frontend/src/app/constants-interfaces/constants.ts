@@ -1,4 +1,4 @@
-import { Option } from './interfaces';
+import { Country, Option } from './interfaces';
 
 export enum LogDialogMode {
   LogIn = 'Přihlášení:',
@@ -32,6 +32,28 @@ export const SHARED_OPTIONS = [
 ];
 
 export const WORD_OPTIONS = ['0 - 10', '11 - 20', '> 20'];
+
+export const COUNTRIES: Country[] = [
+  {
+    label: 'anglicky',
+    value: 'anglicky',
+    codeDeepL: 'EN-GB',
+    fileName: 'gb.webp',
+  },
+  { label: 'německy', value: 'německy', codeDeepL: 'DE', fileName: 'de.webp' },
+  {
+    label: 'španělsky',
+    value: 'španělsky',
+    codeDeepL: 'ES',
+    fileName: 'es.webp',
+  },
+  {
+    label: 'fransouzsky',
+    value: 'fransouzsky',
+    codeDeepL: 'FR',
+    fileName: 'fr.webp',
+  },
+];
 
 export const MESSAGES = {
   invalidInput: 'Chybný vstup',

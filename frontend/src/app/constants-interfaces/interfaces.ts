@@ -11,6 +11,13 @@ export interface Option {
   value: string | number;
 }
 
+export interface Country {
+  label: string;
+  value: string;
+  codeDeepL: string;
+  fileName: string;
+}
+
 export interface Lesson extends Omit<LessonDTO, 'score'> {
   status: 'vlastní' | 'sdílená';
   score: number | null;

@@ -34,6 +34,14 @@
           <span></span>
         }
       </small>
+      <div class="dialog-row">
+        <span>AI překlad</span>
+        <div>@for (country of COUNTRIES; track country.fileName) {
+          <picture (click)="translate(country.codeDeepL)">
+            <img [attr.srcset]="'assets/' + country.fileName" class="flag">
+          </picture>
+        }</div>
+      </div>
     } @else if (item() === 'Lesson') {
       <div class="dialog-row">
         <label for="lessonName">Název</label>

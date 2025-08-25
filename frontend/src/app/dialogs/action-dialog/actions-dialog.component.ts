@@ -1,5 +1,6 @@
 import {
   Component,
+  inject,
   output,
   OutputEmitterRef,
   Signal,
@@ -17,8 +18,13 @@ import {
 } from '../../constants-interfaces/interfaces';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
-import { SHARED_OPTIONS } from '../../constants-interfaces/constants';
+import {
+  COUNTRIES,
+  SHARED_OPTIONS,
+} from '../../constants-interfaces/constants';
 import { NgStyle } from '@angular/common';
+import { WordService } from '../../api';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'action-dialog',
@@ -40,13 +46,14 @@ export class ActionsDialogComponent {
   public name: WritableSignal<string> = signal('');
   public visible = signal(false);
   public save = signal(false);
-
   public lessonName = signal('');
   public description = signal('');
   public shared: WritableSignal<{ label: string; value: boolean } | undefined> =
     signal(undefined);
   public language = signal('');
   protected readonly SHARED_OPTIONS = SHARED_OPTIONS;
+  protected readonly COUNTRIES = COUNTRIES;
+  private readonly wordService = inject(WordService);
 
   public close() {
     if (this.save()) {
@@ -72,6 +79,17 @@ export class ActionsDialogComponent {
   public confirm() {
     this.save.set(true);
     this.visible.set(false);
+  }
+
+  public translate(deepLCode: string) {
+    this.wordService
+      .translateWord({
+        text: this.question(),
+        sourceLang: 'CS',
+        targetLang: deepLCode,
+      })
+      .pipe(first())
+      .subscribe((translation) => this.answer.set(translation));
   }
 
   private resetInputs() {
