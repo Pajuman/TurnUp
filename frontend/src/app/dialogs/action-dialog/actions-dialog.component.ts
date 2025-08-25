@@ -89,7 +89,11 @@ export class ActionsDialogComponent {
         targetLang: deepLCode,
       })
       .pipe(first())
-      .subscribe((translation) => this.answer.set(translation));
+      .subscribe((translation) => {
+        console.log(translation);
+        this.answer.set(translation);
+        console.log(this.answer());
+      });
   }
 
   private resetInputs() {
