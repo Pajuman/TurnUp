@@ -110,6 +110,7 @@ export class PracticeSessionComponent implements OnInit {
   private nextWord() {
     if (this.currentCount() === this.practiceCount()) {
       this.back();
+      return;
     }
     this.currentCount.update((value) => value + 1);
     this.setBothBorders();
