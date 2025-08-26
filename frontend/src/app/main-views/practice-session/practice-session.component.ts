@@ -108,13 +108,13 @@ export class PracticeSessionComponent implements OnInit {
   }
 
   private nextWord() {
-    this.setBothBorders();
-    this.spread = this.rightBorder - this.leftBorder + 1;
-    this.setNewCurrentWord();
-    this.currentCount.update((value) => value + 1);
     if (this.currentCount() === this.practiceCount()) {
       this.back();
     }
+    this.currentCount.update((value) => value + 1);
+    this.setBothBorders();
+    this.spread = this.rightBorder - this.leftBorder + 1;
+    this.setNewCurrentWord();
   }
 
   private separateWords() {
