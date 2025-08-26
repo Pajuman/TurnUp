@@ -80,6 +80,7 @@ export class PracticeSessionComponent implements OnInit {
   public back() {
     if (this.currentCount() <= 1) {
       this.redirectBack();
+      return;
     }
     const wordScoreDTO: WordScoreDTO[] = this.words().map((word) => ({
       id: word.id,
