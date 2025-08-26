@@ -5,28 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5740859e-d1f0-4a76-ae97-2ee5250948af" name="Changes" comment="fix updating of lesson">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/config/Beans.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/dto/TranslationDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/apis/WordsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/apis/WordsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/LessonsApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/LessonsApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/UsersApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/UsersApiController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/WordsApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/controllers/WordsApiController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/WordsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learn/turnup/services/WordsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/openapi.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/apis/WordsApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/apis/WordsApi.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-development.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-development.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-production.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-development.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-development.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-production.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/LessonsApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/LessonsApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/UsersApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/UsersApiController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/WordsApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/controllers/WordsApiController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/dto/LessonDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/dto/LessonDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/dto/NewLessonDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/dto/NewLessonDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/dto/NewWordDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/dto/NewWordDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/dto/WordDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/dto/WordDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/entities/Lesson.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/entities/Lesson.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/entities/Word.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/entities/Word.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/repositories/LessonRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/repositories/LessonRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/LessonsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/LessonsService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/WordsService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/openapi.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/WordsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/learn/turnup/services/WordsService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/LessonMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/LessonMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/WordMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/learn/turnup/mappers/WordMapperImpl.java" afterDir="false" />
     </list>
@@ -43,6 +34,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -69,19 +65,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.TurnupApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.turnup [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.turnup [install].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Já/IdeaProjects/turnup/backend/src/main/java/com/learn/turnup/apis&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.TurnupApplication.executor": "Run",
+    "Maven.turnup [clean].executor": "Run",
+    "Maven.turnup [install].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Já/IdeaProjects/turnup/backend/src/main/java/com/learn/turnup/apis",
+    "settings.editor.selected.configurable": "actions.on.save"
+  },
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+      "directory",
+      "module",
+      "repository"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Já\IdeaProjects\turnup\backend\src\main\java\com\learn\turnup\apis" />
