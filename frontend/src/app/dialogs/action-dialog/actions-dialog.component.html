@@ -9,13 +9,11 @@
       <div class="dialog-row">
         <label for="question">Výraz</label>
         <input #questionInput="ngModel" [(ngModel)]="question" autocomplete="off" name="question" class="flex-auto"
-               id="question" maxlength="30" minlength="3" required pInputText/>
+               id="question" maxlength="40" required pInputText/>
       </div>
       <small [class.in-visible]="!(questionInput.invalid && questionInput.touched)">
         @if (questionInput.errors?.['required']) {
           <span>Výraz je nutný.</span>
-        } @else if (questionInput.errors?.['minlength']) {
-          <span>Minimálně 3 znaky.</span>
         } @else {
           <span></span>
         }
@@ -23,13 +21,11 @@
       <div class="dialog-row">
         <label for="answer">Překlad</label>
         <input #answerInput="ngModel" [(ngModel)]="answer" autocomplete="off" name="answer" class="flex-auto"
-               id="answer" maxlength="30" minlength="3" required pInputText/>
+               id="answer" maxlength="40" required pInputText/>
       </div>
       <small [class.in-visible]="!(answerInput.invalid && answerInput.touched)">
         @if (answerInput.errors?.['required']) {
           <span>Překlad je nutný.</span>
-        } @else if (answerInput.errors?.['minlength']) {
-          <span>Minimálně 3 znaky.</span>
         } @else {
           <span></span>
         }
@@ -38,9 +34,10 @@
         <span>AI překlad</span>
         <div>@for (country of COUNTRIES; track country.fileName) {
           <picture (click)="translate(country.codeDeepL)">
-            <img [attr.srcset]="'assets/' + country.fileName" class="flag">
+            <img [src]="'assets/' + country.fileName" class="flag" alt="flag">
           </picture>
         }</div>
+
       </div>
     } @else if (item() === 'Lesson') {
       <div class="dialog-row">

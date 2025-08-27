@@ -80,6 +80,7 @@ export class PracticeSessionComponent implements OnInit {
   public back() {
     if (this.currentCount() <= 1) {
       this.redirectBack();
+      return;
     }
     const wordScoreDTO: WordScoreDTO[] = this.words().map((word) => ({
       id: word.id,
@@ -108,13 +109,14 @@ export class PracticeSessionComponent implements OnInit {
   }
 
   private nextWord() {
+    if (this.currentCount() === this.practiceCount()) {
+      this.back();
+      return;
+    }
+    this.currentCount.update((value) => value + 1);
     this.setBothBorders();
     this.spread = this.rightBorder - this.leftBorder + 1;
     this.setNewCurrentWord();
-    this.currentCount.update((value) => value + 1);
-    if (this.currentCount() === this.practiceCount()) {
-      this.back();
-    }
   }
 
   private separateWords() {
