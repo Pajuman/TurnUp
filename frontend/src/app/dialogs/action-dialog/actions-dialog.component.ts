@@ -25,10 +25,19 @@ import {
 import { NgStyle } from '@angular/common';
 import { WordService } from '../../api';
 import { first } from 'rxjs';
+import { LanguageSwitcherComponent } from '../../features/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'action-dialog',
-  imports: [Button, Dialog, InputText, FormsModule, DropdownModule, NgStyle],
+  imports: [
+    Button,
+    Dialog,
+    InputText,
+    FormsModule,
+    DropdownModule,
+    NgStyle,
+    LanguageSwitcherComponent,
+  ],
   templateUrl: './actions-dialog.component.html',
   styleUrl: './actions-dialog.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -81,18 +90,16 @@ export class ActionsDialogComponent {
     this.visible.set(false);
   }
 
-  public translate(deepLCode: string) {
+  public translate(deepLCode: string, lngSwitcher: boolean) {
     this.wordService
       .translateWord({
         text: this.question(),
-        sourceLang: 'CS',
-        targetLang: deepLCode,
+        sourceLang: lngSwitcher ? 'CS' : deepLCode,
+        targetLang: lngSwitcher ? deepLCode : 'CS',
       })
       .pipe(first())
       .subscribe((translation) => {
-        console.log(translation);
         this.answer.set(translation);
-        console.log(this.answer());
       });
   }
 

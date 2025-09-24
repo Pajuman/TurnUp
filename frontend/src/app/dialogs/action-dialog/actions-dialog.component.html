@@ -32,8 +32,9 @@
       </small>
       <div class="dialog-row">
         <span>AI překlad</span>
+        <language-switcher #lngSwitcher></language-switcher>
         <div>@for (country of COUNTRIES; track country.fileName) {
-          <picture (click)="translate(country.codeDeepL)">
+          <picture (click)="translate(country.codeDeepL, lngSwitcher.isTranslationFromCz)">
             <img [src]="'assets/' + country.fileName" class="flag" alt="flag">
           </picture>
         }</div>
