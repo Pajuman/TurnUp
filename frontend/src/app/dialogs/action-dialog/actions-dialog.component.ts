@@ -93,22 +93,27 @@ export class ActionsDialogComponent {
   }
 
   public translate(deepLCode: string) {
-    this.wordService
-      .translateWord({
-        text: this.isTranslationFromCz() ? this.question() : this.answer(),
-        sourceLang: this.isTranslationFromCz()
-          ? 'CS'
-          : deepLCode === 'EN-GB'
-            ? 'EN'
-            : deepLCode,
-        targetLang: this.isTranslationFromCz() ? deepLCode : 'CS',
-      })
-      .pipe(first())
-      .subscribe((translation) => {
-        this.isTranslationFromCz()
-          ? this.answer.set(translation)
-          : this.question.set(translation);
-      });
+    const text = this.isTranslationFromCz() ? this.question() : this.answer();
+    const sourceLang = this.isTranslationFromCz()
+      ? 'CS'
+      : deepLCode === 'EN-GB'
+        ? 'EN'
+        : deepLCode;
+    const targetLang = this.isTranslationFromCz() ? deepLCode : 'CS';
+    if (text && sourceLang && targetLang) {
+      this.wordService
+        .translateWord({
+          text: text,
+          sourceLang: sourceLang,
+          targetLang: targetLang,
+        })
+        .pipe(first())
+        .subscribe((translation) => {
+          this.isTranslationFromCz()
+            ? this.answer.set(translation)
+            : this.question.set(translation);
+        });
+    }
   }
 
   public changeTranslationDirection(event: boolean) {
