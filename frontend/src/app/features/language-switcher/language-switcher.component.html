@@ -1,8 +1,9 @@
-<div (click)="isTranslationFromCz = ! isTranslationFromCz">
-  @if (isTranslationFromCz) {
-    <span>do</span>
+<div>
+  <p-toggle-switch (click)="emitValue()" [(ngModel)]="isTranslationFromCz" [ngStyle]="{'margin-left.px':16}"
+  ></p-toggle-switch>
+  @if (isTranslationFromCz()) {
+    <span [ngStyle]="{'padding-left.px': 16}">ČJ <i class="pi pi-angle-right"></i> ?</span>
   } @else {
-    <span>z</span>
+    <span [ngStyle]="{'padding-left.px': 16}">? <i class="pi pi-angle-right"></i> ČJ</span>
   }
 </div>
-

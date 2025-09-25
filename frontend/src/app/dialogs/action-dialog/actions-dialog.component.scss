@@ -29,3 +29,21 @@ p-dropdown {
   padding: 0 0.75rem;
   cursor: pointer;
 }
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+@keyframes highlight {
+  0% {
+    background-color: #08ff00;
+  }
+  100% {
+    background-color: inherit;
+  }
+}
+
+.highlight {
+  animation: highlight 0.5s ease-out;
+}

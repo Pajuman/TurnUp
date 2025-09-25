@@ -1,14 +1,26 @@
 <p-dialog (keydown.enter)="form.valid ? confirm() : null" (onHide)="close()" [(visible)]="visible"
-          [header]="action() === 'New' ? 'Nový výraz' : 'Uprav'" [modal]="true"
+          [modal]="true"
           [style]="{ width: '25rem' }">
-
+  <ng-template pTemplate="header">
+    <div class="dialog-row">
+      <span [textContent]="action() === 'New' ? 'Nový výraz' : 'Uprav'" class="title"></span>
+      <language-switcher (emitter)="changeTranslationDirection($event)"
+                         [isTranslationFromCz]="isTranslationFromCz()"></language-switcher>
+      <button
+        (click)="close()"
+        class="p-button-rounded p-button-text"
+        icon="pi pi-times"
+      ></button>
+    </div>
+  </ng-template>
 
   <form #form="ngForm">
 
     @if (item() === 'Word') {
       <div class="dialog-row">
         <label for="question">Výraz</label>
-        <input #questionInput="ngModel" [(ngModel)]="question" autocomplete="off" name="question" class="flex-auto"
+        <input #questionInput="ngModel" [(ngModel)]="question" [ngClass]="isTranslationFromCz() ? 'highlight' : ''"
+               autocomplete="off" name="question" class="flex-auto"
                id="question" maxlength="40" required pInputText/>
       </div>
       <small [class.in-visible]="!(questionInput.invalid && questionInput.touched)">
@@ -20,7 +32,8 @@
       </small>
       <div class="dialog-row">
         <label for="answer">Překlad</label>
-        <input #answerInput="ngModel" [(ngModel)]="answer" autocomplete="off" name="answer" class="flex-auto"
+        <input #answerInput="ngModel" [(ngModel)]="answer" [ngClass]="!isTranslationFromCz() ? 'highlight' : ''"
+               autocomplete="off" name="answer" class="flex-auto"
                id="answer" maxlength="40" required pInputText/>
       </div>
       <small [class.in-visible]="!(answerInput.invalid && answerInput.touched)">
@@ -32,9 +45,8 @@
       </small>
       <div class="dialog-row">
         <span>AI překlad</span>
-        <language-switcher #lngSwitcher></language-switcher>
         <div>@for (country of COUNTRIES; track country.fileName) {
-          <picture (click)="translate(country.codeDeepL, lngSwitcher.isTranslationFromCz)">
+          <picture (click)="translate(country.codeDeepL)">
             <img [src]="'assets/' + country.fileName" class="flag" alt="flag">
           </picture>
         }</div>

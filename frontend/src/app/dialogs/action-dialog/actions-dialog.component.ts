@@ -22,7 +22,7 @@ import {
   COUNTRIES,
   SHARED_OPTIONS,
 } from '../../constants-interfaces/constants';
-import { NgStyle } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { WordService } from '../../api';
 import { first } from 'rxjs';
 import { LanguageSwitcherComponent } from '../../features/language-switcher/language-switcher.component';
@@ -37,6 +37,7 @@ import { LanguageSwitcherComponent } from '../../features/language-switcher/lang
     DropdownModule,
     NgStyle,
     LanguageSwitcherComponent,
+    NgClass,
   ],
   templateUrl: './actions-dialog.component.html',
   styleUrl: './actions-dialog.component.scss',
@@ -60,6 +61,7 @@ export class ActionsDialogComponent {
   public shared: WritableSignal<{ label: string; value: boolean } | undefined> =
     signal(undefined);
   public language = signal('');
+  protected isTranslationFromCz = signal(true);
   protected readonly SHARED_OPTIONS = SHARED_OPTIONS;
   protected readonly COUNTRIES = COUNTRIES;
   private readonly wordService = inject(WordService);
@@ -90,17 +92,27 @@ export class ActionsDialogComponent {
     this.visible.set(false);
   }
 
-  public translate(deepLCode: string, lngSwitcher: boolean) {
+  public translate(deepLCode: string) {
     this.wordService
       .translateWord({
-        text: this.question(),
-        sourceLang: lngSwitcher ? 'CS' : deepLCode,
-        targetLang: lngSwitcher ? deepLCode : 'CS',
+        text: this.isTranslationFromCz() ? this.question() : this.answer(),
+        sourceLang: this.isTranslationFromCz()
+          ? 'CS'
+          : deepLCode === 'EN-GB'
+            ? 'EN'
+            : deepLCode,
+        targetLang: this.isTranslationFromCz() ? deepLCode : 'CS',
       })
       .pipe(first())
       .subscribe((translation) => {
-        this.answer.set(translation);
+        this.isTranslationFromCz()
+          ? this.answer.set(translation)
+          : this.question.set(translation);
       });
+  }
+
+  public changeTranslationDirection(event: boolean) {
+    this.isTranslationFromCz.set(event);
   }
 
   private resetInputs() {
